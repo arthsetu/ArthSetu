@@ -35,8 +35,7 @@ const isLoggedIn = require('./middleware/isLoggedIn');
 
 app.use(authRoutes);
 app.use(expenseRoutes);
-const aiRoutes = require('./routes/ai');
-app.use(aiRoutes);
+
 const billRoutes = require('./routes/bills');
 app.use(billRoutes);
 const goalRoutes = require('./routes/goals');
