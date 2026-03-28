@@ -1,0 +1,140 @@
+<% layout('layouts/boilerplate') %>
+<%- include('../includes/navbar') %>
+
+<div class="container mt-4 mb-5">
+
+    <div class="mb-4">
+        <h2>🤖 AI Spending Advisor</h2>
+        <p class="text-muted">Get personalized financial advice based on your spending data</p>
+    </div>
+
+    <div class="row">
+
+        <!-- LEFT — Form + Summary -->
+        <div class="col-md-5 mb-4">
+
+            <!-- Spending Summary Card -->
+            <div style="background: linear-gradient(135deg, #1a1a2e, #1a7a4a); border-radius: 20px; padding: 30px; color: white; margin-bottom: 20px;">
+                <h5 style="color: #c9a84c; margin-bottom: 20px;">📊 Your Spending Summary</h5>
+
+                <% if (expenses.length === 0) { %>
+                    <p style="color: rgba(255,255,255,0.7);">No expenses found. 
+                        <a href="/expenses" style="color: #c9a84c;">Add some first!</a>
+                    </p>
+                <% } else { %>
+                    <p style="color: rgba(255,255,255,0.7); margin-bottom: 15px;">
+                        Based on your last <%= expenses.length %> transactions
+                    </p>
+                    <% 
+                        let totalAmt = expenses.reduce((s, e) => s + e.amount, 0);
+                        let catTotals = {};
+                        expenses.forEach(e => {
+                            catTotals[e.category] = (catTotals[e.category] || 0) + e.amount;
+                        });
+                    %>
+                    <div style="font-size: 2rem; font-weight: 800; color: #c9a84c;">
+                        ₹<%= totalAmt %>
+                    </div>
+                    <p style="color: rgba(255,255,255,0.6); font-size: 0.85rem;">Total Tracked</p>
+
+                    <div style="margin-top: 15px;">
+                        <% Object.entries(catTotals).forEach(function([cat, amt]) { %>
+                            <div style="display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                                <span style="color: rgba(255,255,255,0.8); font-size: 0.9rem;"><%= cat %></span>
+                                <span style="color: #c9a84c; font-weight: 600;">₹<%= amt %></span>
+                            </div>
+                        <% }) %>
+                    </div>
+                <% } %>
+            </div>
+
+            <!-- Get Advice Button -->
+            <form action="/ai-advisor" method="POST">
+                <button type="submit" 
+                    style="width: 100%; background: linear-gradient(135deg, #1a7a4a, #c9a84c); color: white; border: none; padding: 16px; border-radius: 16px; font-size: 1.1rem; font-weight: 700; cursor: pointer;">
+                    🤖 Analyze My Spending
+                </button>
+            </form>
+
+            <p style="text-align: center; color: #6c757d; font-size: 0.85rem; margin-top: 10px;">
+                Powered by Google Gemini AI ✨
+            </p>
+
+        </div>
+
+        <!-- RIGHT — AI Advice -->
+        <div class="col-md-7 mb-4">
+            <div style="background: white; border-radius: 20px; padding: 35px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); min-height: 400px;">
+
+                <% if (!advice) { %>
+                    <!-- Empty state -->
+                    <div style="text-align: center; padding: 60px 20px;">
+                        <div style="font-size: 4rem; margin-bottom: 20px;">🤖</div>
+                        <h5 style="color: #1a1a2e; font-weight: 700;">Ready to Analyze!</h5>
+                        <p style="color: #6c757d;">Click the button to get personalized AI advice based on your spending patterns.</p>
+                    </div>
+
+                <% } else { %>
+                    <!-- AI Advice -->
+                    <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 25px;">
+                        <div style="background: linear-gradient(135deg, #1a7a4a, #c9a84c); width: 45px; height: 45px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0;">
+                            🤖
+                        </div>
+                        <div>
+                            <h5 style="margin: 0; font-weight: 700; color: #1a1a2e;">AI Advisor</h5>
+                            <small style="color: #6c757d;">Powered by Google Gemini</small>
+                        </div>
+                    </div>
+
+                    <div style="background: #f8f9fa; border-radius: 16px; padding: 25px; border-left: 4px solid #1a7a4a; line-height: 1.8; color: #1a1a2e; white-space: pre-wrap;">
+                        <%= advice %>
+                    </div>
+
+                    <div style="margin-top: 20px; padding: 15px; background: #e8f5e9; border-radius: 12px; display: flex; align-items: center; gap: 10px;">
+                        <span>💡</span>
+                        <small style="color: #1a7a4a; font-weight: 600;">
+                            Add more expenses regularly for better and more accurate AI advice!
+                        </small>
+                    </div>
+                <% } %>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Recent Expenses Table -->
+    <% if (expenses.length > 0) { %>
+    <div style="background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+        <h5 style="font-weight: 700; margin-bottom: 20px;">📋 Recent Expenses Analyzed</h5>
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead style="background: #f8f9fa;">
+                    <tr>
+                        <th>Title</th>
+                        <th>Amount</th>
+                        <th>Category</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% expenses.slice(0, 10).forEach(function(exp) { %>
+                    <tr>
+                        <td><%= exp.title %></td>
+                        <td style="color: #1a7a4a; font-weight: 600;">₹<%= exp.amount %></td>
+                        <td>
+                            <span style="background: #e8f5e9; color: #1a7a4a; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem;">
+                                <%= exp.category %>
+                            </span>
+                        </td>
+                        <td style="color: #6c757d;"><%= exp.date.toDateString() %></td>
+                    </tr>
+                    <% }) %>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <% } %>
+
+</div>
+
+<%- include('../includes/footer') %>

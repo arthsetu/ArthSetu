@@ -1,0 +1,283 @@
+
+<% layout('layouts/boilerplate') %>
+<%- include('../includes/navbar') %>
+
+<!-- PAGE HERO -->
+<section style="background: linear-gradient(135deg, #1a1a2e 0%, #1a7a4a 100%); padding: 80px 0;">
+    <div class="container text-center">
+        <h1 style="color: white; font-size: 2.8rem; font-weight: 800;">Our <span style="color: #c9a84c;">Services</span></h1>
+        <p style="color: rgba(255,255,255,0.8); font-size: 1.1rem; margin-top: 15px;">
+            Everything a college student needs to manage money smartly
+        </p>
+    </div>
+</section>
+
+<!-- SERVICES GRID -->
+<section style="padding: 80px 0; background: #f8f9fa;">
+    <div class="container">
+
+        <!-- Expense Tracking -->
+        <div class="row align-items-center mb-5 pb-4" style="border-bottom: 1px solid #e9ecef;">
+            <div class="col-md-6">
+                <div style="background: white; border-radius: 20px; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                    <div style="font-size: 3rem; margin-bottom: 15px;">💰</div>
+                    <h3 style="font-weight: 800; color: #1a1a2e;">Expense Tracking</h3>
+                    <p style="color: #6c757d; line-height: 1.8; margin: 15px 0;">
+                        Log every rupee you spend in seconds. Categorize expenses into Food, Transport, Shopping, Entertainment and Bills. See exactly where your money goes every single day.
+                    </p>
+                    <ul style="color: #6c757d; padding-left: 20px;">
+                        <li>Add expenses with one click</li>
+                        <li>5 smart categories</li>
+                        <li>Full expense history</li>
+                        <li>Delete & manage entries</li>
+                    </ul>
+                    <a href="/register" style="display: inline-block; margin-top: 20px; background: #1a7a4a; color: white; padding: 12px 30px; border-radius: 25px; text-decoration: none; font-weight: 600;">
+                        Start Tracking →
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6 d-none d-md-block">
+                <div style="background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); max-width: 350px; margin: auto;">
+                    <p style="color: #6c757d; font-size: 0.85rem;">TODAY'S EXPENSES</p>
+                    <div style="border-bottom: 1px solid #f0f0f0; padding: 12px 0; display: flex; justify-content: space-between;">
+                        <span>🍕 Food & Drinks</span><strong style="color:#1a7a4a">₹250</strong>
+                    </div>
+                    <div style="border-bottom: 1px solid #f0f0f0; padding: 12px 0; display: flex; justify-content: space-between;">
+                        <span>🚌 Transport</span><strong style="color:#1a7a4a">₹80</strong>
+                    </div>
+                    <div style="border-bottom: 1px solid #f0f0f0; padding: 12px 0; display: flex; justify-content: space-between;">
+                        <span>🛍️ Shopping</span><strong style="color:#1a7a4a">₹500</strong>
+                    </div>
+                    <div style="padding: 12px 0; display: flex; justify-content: space-between;">
+                        <strong>Total</strong><strong style="color: #c9a84c; font-size: 1.2rem;">₹830</strong>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Budget Planner -->
+        <div class="row align-items-center mb-5 pb-4" style="border-bottom: 1px solid #e9ecef;">
+            <div class="col-md-6 order-md-2">
+                <div style="background: white; border-radius: 20px; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                    <div style="font-size: 3rem; margin-bottom: 15px;">🎯</div>
+                    <h3 style="font-weight: 800; color: #1a1a2e;">Budget Planner</h3>
+                    <p style="color: #6c757d; line-height: 1.8; margin: 15px 0;">
+                        Set monthly spending limits for each category. Get warned automatically when you're about to overspend. Stay in control of your allowance every month.
+                    </p>
+                    <ul style="color: #6c757d; padding-left: 20px;">
+                        <li>Set budgets per category</li>
+                        <li>Overspend alerts</li>
+                        <li>Monthly reset</li>
+                        <li>Budget vs actual comparison</li>
+                    </ul>
+                    <a href="/register" style="display: inline-block; margin-top: 20px; background: #1a7a4a; color: white; padding: 12px 30px; border-radius: 25px; text-decoration: none; font-weight: 600;">
+                        Set Budget →
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6 order-md-1 d-none d-md-block">
+                <div style="background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); max-width: 350px; margin: auto;">
+                    <p style="color: #6c757d; font-size: 0.85rem;">MONTHLY BUDGET</p>
+                    <div style="margin: 15px 0;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                            <span style="font-size:0.9rem">Food & Drinks</span>
+                            <span style="font-size:0.9rem; color:#1a7a4a">₹1200 / ₹2000</span>
+                        </div>
+                        <div style="background: #f0f0f0; border-radius: 10px; height: 10px;">
+                            <div style="background: #1a7a4a; width: 60%; height: 10px; border-radius: 10px;"></div>
+                        </div>
+                    </div>
+                    <div style="margin: 15px 0;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                            <span style="font-size:0.9rem">Shopping</span>
+                            <span style="font-size:0.9rem; color:#e74c3c">₹1800 / ₹1500 ⚠️</span>
+                        </div>
+                        <div style="background: #f0f0f0; border-radius: 10px; height: 10px;">
+                            <div style="background: #e74c3c; width: 100%; height: 10px; border-radius: 10px;"></div>
+                        </div>
+                    </div>
+                    <div style="margin: 15px 0;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                            <span style="font-size:0.9rem">Transport</span>
+                            <span style="font-size:0.9rem; color:#c9a84c">₹400 / ₹500</span>
+                        </div>
+                        <div style="background: #f0f0f0; border-radius: 10px; height: 10px;">
+                            <div style="background: #c9a84c; width: 80%; height: 10px; border-radius: 10px;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Advisor -->
+        <div class="row align-items-center mb-5 pb-4" style="border-bottom: 1px solid #e9ecef;">
+            <div class="col-md-6">
+                <div style="background: white; border-radius: 20px; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                    <div style="font-size: 3rem; margin-bottom: 15px;">🤖</div>
+                    <h3 style="font-weight: 800; color: #1a1a2e;">AI Spending Advisor</h3>
+                    <p style="color: #6c757d; line-height: 1.8; margin: 15px 0;">
+                        Get personalized financial advice powered by AI. Based on your spending patterns, our AI gives you actionable tips to save more and spend smarter every month.
+                    </p>
+                    <ul style="color: #6c757d; padding-left: 20px;">
+                        <li>Personalized saving tips</li>
+                        <li>Spending pattern analysis</li>
+                        <li>Monthly financial report</li>
+                        <li>Smart recommendations</li>
+                    </ul>
+                    <a href="/register" style="display: inline-block; margin-top: 20px; background: #1a7a4a; color: white; padding: 12px 30px; border-radius: 25px; text-decoration: none; font-weight: 600;">
+                        Get AI Advice →
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6 d-none d-md-block">
+                <div style="background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); max-width: 350px; margin: auto;">
+                    <p style="color: #6c757d; font-size: 0.85rem;">🤖 AI ADVISOR SAYS</p>
+                    <div style="background: #f8f9fa; border-radius: 12px; padding: 15px; margin: 10px 0; border-left: 4px solid #1a7a4a;">
+                        <p style="margin: 0; font-size: 0.9rem; color: #1a1a2e;">You spent <strong>40% on Food</strong> this month. Try meal prepping to save up to <strong style="color:#1a7a4a">₹800/month</strong>!</p>
+                    </div>
+                    <div style="background: #f8f9fa; border-radius: 12px; padding: 15px; margin: 10px 0; border-left: 4px solid #c9a84c;">
+                        <p style="margin: 0; font-size: 0.9rem; color: #1a1a2e;">Your transport costs are <strong>below average</strong>. Great job! 🎉</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bill Splitter -->
+        <div class="row align-items-center mb-5 pb-4" style="border-bottom: 1px solid #e9ecef;">
+            <div class="col-md-6 order-md-2">
+                <div style="background: white; border-radius: 20px; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                    <div style="font-size: 3rem; margin-bottom: 15px;">🤝</div>
+                    <h3 style="font-weight: 800; color: #1a1a2e;">Bill Splitter</h3>
+                    <p style="color: #6c757d; line-height: 1.8; margin: 15px 0;">
+                        Split bills with friends and roommates instantly. Enter the total, add people, and ArthSetu calculates everyone's share automatically. No more awkward money conversations!
+                    </p>
+                    <ul style="color: #6c757d; padding-left: 20px;">
+                        <li>Split equally or custom amounts</li>
+                        <li>Track who has paid</li>
+                        <li>Send reminders to friends</li>
+                        <li>Group expense history</li>
+                    </ul>
+                    <a href="/register" style="display: inline-block; margin-top: 20px; background: #1a7a4a; color: white; padding: 12px 30px; border-radius: 25px; text-decoration: none; font-weight: 600;">
+                        Split Bills →
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6 order-md-1 d-none d-md-block">
+                <div style="background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); max-width: 350px; margin: auto;">
+                    <p style="color: #6c757d; font-size: 0.85rem;">DINNER BILL — ₹1200</p>
+                    <div style="border-bottom: 1px solid #f0f0f0; padding: 10px 0; display: flex; justify-content: space-between; align-items: center;">
+                        <span>👤 You</span>
+                        <span style="background:#e8f5e9; color:#1a7a4a; padding: 3px 12px; border-radius: 20px; font-size:0.85rem;">₹300 ✓ Paid</span>
+                    </div>
+                    <div style="border-bottom: 1px solid #f0f0f0; padding: 10px 0; display: flex; justify-content: space-between; align-items: center;">
+                        <span>👤 Rahul</span>
+                        <span style="background:#fff3e0; color:#e65100; padding: 3px 12px; border-radius: 20px; font-size:0.85rem;">₹300 ⏳ Pending</span>
+                    </div>
+                    <div style="border-bottom: 1px solid #f0f0f0; padding: 10px 0; display: flex; justify-content: space-between; align-items: center;">
+                        <span>👤 Priya</span>
+                        <span style="background:#e8f5e9; color:#1a7a4a; padding: 3px 12px; border-radius: 20px; font-size:0.85rem;">₹300 ✓ Paid</span>
+                    </div>
+                    <div style="padding: 10px 0; display: flex; justify-content: space-between; align-items: center;">
+                        <span>👤 Arjun</span>
+                        <span style="background:#fff3e0; color:#e65100; padding: 3px 12px; border-radius: 20px; font-size:0.85rem;">₹300 ⏳ Pending</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Savings Goal -->
+        <div class="row align-items-center mb-5 pb-4" style="border-bottom: 1px solid #e9ecef;">
+            <div class="col-md-6">
+                <div style="background: white; border-radius: 20px; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                    <div style="font-size: 3rem; margin-bottom: 15px;">🏦</div>
+                    <h3 style="font-weight: 800; color: #1a1a2e;">Savings Goal Tracker</h3>
+                    <p style="color: #6c757d; line-height: 1.8; margin: 15px 0;">
+                        Set a savings goal — a trip, a gadget, or an emergency fund. Track your progress visually and stay motivated. ArthSetu celebrates every milestone with you!
+                    </p>
+                    <ul style="color: #6c757d; padding-left: 20px;">
+                        <li>Set custom savings goals</li>
+                        <li>Visual progress tracker</li>
+                        <li>Deadline reminders</li>
+                        <li>Multiple goals at once</li>
+                    </ul>
+                    <a href="/register" style="display: inline-block; margin-top: 20px; background: #1a7a4a; color: white; padding: 12px 30px; border-radius: 25px; text-decoration: none; font-weight: 600;">
+                        Set a Goal →
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6 d-none d-md-block">
+                <div style="background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); max-width: 350px; margin: auto;">
+                    <p style="color: #6c757d; font-size: 0.85rem;">MY SAVINGS GOALS</p>
+                    <div style="margin: 15px 0;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span>✈️ Goa Trip</span>
+                            <span style="color:#1a7a4a; font-weight:600;">₹3500 / ₹5000</span>
+                        </div>
+                        <div style="background: #f0f0f0; border-radius: 10px; height: 12px;">
+                            <div style="background: linear-gradient(90deg, #1a7a4a, #c9a84c); width: 70%; height: 12px; border-radius: 10px;"></div>
+                        </div>
+                        <p style="font-size:0.8rem; color:#6c757d; margin-top:5px;">70% complete 🎉</p>
+                    </div>
+                    <div style="margin: 15px 0;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                            <span>📱 New Phone</span>
+                            <span style="color:#1a7a4a; font-weight:600;">₹4000 / ₹15000</span>
+                        </div>
+                        <div style="background: #f0f0f0; border-radius: 10px; height: 12px;">
+                            <div style="background: linear-gradient(90deg, #1a7a4a, #c9a84c); width: 27%; height: 12px; border-radius: 10px;"></div>
+                        </div>
+                        <p style="font-size:0.8rem; color:#6c757d; margin-top:5px;">27% complete</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Visual Reports -->
+        <div class="row align-items-center">
+            <div class="col-md-6 order-md-2">
+                <div style="background: white; border-radius: 20px; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                    <div style="font-size: 3rem; margin-bottom: 15px;">📊</div>
+                    <h3 style="font-weight: 800; color: #1a1a2e;">Visual Reports</h3>
+                    <p style="color: #6c757d; line-height: 1.8; margin: 15px 0;">
+                        See your finances through beautiful charts and graphs. Pie charts for category breakdown, bar charts for monthly trends. Understanding your money has never been this easy.
+                    </p>
+                    <ul style="color: #6c757d; padding-left: 20px;">
+                        <li>Pie chart by category</li>
+                        <li>Monthly spending trends</li>
+                        <li>Progress bar breakdown</li>
+                        <li>Downloadable reports</li>
+                    </ul>
+                    <a href="/register" style="display: inline-block; margin-top: 20px; background: #1a7a4a; color: white; padding: 12px 30px; border-radius: 25px; text-decoration: none; font-weight: 600;">
+                        View Reports →
+                    </a>
+                </div>
+            </div>
+            <div class="col-md-6 order-md-1 d-none d-md-block">
+                <div style="background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.06); max-width: 350px; margin: auto; text-align: center;">
+                    <p style="color: #6c757d; font-size: 0.85rem;">SPENDING BREAKDOWN</p>
+                    <div style="display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 15px;">
+                        <span style="background:#FF638420; color:#FF6384; padding: 8px 16px; border-radius: 20px; font-size:0.85rem; font-weight:600;">🍕 Food 35%</span>
+                        <span style="background:#36A2EB20; color:#36A2EB; padding: 8px 16px; border-radius: 20px; font-size:0.85rem; font-weight:600;">🚌 Transport 15%</span>
+                        <span style="background:#FFCE5620; color:#c9a84c; padding: 8px 16px; border-radius: 20px; font-size:0.85rem; font-weight:600;">🛍️ Shopping 30%</span>
+                        <span style="background:#4BC0C020; color:#4BC0C0; padding: 8px 16px; border-radius: 20px; font-size:0.85rem; font-weight:600;">🎮 Entertainment 10%</span>
+                        <span style="background:#9966FF20; color:#9966FF; padding: 8px 16px; border-radius: 20px; font-size:0.85rem; font-weight:600;">🏠 Rent 10%</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<!-- CTA -->
+<section style="background: linear-gradient(135deg, #1a1a2e 0%, #1a7a4a 100%); padding: 80px 0; text-align: center;">
+    <div class="container">
+        <h2 style="color: white; font-size: 2.2rem; font-weight: 800;">Ready to Use All These Features?</h2>
+        <p style="color: rgba(255,255,255,0.8); margin: 15px 0 35px;">Join ArthSetu for free and start your financial journey today</p>
+        <a href="/register" style="background: #c9a84c; color: #1a1a2e; font-weight: 700; padding: 16px 50px; border-radius: 30px; font-size: 1.1rem; text-decoration: none;">
+            Get Started Free →
+        </a>
+    </div>
+</section>
+
+<%- include('../includes/footer') %>

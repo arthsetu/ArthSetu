@@ -1,0 +1,229 @@
+<% layout('layouts/boilerplate') %>
+<%- include('../includes/navbar') %>
+
+<div class="container mt-4 mb-5">
+
+    <div class="mb-4">
+        <h2>🤝 Bill Splitter</h2>
+        <p class="text-muted">Split bills with friends and track who has paid</p>
+    </div>
+
+    <div class="row">
+
+        <!-- CREATE BILL FORM -->
+        <div class="col-md-4 mb-4">
+            <div style="background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); position: sticky; top: 20px;">
+                <h5 style="font-weight: 700; color: #1a1a2e; margin-bottom: 20px;">➕ Create New Bill</h5>
+
+                <form action="/bills" method="POST" id="billForm">
+
+                    <div class="mb-3">
+                        <label class="form-label" style="font-weight: 600;">Bill Title</label>
+                        <input type="text" name="title" class="form-control"
+                            placeholder="e.g. Dinner at Pizza Hut"
+                            style="border-radius: 10px; border: 2px solid #e9ecef;"
+                            required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" style="font-weight: 600;">Total Amount (₹)</label>
+                        <input type="number" name="totalAmount" id="totalAmount"
+                            class="form-control"
+                            placeholder="e.g. 1200"
+                            style="border-radius: 10px; border: 2px solid #e9ecef;"
+                            required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" style="font-weight: 600;">
+                            Members
+                            <button type="button" onclick="addMember()"
+                                style="background: none; border: none; color: #1a7a4a; font-weight: 700; cursor: pointer; font-size: 0.85rem;">
+                                + Add Member
+                            </button>
+                        </label>
+
+                        <div id="membersContainer">
+                            <input type="text" name="memberNames"
+                                class="form-control mb-2"
+                                placeholder="Member name (e.g. You)"
+                                style="border-radius: 10px; border: 2px solid #e9ecef;"
+                                required>
+                            <input type="text" name="memberNames"
+                                class="form-control mb-2"
+                                placeholder="Member name (e.g. Rahul)"
+                                style="border-radius: 10px; border: 2px solid #e9ecef;">
+                        </div>
+
+                        <!-- Live split preview -->
+                        <div id="splitPreview" style="background: #e8f5e9; border-radius: 10px; padding: 10px; margin-top: 10px; display: none;">
+                            <small style="color: #1a7a4a; font-weight: 600;">
+                                Each person pays: ₹<span id="splitAmount">0</span>
+                            </small>
+                        </div>
+                    </div>
+
+                    <button type="submit"
+                        style="width: 100%; background: #1a7a4a; color: white; border: none; padding: 14px; border-radius: 12px; font-weight: 700; cursor: pointer;">
+                        Split Bill 🤝
+                    </button>
+
+                </form>
+            </div>
+        </div>
+
+        <!-- BILLS LIST -->
+        <div class="col-md-8">
+
+            <% if (bills.length === 0) { %>
+                <div style="background: white; border-radius: 20px; padding: 60px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                    <div style="font-size: 3rem; margin-bottom: 15px;">🤝</div>
+                    <h5 style="color: #1a1a2e; font-weight: 700;">No Bills Yet!</h5>
+                    <p style="color: #6c757d;">Create your first bill split on the left.</p>
+                </div>
+
+            <% } else { %>
+                <% bills.forEach(function(bill) { %>
+                    <%
+                        let paidCount = bill.members.filter(m => m.paid).length;
+                        let totalMembers = bill.members.length;
+                        let paidAmount = bill.members
+                            .filter(m => m.paid)
+                            .reduce((sum, m) => sum + m.share, 0);
+                        let pendingAmount = bill.totalAmount - paidAmount;
+                    %>
+
+                    <div style="background: white; border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); margin-bottom: 20px;">
+
+                        <!-- Bill Header -->
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 20px;">
+                            <div>
+                                <h5 style="font-weight: 700; color: #1a1a2e; margin: 0;">
+                                    <%= bill.title %>
+                                </h5>
+                                <small style="color: #6c757d;">
+                                    <%= bill.createdAt.toDateString() %> •
+                                    <%= totalMembers %> members
+                                </small>
+                            </div>
+                            <div style="text-align: right;">
+                                <div style="font-size: 1.5rem; font-weight: 800; color: #1a7a4a;">
+                                    ₹<%= bill.totalAmount %>
+                                </div>
+                                <small style="color: #6c757d;">Total Bill</small>
+                            </div>
+                        </div>
+
+                        <!-- Progress -->
+                        <div style="margin-bottom: 20px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                <small style="color: #6c757d;"><%= paidCount %>/<%= totalMembers %> paid</small>
+                                <small style="color: #1a7a4a; font-weight: 600;">₹<%= paidAmount %> collected</small>
+                            </div>
+                            <div style="background: #f0f0f0; border-radius: 10px; height: 8px;">
+                                <div style="background: #1a7a4a; width: <%= (paidCount/totalMembers*100) %>%; height: 8px; border-radius: 10px; transition: width 0.3s;"></div>
+                            </div>
+                        </div>
+
+                        <!-- Members -->
+                        <div style="margin-bottom: 20px;">
+                            <% bill.members.forEach(function(member) { %>
+                                <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px; border-radius: 12px; margin-bottom: 8px; background: <%= member.paid ? '#e8f5e9' : '#fff8f0' %>;">
+
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <div style="width: 35px; height: 35px; border-radius: 50%; background: <%= member.paid ? '#1a7a4a' : '#c9a84c' %>; display: flex; align-items: center; justify-content: center; color: white; font-weight: 700; font-size: 0.9rem;">
+                                            <%= member.name.charAt(0).toUpperCase() %>
+                                        </div>
+                                        <span style="font-weight: 600; color: #1a1a2e;">
+                                            <%= member.name %>
+                                        </span>
+                                    </div>
+
+                                    <div style="display: flex; align-items: center; gap: 10px;">
+                                        <span style="font-weight: 700; color: #1a1a2e;">
+                                            ₹<%= member.share %>
+                                        </span>
+
+                                        <form action="/bills/<%= bill._id %>/member/<%= member._id %>/toggle" method="POST">
+                                            <button type="submit"
+                                                style="background: <%= member.paid ? '#1a7a4a' : '#e9ecef' %>; color: <%= member.paid ? 'white' : '#6c757d' %>; border: none; padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; cursor: pointer;">
+                                                <%= member.paid ? '✓ Paid' : 'Pending' %>
+                                            </button>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            <% }) %>
+                        </div>
+
+                        <!-- Pending Amount + Delete -->
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 15px; border-top: 1px solid #f0f0f0;">
+                            <span style="color: #e74c3c; font-weight: 600;">
+                                ₹<%= pendingAmount %> still pending
+                            </span>
+                            <form action="/bills/<%= bill._id %>/delete" method="POST">
+                                <button type="submit"
+                                    style="background: #fff0f0; color: #e74c3c; border: none; padding: 8px 16px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 0.85rem;">
+                                    🗑️ Delete
+                                </button>
+                            </form>
+                        </div>
+
+                    </div>
+                <% }) %>
+            <% } %>
+
+        </div>
+    </div>
+</div>
+
+<!-- JS for dynamic member adding + split preview -->
+<script>
+    function addMember() {
+        const container = document.getElementById('membersContainer');
+        const input = document.createElement('div');
+        input.style.display = 'flex';
+        input.style.gap = '8px';
+        input.style.marginBottom = '8px';
+        input.innerHTML = `
+            <input type="text" name="memberNames"
+                class="form-control"
+                placeholder="Member name"
+                style="border-radius: 10px; border: 2px solid #e9ecef;">
+            <button type="button" onclick="this.parentElement.remove(); updatePreview();"
+                style="background: #fff0f0; color: #e74c3c; border: none; padding: 8px 12px; border-radius: 10px; cursor: pointer; font-weight: 700;">
+                ✕
+            </button>
+        `;
+        container.appendChild(input);
+        updatePreview();
+    }
+
+    function updatePreview() {
+        const total = parseFloat(document.getElementById('totalAmount').value) || 0;
+        const inputs = document.querySelectorAll('input[name="memberNames"]');
+        const filledInputs = Array.from(inputs).filter(i => i.value.trim() !== '');
+        const count = filledInputs.length || 1;
+        const share = Math.ceil(total / count);
+
+        const preview = document.getElementById('splitPreview');
+        const splitAmount = document.getElementById('splitAmount');
+
+        if (total > 0) {
+            preview.style.display = 'block';
+            splitAmount.textContent = share;
+        } else {
+            preview.style.display = 'none';
+        }
+    }
+
+    // Update preview when amount changes
+    document.getElementById('totalAmount').addEventListener('input', updatePreview);
+
+    // Update preview when names are typed
+    document.addEventListener('input', function(e) {
+        if (e.target.name === 'memberNames') updatePreview();
+    });
+</script>
+
+<%- include('../includes/footer') %>

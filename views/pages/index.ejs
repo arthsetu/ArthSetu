@@ -1,0 +1,233 @@
+<% layout('layouts/boilerplate') %>
+<%- include('../includes/navbar') %>
+
+<!-- HERO -->
+<section class="hero">
+    <div class="container">
+        <div class="row align-items-center">
+
+            <div class="col-lg-6 hero-content">
+                <h1>Take Control of Your <span>Finances</span> Today</h1>
+                <p>ArthSetu helps college students track expenses, set budgets, and make smarter financial decisions — all in one place.</p>
+
+                <div>
+                    <a href="/register" class="btn-hero-primary">Get Started Free</a>
+                    <a href="#features" class="btn-hero-secondary">Learn More</a>
+                </div>
+
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <h3>500+</h3>
+                        <p>Students Using</p>
+                    </div>
+                    <div class="hero-stat">
+                        <h3>₹2L+</h3>
+                        <p>Expenses Tracked</p>
+                    </div>
+                    <div class="hero-stat">
+                        <h3>5★</h3>
+                        <p>Rated by Users</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Floating Card -->
+            <div class="col-lg-5 offset-lg-1 d-none d-lg-block">
+                <div class="hero-card">
+                    <div class="label">This Month's Spending</div>
+                    <div class="amount">₹4,280</div>
+
+                    <div class="mt-3">
+                        <div class="expense-item">
+                            <div>
+                                <span class="expense-dot" style="background:#FF6384"></span>
+                                Food & Drinks
+                            </div>
+                            <strong>₹1,200</strong>
+                        </div>
+                        <div class="expense-item">
+                            <div>
+                                <span class="expense-dot" style="background:#36A2EB"></span>
+                                Transport
+                            </div>
+                            <strong>₹580</strong>
+                        </div>
+                        <div class="expense-item">
+                            <div>
+                                <span class="expense-dot" style="background:#FFCE56"></span>
+                                Shopping
+                            </div>
+                            <strong>₹2,500</strong>
+                        </div>
+                    </div>
+
+                    <div class="mt-3 pt-2" style="border-top: 2px solid #f0f0f0">
+                        <div class="d-flex justify-content-between">
+                            <span style="color:#6c757d">Budget Left</span>
+                            <strong style="color:#1a7a4a">₹1,720</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- FEATURES -->
+<section class="features" id="features">
+    <div class="container">
+        <div class="section-title">
+            <h2>Everything You Need to <span>Manage Money</span></h2>
+            <p>Powerful tools designed specifically for college students</p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">💰</div>
+                    <h5>Expense Tracker</h5>
+                    <p>Log daily expenses by category. See exactly where your money goes every month.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h5>Budget Planner</h5>
+                    <p>Set monthly budgets per category. Get alerts before you overspend.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">🤖</div>
+                    <h5>AI Advisor</h5>
+                    <p>Get personalized spending advice powered by AI based on your habits.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h5>Visual Reports</h5>
+                    <p>Beautiful charts and graphs to visualize your spending patterns clearly.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">🤝</div>
+                    <h5>Bill Splitter</h5>
+                    <p>Split bills with friends easily. Track who owes what without awkwardness.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card">
+                    <div class="feature-icon">🔒</div>
+                    <h5>100% Secure</h5>
+                    <p>Your data is encrypted and protected. We never share your information.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-it-works">
+    <div class="container">
+        <div class="section-title">
+            <h2>How <span>ArthSetu</span> Works</h2>
+            <p>Get started in just 3 simple steps</p>
+        </div>
+
+        <div class="row justify-content-center">
+            <div class="col-md-3">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <h5>Create Account</h5>
+                    <p>Sign up for free in under 30 seconds. No credit card needed.</p>
+                </div>
+            </div>
+            <div class="col-md-1 d-none d-md-flex align-items-center justify-content-center">
+                <span style="font-size:2rem; color: var(--gold)">→</span>
+            </div>
+            <div class="col-md-3">
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <h5>Add Expenses</h5>
+                    <p>Log your daily expenses quickly with category and amount.</p>
+                </div>
+            </div>
+            <div class="col-md-1 d-none d-md-flex align-items-center justify-content-center">
+                <span style="font-size:2rem; color: var(--gold)">→</span>
+            </div>
+            <div class="col-md-3">
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <h5>Get Insights</h5>
+                    <p>View charts, get AI advice and take control of your money.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="testimonials">
+    <div class="container">
+        <div class="section-title">
+            <h2>What Students Say</h2>
+            <p>Join hundreds of students already managing their finances better</p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"ArthSetu completely changed how I manage my monthly allowance. I finally stopped overspending on food!"</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">R</div>
+                        <div class="author-info">
+                            <h6>Rahul Sharma</h6>
+                            <small>Engineering Student, Delhi</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"The AI advisor gave me tips that saved me ₹2000 last month. This app is a must for every college student."</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">P</div>
+                        <div class="author-info">
+                            <h6>Priya Patel</h6>
+                            <small>Commerce Student, Mumbai</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="testimonial-card">
+                    <div class="stars">★★★★★</div>
+                    <p>"Bill splitting with friends is so easy now. No more awkward conversations about who owes what!"</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">A</div>
+                        <div class="author-info">
+                            <h6>Arjun Mehta</h6>
+                            <small>MBA Student, Bangalore</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+    <div class="container">
+        <h2>Ready to Take <span>Control</span> of Your Money?</h2>
+        <p>Join thousands of students making smarter financial decisions with ArthSetu</p>
+        <a href="/register" class="btn-cta">Start For Free Today →</a>
+    </div>
+</section>
+
+<%- include('../includes/footer') %>

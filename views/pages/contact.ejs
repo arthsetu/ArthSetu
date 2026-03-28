@@ -1,0 +1,183 @@
+<% layout('layouts/boilerplate') %>
+<%- include('../includes/navbar') %>
+
+<!-- PAGE HERO -->
+<section style="background: linear-gradient(135deg, #1a1a2e 0%, #1a7a4a 100%); padding: 80px 0;">
+    <div class="container text-center">
+        <h1 style="color: white; font-size: 2.8rem; font-weight: 800;">Get In <span style="color: #c9a84c;">Touch</span></h1>
+        <p style="color: rgba(255,255,255,0.8); font-size: 1.1rem; margin-top: 15px;">
+            We'd love to hear from you. Send us a message!
+        </p>
+    </div>
+</section>
+
+<section style="padding: 80px 0; background: #f8f9fa;">
+    <div class="container">
+        <div class="row g-4">
+
+            <!-- CONTACT FORM -->
+            <div class="col-md-7">
+                <div style="background: white; border-radius: 20px; padding: 40px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                    <h3 style="font-weight: 800; color: #1a1a2e; margin-bottom: 25px;">Send us a Message</h3>
+
+                    <form action="/contact" method="POST">
+                        <div class="mb-3">
+                            <label class="form-label" style="font-weight: 600; color: #1a1a2e;">Full Name</label>
+                            <input type="text" name="name" class="form-control" 
+                                placeholder="Your full name" required
+                                style="border-radius: 10px; padding: 12px; border: 2px solid #e9ecef;">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" style="font-weight: 600; color: #1a1a2e;">Email Address</label>
+                            <input type="email" name="email" class="form-control" 
+                                placeholder="your@email.com" required
+                                style="border-radius: 10px; padding: 12px; border: 2px solid #e9ecef;">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label" style="font-weight: 600; color: #1a1a2e;">Subject</label>
+                            <select name="subject" class="form-select"
+                                style="border-radius: 10px; padding: 12px; border: 2px solid #e9ecef;">
+                                <option>General Inquiry</option>
+                                <option>Feature Request</option>
+                                <option>Bug Report</option>
+                                <option>Partnership</option>
+                                <option>Other</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label" style="font-weight: 600; color: #1a1a2e;">Message</label>
+                            <textarea name="message" class="form-control" rows="5"
+                                placeholder="Write your message here..." required
+                                style="border-radius: 10px; padding: 12px; border: 2px solid #e9ecef; resize: none;"></textarea>
+                        </div>
+
+                        <button type="submit" 
+                            style="background: #1a7a4a; color: white; border: none; padding: 14px 40px; border-radius: 25px; font-weight: 700; font-size: 1rem; width: 100%; cursor: pointer; transition: all 0.3s;">
+                            Send Message 📨
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- CONTACT INFO -->
+            <div class="col-md-5">
+
+                <!-- Email -->
+                <div style="background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); margin-bottom: 20px;">
+                    <h5 style="font-weight: 700; color: #1a1a2e; margin-bottom: 20px;">📬 Contact Info</h5>
+
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                        <div style="background: #e8f5e9; width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0;">
+                            📧
+                        </div>
+                        <div>
+                            <p style="margin: 0; font-weight: 600; color: #1a1a2e;">Email Us</p>
+                            <p style="margin: 0; color: #6c757d;">arthsetu@gmail.com</p>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; align-items: center; gap: 15px; margin-bottom: 20px;">
+                        <div style="background: #e8f5e9; width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0;">
+                            📍
+                        </div>
+                        <div>
+                            <p style="margin: 0; font-weight: 600; color: #1a1a2e;">Location</p>
+                            <p style="margin: 0; color: #6c757d;">India 🇮🇳</p>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; align-items: center; gap: 15px;">
+                        <div style="background: #e8f5e9; width: 50px; height: 50px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0;">
+                            ⏰
+                        </div>
+                        <div>
+                            <p style="margin: 0; font-weight: 600; color: #1a1a2e;">Response Time</p>
+                            <p style="margin: 0; color: #6c757d;">Within 24 hours</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Social Media -->
+                <div style="background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); margin-bottom: 20px;">
+                    <h5 style="font-weight: 700; color: #1a1a2e; margin-bottom: 20px;">🌐 Follow Us</h5>
+
+                    <div style="display: flex; flex-direction: column; gap: 12px;">
+                        <a href="#" style="display: flex; align-items: center; gap: 12px; text-decoration: none; padding: 12px; border-radius: 12px; background: #f8f9fa; transition: all 0.3s;">
+                            <span style="font-size: 1.3rem;">📸</span>
+                            <span style="color: #1a1a2e; font-weight: 600;">Instagram</span>
+                            <span style="margin-left: auto; color: #6c757d; font-size: 0.85rem;">@arthsetu</span>
+                        </a>
+                        <a href="#" style="display: flex; align-items: center; gap: 12px; text-decoration: none; padding: 12px; border-radius: 12px; background: #f8f9fa; transition: all 0.3s;">
+                            <span style="font-size: 1.3rem;">🐦</span>
+                            <span style="color: #1a1a2e; font-weight: 600;">Twitter / X</span>
+                            <span style="margin-left: auto; color: #6c757d; font-size: 0.85rem;">@arthsetu</span>
+                        </a>
+                        <a href="#" style="display: flex; align-items: center; gap: 12px; text-decoration: none; padding: 12px; border-radius: 12px; background: #f8f9fa; transition: all 0.3s;">
+                            <span style="font-size: 1.3rem;">💼</span>
+                            <span style="color: #1a1a2e; font-weight: 600;">LinkedIn</span>
+                            <span style="margin-left: auto; color: #6c757d; font-size: 0.85rem;">ArthSetu</span>
+                        </a>
+                        <a href="#" style="display: flex; align-items: center; gap: 12px; text-decoration: none; padding: 12px; border-radius: 12px; background: #f8f9fa; transition: all 0.3s;">
+                            <span style="font-size: 1.3rem;">💻</span>
+                            <span style="color: #1a1a2e; font-weight: 600;">GitHub</span>
+                            <span style="margin-left: auto; color: #6c757d; font-size: 0.85rem;">arthsetu</span>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- FAQ SECTION -->
+        <div style="margin-top: 60px;">
+            <h3 style="font-weight: 800; color: #1a1a2e; text-align: center; margin-bottom: 40px;">
+                ❓ Frequently Asked <span style="color: #1a7a4a;">Questions</span>
+            </h3>
+
+            <div class="row g-3">
+                <div class="col-md-6">
+                    <div style="background: white; border-radius: 16px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.06); border-left: 4px solid #1a7a4a;">
+                        <h6 style="font-weight: 700; color: #1a1a2e; margin-bottom: 10px;">Is ArthSetu completely free?</h6>
+                        <p style="color: #6c757d; margin: 0; font-size: 0.95rem;">Yes! ArthSetu is 100% free for all college students. No hidden charges, no credit card required.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div style="background: white; border-radius: 16px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.06); border-left: 4px solid #c9a84c;">
+                        <h6 style="font-weight: 700; color: #1a1a2e; margin-bottom: 10px;">Is my financial data secure?</h6>
+                        <p style="color: #6c757d; margin: 0; font-size: 0.95rem;">Absolutely. All passwords are encrypted using bcrypt and your data is stored securely in our database.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div style="background: white; border-radius: 16px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.06); border-left: 4px solid #1a7a4a;">
+                        <h6 style="font-weight: 700; color: #1a1a2e; margin-bottom: 10px;">Can I use it on mobile?</h6>
+                        <p style="color: #6c757d; margin: 0; font-size: 0.95rem;">Yes! ArthSetu is fully responsive and works perfectly on mobile, tablet and desktop browsers.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div style="background: white; border-radius: 16px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.06); border-left: 4px solid #c9a84c;">
+                        <h6 style="font-weight: 700; color: #1a1a2e; margin-bottom: 10px;">How does the AI Advisor work?</h6>
+                        <p style="color: #6c757d; margin: 0; font-size: 0.95rem;">Our AI analyzes your spending patterns and gives personalized tips to help you save more each month.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div style="background: white; border-radius: 16px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.06); border-left: 4px solid #1a7a4a;">
+                        <h6 style="font-weight: 700; color: #1a1a2e; margin-bottom: 10px;">Can I track expenses in groups?</h6>
+                        <p style="color: #6c757d; margin: 0; font-size: 0.95rem;">Yes! Our Bill Splitter feature lets you split and track shared expenses with friends and roommates easily.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div style="background: white; border-radius: 16px; padding: 25px; box-shadow: 0 5px 15px rgba(0,0,0,0.06); border-left: 4px solid #c9a84c;">
+                        <h6 style="font-weight: 700; color: #1a1a2e; margin-bottom: 10px;">How do I reset my password?</h6>
+                        <p style="color: #6c757d; margin: 0; font-size: 0.95rem;">Click "Forgot Password" on the login page or email us at arthsetu@gmail.com for assistance.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+
+<%- include('../includes/footer') %>

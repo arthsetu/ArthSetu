@@ -1,0 +1,129 @@
+<% layout('layouts/boilerplate') %>
+<%- include('../includes/navbar') %>
+
+<div class="container mt-4">
+
+    <div class="mb-4">
+        <h2>👋 Welcome, <%= user.name %>!</h2>
+        <p class="text-muted">Here's your financial summary</p>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-4 mb-3">
+            <div class="card shadow border-0 bg-primary text-white">
+                <div class="card-body">
+                    <h6 class="card-title">💰 Total Spent</h6>
+                    <h2>₹<%= total %></h2>
+                    <p class="mb-0">across all categories</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card shadow border-0 bg-danger text-white">
+                <div class="card-body">
+                    <h6 class="card-title">🔥 Highest Spending</h6>
+                    <h2><%= highestCategory %></h2>
+                    <p class="mb-0">₹<%= highestAmount %> spent</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-4 mb-3">
+            <div class="card shadow border-0 bg-success text-white">
+                <div class="card-body">
+                    <h6 class="card-title">📋 Categories Used</h6>
+                    <h2><%= Object.keys(categoryTotals).length %></h2>
+                    <p class="mb-0">out of 5 categories</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-4">
+            <div class="card shadow border-0">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">📊 Spending by Category</h5>
+                    <% if (Object.keys(categoryTotals).length === 0) { %>
+                        <p class="text-muted">No expenses yet!
+                            <a href="/expenses">Add some</a>
+                        </p>
+                    <% } else { %>
+                        <canvas id="pieChart"></canvas>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 mb-4">
+            <div class="card shadow border-0">
+                <div class="card-body">
+                    <h5 class="card-title mb-3">📋 Category Breakdown</h5>
+                    <% if (Object.keys(categoryTotals).length === 0) { %>
+                        <p class="text-muted">No data yet!</p>
+                    <% } else { %>
+                        <% Object.keys(categoryTotals).forEach(function(cat) { %>
+                            <% var percentage = (categoryTotals[cat] / total * 100).toFixed(1) %>
+                            <div class="mb-3">
+                                <div class="d-flex justify-content-between mb-1">
+                                    <span><%= cat %></span>
+                                    <span>₹<%= categoryTotals[cat] %></span>
+                                </div>
+                                <div class="progress">
+                                    <div class="progress-bar"
+                                        style="width: <%= percentage %>%">
+                                        <%= percentage %>%
+                                    </div>
+                                </div>
+                            </div>
+                        <% }) %>
+                    <% } %>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-4">
+        <a href="/expenses" class="btn btn-primary me-2">➕ Add Expense</a>
+        <a href="/logout" class="btn btn-outline-danger">🚪 Logout</a>
+    </div>
+
+</div>
+
+<%- include('../includes/footer') %>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const categoryData = <%- JSON.stringify(categoryTotals) %>;
+    const labels = Object.keys(categoryData);
+    const dataValues = Object.values(categoryData);
+    const canvas = document.getElementById('pieChart');
+
+    if (labels.length > 0 && canvas) {
+        const ctx = canvas.getContext('2d');
+        new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: dataValues,
+                    backgroundColor: [
+                        '#FF6384',
+                        '#36A2EB',
+                        '#FFCE56',
+                        '#4BC0C0',
+                        '#9966FF'
+                    ],
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: { position: 'bottom' }
+                }
+            }
+        });
+    }
+</script>

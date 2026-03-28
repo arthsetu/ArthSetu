@@ -1,0 +1,133 @@
+<% layout('layouts/boilerplate') %>
+<%- include('../includes/navbar') %>
+
+<div class="container mt-4">
+
+    <h2 class="mb-4">My Expenses</h2>
+
+    <!-- ADD EXPENSE FORM -->
+    <div class="card shadow mb-4">
+        <div class="card-body">
+            <h5 class="card-title">Add New Expense</h5>
+            <form action="/expenses" method="POST">
+
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <input 
+                            type="text" 
+                            name="title" 
+                            class="form-control" 
+                            placeholder="Expense title"
+                            required>
+                    </div>
+
+                    <div class="col-md-2">
+                        <input 
+                            type="number" 
+                            name="amount" 
+                            class="form-control" 
+                            placeholder="Amount (₹)"
+                            required>
+                    </div>
+
+                    <div class="col-md-3">
+                        <select name="category" class="form-select" required>
+                            <option value="">Select Category</option>
+                            <option>Food & Drinks</option>
+                            <option>Transport</option>
+                            <option>Shopping</option>
+                            <option>Entertainment</option>
+                            <option>Rent & Bills</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-2">
+                        <input 
+                            type="text" 
+                            name="note" 
+                            class="form-control" 
+                            placeholder="Note (optional)">
+                    </div>
+
+                    <div class="col-md-2">
+                        <button type="submit" class="btn btn-primary w-100">
+                            Add ➕
+                        </button>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+
+    <!-- TOTAL SPENDING SUMMARY -->
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card bg-primary text-white shadow">
+                <div class="card-body">
+                    <h6>Total Spent</h6>
+                    <h3>₹<%= total %></h3>
+                </div>
+            </div>
+        </div>
+
+        <% Object.keys(categoryTotals).forEach(cat => { %>
+        <div class="col-md-4 mt-2">
+            <div class="card shadow">
+                <div class="card-body">
+                    <h6><%= cat %></h6>
+                    <h5>₹<%= categoryTotals[cat] %></h5>
+                </div>
+            </div>
+        </div>
+        <% }) %>
+    </div>
+
+    <!-- EXPENSES LIST -->
+    <div class="card shadow">
+        <div class="card-body">
+            <h5 class="card-title">All Expenses</h5>
+
+            <% if (expenses.length === 0) { %>
+                <p class="text-muted">No expenses added yet!</p>
+            <% } else { %>
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Amount</th>
+                            <th>Category</th>
+                            <th>Note</th>
+                            <th>Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <% expenses.forEach(exp => { %>
+                        <tr>
+                            <td><%= exp.title %></td>
+                            <td>₹<%= exp.amount %></td>
+                            <td>
+                                <span class="badge bg-secondary">
+                                    <%= exp.category %>
+                                </span>
+                            </td>
+                            <td><%= exp.note || '-' %></td>
+                            <td><%= exp.date.toDateString() %></td>
+                            <td>
+                                <form action="/expenses/<%= exp._id %>/delete" method="POST">
+                                    <button class="btn btn-danger btn-sm">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        <% }) %>
+                    </tbody>
+                </table>
+            <% } %>
+        </div>
+    </div>
+
+</div>
+
+
+<%- include('../includes/footer') %>
