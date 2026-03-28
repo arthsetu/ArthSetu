@@ -21,9 +21,9 @@ app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-    store: MongoStore.create({
-        mongoUrl: 'mongodb://127.0.0.1:27017/ArthSetu'
-    }),
+   store: MongoStore.create({
+    mongoUrl: process.env.MONGODB_URI
+}),
     cookie: {
         maxAge: 1000 * 60 * 60 * 24
     }
@@ -98,9 +98,7 @@ app.post('/contact', (req, res) => {
     `);
 });
 async function main() {
-await mongoose.connect(process.env.MONGODB_URI);
-    console.log('MongoDB Connected!');
-}
+await mongoose.connect(process.env.MONGODB_URI); console.log('MongoDB Connected!'); }
 main().catch(err => console.log(err));
 
 
