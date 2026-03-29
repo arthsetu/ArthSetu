@@ -38,7 +38,7 @@
 </footer>
 
 <!-- ✅ Chat Button -->
-<button onclick="toggleChat()" id="chatBtn">
+<button onclick="toggleChat(event)" id="chatBtn">
   💬
 </button>
 
@@ -46,7 +46,7 @@
 <div id="chatSidebar">
   <div id="chatHeader">
     <span>AI Assistant</span>
-    <button onclick="toggleChat()">✖</button>
+    <button onclick="toggleChat(event)">✖</button>
   </div>
 
   <iframe src="https://arthsetuchatbot.onrender.com"></iframe>
@@ -87,7 +87,7 @@
   right: 0;
 }
 
-/* Header */
+/* Header (above iframe) */
 #chatHeader {
   display: flex;
   justify-content: space-between;
@@ -96,6 +96,8 @@
   background: #4CAF50;
   color: white;
   font-weight: bold;
+  position: relative;
+  z-index: 1002;
 }
 
 #chatHeader button {
@@ -109,14 +111,31 @@
 /* Chat iframe */
 #chatSidebar iframe {
   flex: 1;
-  border: none;
   width: 100%;
+  border: none;
+  z-index: 1000;
 }
 </style>
 
 <script>
-function toggleChat() {
+function toggleChat(e) {
+  if (e) e.stopPropagation();
+
   const sidebar = document.getElementById("chatSidebar");
   sidebar.classList.toggle("active");
 }
+
+/* ✅ Click outside to close */
+document.addEventListener("click", function(e) {
+  const sidebar = document.getElementById("chatSidebar");
+  const button = document.getElementById("chatBtn");
+
+  if (
+    sidebar.classList.contains("active") &&
+    !sidebar.contains(e.target) &&
+    e.target !== button
+  ) {
+    sidebar.classList.remove("active");
+  }
+});
 </script>
