@@ -1,4 +1,4 @@
-## Hi there 👋
+This is the official website of ArthSetu
 
 <!--
 **arthsetu/ArthSetu** is a ✨ _special_ ✨ repository because its `README.md` (this file) appears on your GitHub profile.
