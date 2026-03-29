@@ -1,0 +1,543 @@
+<% layout('layouts/boilerplate') %>
+<%- include('../includes/navbar') %>
+
+<div class="container mt-4 mb-5">
+
+    <div class="mb-4">
+        <h2>📈 SIP & Investment Calculator</h2>
+        <p class="text-muted">Plan your investments and watch your money grow!</p>
+    </div>
+
+    <!-- TAB NAVIGATION -->
+    <ul class="nav nav-pills mb-4">
+        <li class="nav-item">
+            <button class="nav-link active" onclick="showTab('sip')" id="sipTab"
+                style="border-radius: 25px; margin-right: 10px; background: #1a7a4a; color: white; border: none;">
+                📊 SIP Calculator
+            </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" onclick="showTab('lumpsum')" id="lumpsumTab"
+                style="border-radius: 25px; margin-right: 10px; background: #f0f0f0; color: #1a1a2e; border: none;">
+                💰 Lumpsum Calculator
+            </button>
+        </li>
+        <li class="nav-item">
+            <button class="nav-link" onclick="showTab('compare')" id="compareTab"
+                style="border-radius: 25px; background: #f0f0f0; color: #1a1a2e; border: none;">
+                ⚖️ FD vs SIP vs RD
+            </button>
+        </li>
+    </ul>
+
+    <!-- ===== SIP CALCULATOR ===== -->
+    <div id="sipSection">
+        <div class="row">
+            <div class="col-md-5 mb-4">
+                <div style="background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                    <h5 style="font-weight: 700; color: #1a1a2e; margin-bottom: 20px;">📊 SIP Details</h5>
+
+                    <div class="mb-4">
+                        <label class="form-label" style="font-weight: 600;">Monthly Investment (₹)</label>
+                        <input type="range" id="sipAmount" min="500" max="100000" value="5000" step="500"
+                            class="form-range" oninput="updateSIP()">
+                        <div style="display: flex; justify-content: space-between;">
+                            <small style="color: #6c757d;">₹500</small>
+                            <strong style="color: #1a7a4a;" id="sipAmountDisplay">₹5,000</strong>
+                            <small style="color: #6c757d;">₹1,00,000</small>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label" style="font-weight: 600;">Expected Annual Return (%)</label>
+                        <input type="range" id="sipRate" min="1" max="30" value="12" step="0.5"
+                            class="form-range" oninput="updateSIP()">
+                        <div style="display: flex; justify-content: space-between;">
+                            <small style="color: #6c757d;">1%</small>
+                            <strong style="color: #1a7a4a;" id="sipRateDisplay">12%</strong>
+                            <small style="color: #6c757d;">30%</small>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label" style="font-weight: 600;">Investment Duration (Years)</label>
+                        <input type="range" id="sipYears" min="1" max="40" value="10" step="1"
+                            class="form-range" oninput="updateSIP()">
+                        <div style="display: flex; justify-content: space-between;">
+                            <small style="color: #6c757d;">1 Year</small>
+                            <strong style="color: #1a7a4a;" id="sipYearsDisplay">10 Years</strong>
+                            <small style="color: #6c757d;">40 Years</small>
+                        </div>
+                    </div>
+
+                    <div>
+                        <p style="font-weight: 600; font-size: 0.9rem; margin-bottom: 8px;">⚡ Quick Presets:</p>
+                        <div style="display: flex; gap: 8px; flex-wrap: wrap;">
+                            <button onclick="setPreset(1000, 12, 5)"
+                                style="background: #e8f5e9; color: #1a7a4a; border: none; padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; font-weight: 600;">
+                                📚 Student
+                            </button>
+                            <button onclick="setPreset(5000, 12, 10)"
+                                style="background: #e8f5e9; color: #1a7a4a; border: none; padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; font-weight: 600;">
+                                💼 Young Pro
+                            </button>
+                            <button onclick="setPreset(10000, 15, 20)"
+                                style="background: #e8f5e9; color: #1a7a4a; border: none; padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; cursor: pointer; font-weight: 600;">
+                                🏆 Wealth Builder
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-7 mb-4">
+                <div style="background: linear-gradient(135deg, #1a1a2e, #1a7a4a); border-radius: 20px; padding: 30px; color: white; margin-bottom: 20px;">
+                    <h5 style="color: #c9a84c; margin-bottom: 20px;">💰 Your Investment Results</h5>
+                    <div class="row text-center">
+                        <div class="col-4">
+                            <div style="font-size: 1.4rem; font-weight: 800; color: #c9a84c;" id="sipInvested">₹0</div>
+                            <small style="color: rgba(255,255,255,0.7);">Total Invested</small>
+                        </div>
+                        <div class="col-4">
+                            <div style="font-size: 1.4rem; font-weight: 800; color: #4BC0C0;" id="sipReturns">₹0</div>
+                            <small style="color: rgba(255,255,255,0.7);">Returns Earned</small>
+                        </div>
+                        <div class="col-4">
+                            <div style="font-size: 1.4rem; font-weight: 800; color: white;" id="sipTotal">₹0</div>
+                            <small style="color: rgba(255,255,255,0.7);">Total Value</small>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 20px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                            <small style="color: rgba(255,255,255,0.7);">Invested</small>
+                            <small style="color: rgba(255,255,255,0.7);">Returns</small>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.2); border-radius: 10px; height: 12px; overflow: hidden;">
+                            <div id="sipInvestedBar" style="background: #c9a84c; height: 12px; border-radius: 10px; transition: width 0.5s;"></div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 15px; padding: 12px; background: rgba(255,255,255,0.1); border-radius: 12px; text-align: center;">
+                        <span style="color: #c9a84c; font-weight: 800; font-size: 1.2rem;" id="sipMultiplier">0x</span>
+                        <span style="color: rgba(255,255,255,0.8); font-size: 0.9rem;"> — Your money grows by this much! 🚀</span>
+                    </div>
+                </div>
+
+                <div style="background: white; border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                    <h6 style="font-weight: 700; margin-bottom: 15px;">📅 Year-wise Growth</h6>
+                    <div style="max-height: 250px; overflow-y: auto;" id="yearlyBreakdown"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== LUMPSUM CALCULATOR ===== -->
+    <div id="lumpsumSection" style="display: none;">
+        <div class="row">
+            <div class="col-md-5 mb-4">
+                <div style="background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                    <h5 style="font-weight: 700; color: #1a1a2e; margin-bottom: 20px;">💰 Lumpsum Details</h5>
+
+                    <div class="mb-4">
+                        <label class="form-label" style="font-weight: 600;">Investment Amount (₹)</label>
+                        <input type="range" id="lsAmount" min="1000" max="1000000" value="100000" step="1000"
+                            class="form-range" oninput="updateLumpsum()">
+                        <div style="display: flex; justify-content: space-between;">
+                            <small style="color: #6c757d;">₹1,000</small>
+                            <strong style="color: #1a7a4a;" id="lsAmountDisplay">₹1,00,000</strong>
+                            <small style="color: #6c757d;">₹10,00,000</small>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label" style="font-weight: 600;">Expected Annual Return (%)</label>
+                        <input type="range" id="lsRate" min="1" max="30" value="12" step="0.5"
+                            class="form-range" oninput="updateLumpsum()">
+                        <div style="display: flex; justify-content: space-between;">
+                            <small style="color: #6c757d;">1%</small>
+                            <strong style="color: #1a7a4a;" id="lsRateDisplay">12%</strong>
+                            <small style="color: #6c757d;">30%</small>
+                        </div>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label" style="font-weight: 600;">Investment Duration (Years)</label>
+                        <input type="range" id="lsYears" min="1" max="40" value="10" step="1"
+                            class="form-range" oninput="updateLumpsum()">
+                        <div style="display: flex; justify-content: space-between;">
+                            <small style="color: #6c757d;">1 Year</small>
+                            <strong style="color: #1a7a4a;" id="lsYearsDisplay">10 Years</strong>
+                            <small style="color: #6c757d;">40 Years</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-7 mb-4">
+                <div style="background: linear-gradient(135deg, #1a1a2e, #1a7a4a); border-radius: 20px; padding: 30px; color: white; margin-bottom: 20px;">
+                    <h5 style="color: #c9a84c; margin-bottom: 20px;">💰 Lumpsum Results</h5>
+                    <div class="row text-center">
+                        <div class="col-4">
+                            <div style="font-size: 1.4rem; font-weight: 800; color: #c9a84c;" id="lsInvested">₹0</div>
+                            <small style="color: rgba(255,255,255,0.7);">Amount Invested</small>
+                        </div>
+                        <div class="col-4">
+                            <div style="font-size: 1.4rem; font-weight: 800; color: #4BC0C0;" id="lsReturns">₹0</div>
+                            <small style="color: rgba(255,255,255,0.7);">Returns Earned</small>
+                        </div>
+                        <div class="col-4">
+                            <div style="font-size: 1.4rem; font-weight: 800; color: white;" id="lsTotal">₹0</div>
+                            <small style="color: rgba(255,255,255,0.7);">Total Value</small>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 20px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                            <small style="color: rgba(255,255,255,0.7);">Invested</small>
+                            <small style="color: rgba(255,255,255,0.7);">Returns</small>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.2); border-radius: 10px; height: 12px; overflow: hidden;">
+                            <div id="lsInvestedBar" style="background: #c9a84c; height: 12px; border-radius: 10px; transition: width 0.5s;"></div>
+                        </div>
+                    </div>
+
+                    <div style="margin-top: 15px; padding: 12px; background: rgba(255,255,255,0.1); border-radius: 12px; text-align: center;">
+                        <span style="color: #c9a84c; font-weight: 800; font-size: 1.2rem;" id="lsMultiplier">0x</span>
+                        <span style="color: rgba(255,255,255,0.8); font-size: 0.9rem;"> — Your money multiplies! 🚀</span>
+                    </div>
+                </div>
+
+                <!-- Lumpsum yearly breakdown -->
+                <div style="background: white; border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                    <h6 style="font-weight: 700; margin-bottom: 15px;">📅 Year-wise Growth</h6>
+                    <div style="max-height: 250px; overflow-y: auto;" id="lsYearlyBreakdown"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== COMPARE: FD vs SIP vs RD ===== -->
+    <div id="compareSection" style="display: none;">
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div style="background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                    <h5 style="font-weight: 700; color: #1a1a2e; margin-bottom: 20px;">⚖️ Compare Investments</h5>
+
+                    <div class="mb-3">
+                        <label class="form-label" style="font-weight: 600;">Monthly Amount (₹)</label>
+                        <input type="number" id="cmpAmount" class="form-control" value="5000"
+                            style="border-radius: 10px; border: 2px solid #e9ecef;"
+                            oninput="updateCompare()">
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" style="font-weight: 600;">Duration (Years)</label>
+                        <select id="cmpYears" class="form-select"
+                            style="border-radius: 10px; border: 2px solid #e9ecef;"
+                            onchange="updateCompare()">
+                            <option value="1">1 Year</option>
+                            <option value="3">3 Years</option>
+                            <option value="5" selected>5 Years</option>
+                            <option value="10">10 Years</option>
+                            <option value="15">15 Years</option>
+                            <option value="20">20 Years</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" style="font-weight: 600;">Market Scenario</label>
+                        <div style="display: flex; flex-direction: column; gap: 8px;">
+                            <button onclick="setScenario('bull')" id="btnBull"
+                                style="background: #e8f5e9; color: #1a7a4a; border: 2px solid #1a7a4a; padding: 10px; border-radius: 12px; font-weight: 600; cursor: pointer; text-align: left;">
+                                🐂 Bull Market
+                                <small style="display: block; font-weight: 400; color: #555;">SIP: 15% | FD: 7% | RD: 6.5%</small>
+                            </button>
+                            <button onclick="setScenario('normal')" id="btnNormal"
+                                style="background: #fff8e1; color: #c9a84c; border: 2px solid #c9a84c; padding: 10px; border-radius: 12px; font-weight: 600; cursor: pointer; text-align: left;">
+                                📊 Normal Market
+                                <small style="display: block; font-weight: 400; color: #555;">SIP: 12% | FD: 6.5% | RD: 6%</small>
+                            </button>
+                            <button onclick="setScenario('bear')" id="btnBear"
+                                style="background: #fce4ec; color: #e74c3c; border: 2px solid #e74c3c; padding: 10px; border-radius: 12px; font-weight: 600; cursor: pointer; text-align: left;">
+                                🐻 Bear Market
+                                <small style="display: block; font-weight: 400; color: #555;">SIP: 4% | FD: 6.5% | RD: 6%</small>
+                            </button>
+                            <button onclick="setScenario('custom')" id="btnCustom"
+                                style="background: #f0f0f0; color: #1a1a2e; border: 2px solid #e9ecef; padding: 10px; border-radius: 12px; font-weight: 600; cursor: pointer; text-align: left;">
+                                ⚙️ Custom Rates
+                                <small style="display: block; font-weight: 400; color: #555;">Set your own rates</small>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div id="customRates" style="display: none; background: #f8f9fa; border-radius: 12px; padding: 15px;">
+                        <div class="mb-2">
+                            <label style="font-size: 0.85rem; font-weight: 600;">SIP Return (%)</label>
+                            <input type="number" id="customSIP" class="form-control form-control-sm"
+                                value="12" min="1" max="50"
+                                style="border-radius: 8px;" oninput="updateCompare()">
+                        </div>
+                        <div class="mb-2">
+                            <label style="font-size: 0.85rem; font-weight: 600;">FD Rate (%)</label>
+                            <input type="number" id="customFD" class="form-control form-control-sm"
+                                value="6.5" min="1" max="20"
+                                style="border-radius: 8px;" oninput="updateCompare()">
+                        </div>
+                        <div>
+                            <label style="font-size: 0.85rem; font-weight: 600;">RD Rate (%)</label>
+                            <input type="number" id="customRD" class="form-control form-control-sm"
+                                value="6" min="1" max="20"
+                                style="border-radius: 8px;" oninput="updateCompare()">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-8 mb-4">
+                <div style="background: white; border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                    <div id="scenarioBanner" style="border-radius: 12px; padding: 12px 20px; margin-bottom: 20px; text-align: center; font-weight: 600;"></div>
+                    <h5 style="font-weight: 700; margin-bottom: 20px;">📊 Comparison Results</h5>
+                    <div id="compareResults"></div>
+                    <div style="background: #f8f9fa; border-radius: 12px; padding: 15px; margin-top: 20px;">
+                        <p style="font-weight: 700; color: #1a1a2e; margin-bottom: 8px;">💡 What this means:</p>
+                        <div id="educationalNote" style="color: #6c757d; font-size: 0.9rem; line-height: 1.6;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+// ===== FORMAT =====
+function fmt(n) {
+    return '₹' + Math.round(n).toLocaleString('en-IN');
+}
+
+// ===== TAB SWITCHING =====
+function showTab(tab) {
+    document.getElementById('sipSection').style.display = tab === 'sip' ? 'block' : 'none';
+    document.getElementById('lumpsumSection').style.display = tab === 'lumpsum' ? 'block' : 'none';
+    document.getElementById('compareSection').style.display = tab === 'compare' ? 'block' : 'none';
+
+    ['sip', 'lumpsum', 'compare'].forEach(function(t) {
+        const btn = document.getElementById(t + 'Tab');
+        if (t === tab) {
+            btn.style.background = '#1a7a4a';
+            btn.style.color = 'white';
+        } else {
+            btn.style.background = '#f0f0f0';
+            btn.style.color = '#1a1a2e';
+        }
+    });
+
+    if (tab === 'compare') updateCompare();
+}
+
+// ===== SIP =====
+function setPreset(amount, rate, years) {
+    document.getElementById('sipAmount').value = amount;
+    document.getElementById('sipRate').value = rate;
+    document.getElementById('sipYears').value = years;
+    updateSIP();
+}
+
+function updateSIP() {
+    const P = parseFloat(document.getElementById('sipAmount').value);
+    const r = parseFloat(document.getElementById('sipRate').value) / 100 / 12;
+    const n = parseFloat(document.getElementById('sipYears').value) * 12;
+
+    document.getElementById('sipAmountDisplay').textContent = fmt(P);
+    document.getElementById('sipRateDisplay').textContent = document.getElementById('sipRate').value + '%';
+    document.getElementById('sipYearsDisplay').textContent = document.getElementById('sipYears').value + ' Years';
+
+    const total = P * ((Math.pow(1 + r, n) - 1) / r) * (1 + r);
+    const invested = P * n;
+    const returns = total - invested;
+
+    document.getElementById('sipInvested').textContent = fmt(invested);
+    document.getElementById('sipReturns').textContent = fmt(returns);
+    document.getElementById('sipTotal').textContent = fmt(total);
+    document.getElementById('sipMultiplier').textContent = (total / invested).toFixed(2) + 'x';
+    document.getElementById('sipInvestedBar').style.width = (invested / total * 100).toFixed(1) + '%';
+
+    let html = '<table class="table table-sm table-hover"><thead><tr><th>Year</th><th>Invested</th><th>Value</th><th>Returns</th></tr></thead><tbody>';
+    for (let y = 1; y <= parseFloat(document.getElementById('sipYears').value); y++) {
+        const m = y * 12;
+        const val = P * ((Math.pow(1 + r, m) - 1) / r) * (1 + r);
+        const inv = P * m;
+        html += `<tr>
+            <td><strong>Year ${y}</strong></td>
+            <td>${fmt(inv)}</td>
+            <td style="color: #1a7a4a; font-weight: 600;">${fmt(val)}</td>
+            <td style="color: #c9a84c;">+${fmt(val - inv)}</td>
+        </tr>`;
+    }
+    html += '</tbody></table>';
+    document.getElementById('yearlyBreakdown').innerHTML = html;
+}
+
+// ===== LUMPSUM =====
+function updateLumpsum() {
+    const P = parseFloat(document.getElementById('lsAmount').value);
+    const r = parseFloat(document.getElementById('lsRate').value) / 100;
+    const n = parseFloat(document.getElementById('lsYears').value);
+
+    document.getElementById('lsAmountDisplay').textContent = fmt(P);
+    document.getElementById('lsRateDisplay').textContent = document.getElementById('lsRate').value + '%';
+    document.getElementById('lsYearsDisplay').textContent = n + ' Years';
+
+    const total = P * Math.pow(1 + r, n);
+    const returns = total - P;
+
+    document.getElementById('lsInvested').textContent = fmt(P);
+    document.getElementById('lsReturns').textContent = fmt(returns);
+    document.getElementById('lsTotal').textContent = fmt(total);
+    document.getElementById('lsMultiplier').textContent = (total / P).toFixed(2) + 'x';
+    document.getElementById('lsInvestedBar').style.width = (P / total * 100).toFixed(1) + '%';
+
+    let html = '<table class="table table-sm table-hover"><thead><tr><th>Year</th><th>Value</th><th>Returns</th></tr></thead><tbody>';
+    for (let y = 1; y <= n; y++) {
+        const val = P * Math.pow(1 + r, y);
+        html += `<tr>
+            <td><strong>Year ${y}</strong></td>
+            <td style="color: #1a7a4a; font-weight: 600;">${fmt(val)}</td>
+            <td style="color: #c9a84c;">+${fmt(val - P)}</td>
+        </tr>`;
+    }
+    html += '</tbody></table>';
+    document.getElementById('lsYearlyBreakdown').innerHTML = html;
+}
+
+// ===== COMPARE =====
+var currentScenario = 'normal';
+var scenarioRates = {
+    bull:   { sip: 15,  fd: 7,   rd: 6.5, label: '🐂 Bull Market',   color: '#1a7a4a', bg: '#e8f5e9' },
+    normal: { sip: 12,  fd: 6.5, rd: 6,   label: '📊 Normal Market', color: '#c9a84c', bg: '#fff8e1' },
+    bear:   { sip: 4,   fd: 6.5, rd: 6,   label: '🐻 Bear Market',   color: '#e74c3c', bg: '#fce4ec' },
+    custom: { sip: 12,  fd: 6.5, rd: 6,   label: '⚙️ Custom Rates',  color: '#6c757d', bg: '#f0f0f0' }
+};
+
+var educationalNotes = {
+    bull: '📈 In a bull market, SIP gives the highest returns. Markets are rising and equity mutual funds perform exceptionally well. Best time to invest in SIP!',
+    normal: '📊 In normal conditions, SIP beats FD and RD over long term due to compounding power. However SIP has market risk — returns may vary year to year.',
+    bear: '🐻 In a bear market, SIP returns drop below FD/RD! This is why FD and RD are safer — they give guaranteed returns regardless of market. SIP is better for 10+ years as markets always recover.',
+    custom: '⚙️ Based on your custom rates — the highest return rate will always win over long term due to the power of compounding!'
+};
+
+function setScenario(scenario) {
+    currentScenario = scenario;
+    ['bull', 'normal', 'bear', 'custom'].forEach(function(s) {
+        const btn = document.getElementById('btn' + s.charAt(0).toUpperCase() + s.slice(1));
+        btn.style.opacity = s === scenario ? '1' : '0.5';
+    });
+    document.getElementById('customRates').style.display = scenario === 'custom' ? 'block' : 'none';
+    updateCompare();
+}
+
+function updateCompare() {
+    const amount = parseFloat(document.getElementById('cmpAmount').value) || 5000;
+    const years = parseFloat(document.getElementById('cmpYears').value);
+    const months = years * 12;
+    const invested = amount * months;
+
+    let rates = scenarioRates[currentScenario];
+    if (currentScenario === 'custom') {
+        rates = {
+            sip: parseFloat(document.getElementById('customSIP').value) || 12,
+            fd:  parseFloat(document.getElementById('customFD').value)  || 6.5,
+            rd:  parseFloat(document.getElementById('customRD').value)  || 6,
+            label: '⚙️ Custom Rates',
+            color: '#6c757d',
+            bg: '#f0f0f0'
+        };
+    }
+
+    // Calculations
+    const sipRate = rates.sip / 100 / 12;
+    const sipTotal = amount * ((Math.pow(1 + sipRate, months) - 1) / sipRate) * (1 + sipRate);
+
+    const fdTotal = invested * Math.pow(1 + rates.fd / 100, years);
+
+    const rdRate = rates.rd / 100 / 12;
+    const rdTotal = amount * ((Math.pow(1 + rdRate, months) - 1) / rdRate) * (1 + rdRate);
+
+    const max = Math.max(sipTotal, fdTotal, rdTotal);
+
+    const items = [
+        { name: 'SIP (Mutual Fund)', total: sipTotal, rate: rates.sip + '%', color: '#1a7a4a', icon: '📈', risk: 'Market Risk' },
+        { name: 'Fixed Deposit (FD)', total: fdTotal, rate: rates.fd + '%', color: '#c9a84c', icon: '🏦', risk: 'No Risk' },
+        { name: 'Recurring Deposit (RD)', total: rdTotal, rate: rates.rd + '%', color: '#36A2EB', icon: '💳', risk: 'No Risk' }
+    ].sort((a, b) => b.total - a.total);
+
+    // Scenario banner
+    document.getElementById('scenarioBanner').style.background = rates.bg;
+    document.getElementById('scenarioBanner').style.color = rates.color;
+    document.getElementById('scenarioBanner').innerHTML =
+        `<strong>${rates.label}</strong> — SIP: ${rates.sip}% | FD: ${rates.fd}% | RD: ${rates.rd}%`;
+
+    let html = `<p style="color: #6c757d; margin-bottom: 20px;">
+        Investing <strong>${fmt(amount)}/month</strong> for 
+        <strong>${years} years</strong> 
+        (Total invested: <strong>${fmt(invested)}</strong>)
+    </p>`;
+
+    items.forEach(function(item, index) {
+        const barWidth = (item.total / max * 100).toFixed(1);
+        const returns = item.total - invested;
+        const returnsPercent = ((returns / invested) * 100).toFixed(1);
+
+        html += `
+            <div style="margin-bottom: 15px; padding: 15px; border-radius: 16px;
+                background: ${index === 0 ? '#f0faf4' : '#f8f9fa'};
+                border: 2px solid ${index === 0 ? '#1a7a4a' : '#e9ecef'};">
+                <div style="display: flex; justify-content: space-between; margin-bottom: 10px; align-items: start;">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <span style="font-size: 1.5rem;">${item.icon}</span>
+                        <div>
+                            <div style="display: flex; align-items: center; gap: 6px; flex-wrap: wrap;">
+                                <span style="font-weight: 700; color: #1a1a2e;">${item.name}</span>
+                                ${index === 0 ? '<span style="background: #1a7a4a; color: white; padding: 2px 8px; border-radius: 20px; font-size: 0.7rem; font-weight: 700;">🏆 BEST</span>' : ''}
+                            </div>
+                            <small style="color: #6c757d;">${item.rate} p.a. • ${item.risk}</small>
+                        </div>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-size: 1.2rem; font-weight: 800; color: ${item.color};">${fmt(item.total)}</div>
+                        <small style="color: ${returns >= 0 ? '#1a7a4a' : '#e74c3c'};">
+                            ${returns >= 0 ? '+' : ''}${fmt(returns)} (${returnsPercent}%)
+                        </small>
+                    </div>
+                </div>
+                <div style="background: #e9ecef; border-radius: 10px; height: 10px; overflow: hidden;">
+                    <div style="background: ${item.color}; width: ${barWidth}%; height: 10px; border-radius: 10px; transition: width 0.5s;"></div>
+                </div>
+            </div>
+        `;
+    });
+
+    const diff = items[0].total - items[items.length - 1].total;
+    html += `
+        <div style="background: linear-gradient(135deg, #1a1a2e, #1a7a4a); border-radius: 16px; padding: 15px; text-align: center;">
+            <p style="color: white; margin: 0; font-weight: 600;">
+                🏆 ${items[0].name} wins by 
+                <span style="color: #c9a84c;">${fmt(diff)}</span> 
+                over ${items[items.length - 1].name}!
+            </p>
+        </div>
+    `;
+
+    document.getElementById('compareResults').innerHTML = html;
+    document.getElementById('educationalNote').textContent =
+        currentScenario === 'custom' ? educationalNotes.custom : educationalNotes[currentScenario];
+}
+
+// ===== INITIALIZE =====
+updateSIP();
+updateLumpsum();
+setScenario('normal');
+</script>
+
+<%- include('../includes/footer') %>

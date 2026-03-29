@@ -1,0 +1,628 @@
+<% layout('layouts/boilerplate') %>
+<%- include('../includes/navbar') %>
+
+<div class="container mt-4 mb-5">
+
+    <div class="mb-4">
+        <h2 style="font-weight: 800; color: #1a1a2e;">Income Tax Calculator</h2>
+        <p style="color: #6c757d;">Calculate your tax under Old and New regime — FY 2024-25</p>
+    </div>
+
+    <div class="row">
+
+        <!-- LEFT — Input -->
+        <div class="col-md-4 mb-4">
+            <div style="background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                <h5 style="font-weight: 700; color: #1a1a2e; margin-bottom: 20px;">Your Income Details</h5>
+
+                <!-- Age -->
+                <div class="mb-3">
+                    <label class="form-label" style="font-weight: 600;">Age Group</label>
+                    <select id="age" class="form-select"
+                        style="border-radius: 10px; border: 2px solid #e9ecef;"
+                        onchange="calculateTax()">
+                        <option value="below60">Below 60 years</option>
+                        <option value="60to80">60 to 80 years (Senior)</option>
+                        <option value="above80">Above 80 years (Super Senior)</option>
+                    </select>
+                </div>
+
+                <!-- Annual Income -->
+                <div class="mb-3">
+                    <label class="form-label" style="font-weight: 600;">Annual Income (₹)</label>
+                    <input type="number" id="income" class="form-control"
+                        placeholder="e.g. 800000"
+                        style="border-radius: 10px; border: 2px solid #e9ecef; padding: 12px;"
+                        oninput="calculateTax()" value="800000">
+                </div>
+
+                <!-- Deductions — Old Regime Only -->
+                <div id="deductionSection">
+                    <div style="background: #f8f9fa; border-radius: 12px; padding: 15px; margin-bottom: 15px;">
+                        <p style="font-weight: 700; color: #1a1a2e; margin-bottom: 15px; font-size: 0.95rem;">
+                            Deductions (Old Regime Only)
+                        </p>
+
+                        <div class="mb-3">
+                            <label style="font-weight: 600; font-size: 0.9rem;">Section 80C (₹)</label>
+                            <input type="number" id="sec80c" class="form-control form-control-sm"
+                                placeholder="Max ₹1,50,000"
+                                style="border-radius: 8px; border: 2px solid #e9ecef;"
+                                oninput="cap('sec80c', 150000); calculateTax()"
+                                value="150000">
+                            <small style="color: #6c757d;">PPF, ELSS, LIC, EPF, NSC</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label style="font-weight: 600; font-size: 0.9rem;">Section 80D (₹)</label>
+                            <input type="number" id="sec80d" class="form-control form-control-sm"
+                                placeholder="Max ₹25,000"
+                                style="border-radius: 8px; border: 2px solid #e9ecef;"
+                                oninput="cap('sec80d', 25000); calculateTax()"
+                                value="25000">
+                            <small style="color: #6c757d;">Health Insurance Premium</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label style="font-weight: 600; font-size: 0.9rem;">HRA Exemption (₹)</label>
+                            <input type="number" id="hra" class="form-control form-control-sm"
+                                placeholder="House Rent Allowance"
+                                style="border-radius: 8px; border: 2px solid #e9ecef;"
+                                oninput="calculateTax()"
+                                value="0">
+                            <small style="color: #6c757d;">If you live in rented house</small>
+                        </div>
+
+                        <div class="mb-2">
+                            <label style="font-weight: 600; font-size: 0.9rem;">Other Deductions (₹)</label>
+                            <input type="number" id="otherDed" class="form-control form-control-sm"
+                                placeholder="80E, 80G, NPS etc."
+                                style="border-radius: 8px; border: 2px solid #e9ecef;"
+                                oninput="calculateTax()"
+                                value="0">
+                            <small style="color: #6c757d;">80E (Education Loan), 80G (Donation), NPS</small>
+                        </div>
+                    </div>
+                </div>
+
+                <button onclick="calculateTax()"
+                    style="width: 100%; background: #1a7a4a; color: white; border: none; padding: 14px; border-radius: 12px; font-weight: 700; cursor: pointer; font-size: 1rem;">
+                    Calculate Tax
+                </button>
+            </div>
+        </div>
+
+        <!-- RIGHT — Results -->
+        <div class="col-md-8">
+
+            <!-- Regime Comparison Cards -->
+            <div class="row g-3 mb-4">
+                <div class="col-md-6">
+                    <div id="oldRegimeCard"
+                        style="background: white; border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border: 3px solid #e9ecef; cursor: pointer; transition: all 0.3s;"
+                        onclick="selectRegime('old')">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <h6 style="font-weight: 700; color: #1a1a2e; margin: 0;">Old Tax Regime</h6>
+                            <span id="oldBadge" style="display: none; background: #1a7a4a; color: white; padding: 3px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700;">BETTER</span>
+                        </div>
+                        <div style="font-size: 2rem; font-weight: 800; color: #1a7a4a;" id="oldTax">₹0</div>
+                        <small style="color: #6c757d;">Tax Payable</small>
+                        <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #f0f0f0;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <small style="color: #6c757d;">Taxable Income</small>
+                                <small style="font-weight: 600;" id="oldTaxable">₹0</small>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+                                <small style="color: #6c757d;">Effective Rate</small>
+                                <small style="font-weight: 600;" id="oldRate">0%</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div id="newRegimeCard"
+                        style="background: white; border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border: 3px solid #e9ecef; cursor: pointer; transition: all 0.3s;"
+                        onclick="selectRegime('new')">
+                        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                            <h6 style="font-weight: 700; color: #1a1a2e; margin: 0;">New Tax Regime</h6>
+                            <span id="newBadge" style="display: none; background: #1a7a4a; color: white; padding: 3px 12px; border-radius: 20px; font-size: 0.75rem; font-weight: 700;">BETTER</span>
+                        </div>
+                        <div style="font-size: 2rem; font-weight: 800; color: #1a7a4a;" id="newTax">₹0</div>
+                        <small style="color: #6c757d;">Tax Payable</small>
+                        <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #f0f0f0;">
+                            <div style="display: flex; justify-content: space-between;">
+                                <small style="color: #6c757d;">Taxable Income</small>
+                                <small style="font-weight: 600;" id="newTaxable">₹0</small>
+                            </div>
+                            <div style="display: flex; justify-content: space-between; margin-top: 5px;">
+                                <small style="color: #6c757d;">Effective Rate</small>
+                                <small style="font-weight: 600;" id="newRate">0%</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Savings Banner -->
+            <div id="savingsBanner" style="background: linear-gradient(135deg, #1a1a2e, #1a7a4a); border-radius: 20px; padding: 20px 25px; color: white; margin-bottom: 25px; display: none;">
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <div>
+                        <p style="margin: 0; font-size: 0.9rem; color: rgba(255,255,255,0.7);">You save</p>
+                        <div style="font-size: 1.8rem; font-weight: 800; color: #c9a84c;" id="savingsAmount">₹0</div>
+                        <p style="margin: 0; font-size: 0.9rem; color: rgba(255,255,255,0.8);" id="savingsText"></p>
+                    </div>
+                    <div style="text-align: right;">
+                        <p style="margin: 0; font-size: 0.9rem; color: rgba(255,255,255,0.7);">Recommended Regime</p>
+                        <div style="font-size: 1.2rem; font-weight: 800; color: white;" id="recommendedRegime"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tax Breakdown -->
+            <div style="background: white; border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); margin-bottom: 25px;">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                    <h5 style="font-weight: 700; color: #1a1a2e; margin: 0;">Tax Slab Breakdown</h5>
+                    <div style="display: flex; gap: 8px;">
+                        <button onclick="showBreakdown('old')" id="breakdownOldBtn"
+                            style="background: #1a7a4a; color: white; border: none; padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; cursor: pointer;">
+                            Old Regime
+                        </button>
+                        <button onclick="showBreakdown('new')" id="breakdownNewBtn"
+                            style="background: #f0f0f0; color: #1a1a2e; border: none; padding: 6px 16px; border-radius: 20px; font-size: 0.85rem; font-weight: 600; cursor: pointer;">
+                            New Regime
+                        </button>
+                    </div>
+                </div>
+                <div id="slabBreakdown"></div>
+            </div>
+
+            <!-- Deduction Summary -->
+            <div id="deductionSummary" style="background: white; border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); margin-bottom: 25px;">
+                <h5 style="font-weight: 700; color: #1a1a2e; margin-bottom: 20px;">Deductions Summary (Old Regime)</h5>
+                <div id="deductionList"></div>
+            </div>
+
+            <!-- Tax Saving Tips -->
+            <div style="background: white; border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                <h5 style="font-weight: 700; color: #1a1a2e; margin-bottom: 20px;">Tax Saving Tips</h5>
+                <div id="taxTips"></div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+// Format number to Indian format
+function fmt(n) {
+    return '₹' + Math.round(n).toLocaleString('en-IN');
+}
+
+// Cap input value
+function cap(id, max) {
+    const el = document.getElementById(id);
+    if (parseFloat(el.value) > max) el.value = max;
+}
+
+var currentBreakdown = 'old';
+var lastOldTax = 0;
+var lastNewTax = 0;
+var lastOldTaxable = 0;
+var lastNewTaxable = 0;
+var lastIncome = 0;
+
+// ===== OLD REGIME TAX SLABS =====
+function calcOldTax(taxableIncome, age) {
+    let tax = 0;
+    let slabs = [];
+
+    if (age === 'above80') {
+        // Super Senior Citizen
+        if (taxableIncome <= 500000) {
+            slabs.push({ range: 'Up to ₹5,00,000', rate: '0%', tax: 0, applicable: taxableIncome });
+        } else {
+            slabs.push({ range: 'Up to ₹5,00,000', rate: '0%', tax: 0, applicable: 500000 });
+            if (taxableIncome <= 1000000) {
+                const t = (taxableIncome - 500000) * 0.20;
+                tax += t;
+                slabs.push({ range: '₹5,00,001 to ₹10,00,000', rate: '20%', tax: t, applicable: taxableIncome - 500000 });
+            } else {
+                const t1 = 500000 * 0.20;
+                tax += t1;
+                slabs.push({ range: '₹5,00,001 to ₹10,00,000', rate: '20%', tax: t1, applicable: 500000 });
+                const t2 = (taxableIncome - 1000000) * 0.30;
+                tax += t2;
+                slabs.push({ range: 'Above ₹10,00,000', rate: '30%', tax: t2, applicable: taxableIncome - 1000000 });
+            }
+        }
+    } else if (age === '60to80') {
+        // Senior Citizen
+        if (taxableIncome <= 300000) {
+            slabs.push({ range: 'Up to ₹3,00,000', rate: '0%', tax: 0, applicable: taxableIncome });
+        } else {
+            slabs.push({ range: 'Up to ₹3,00,000', rate: '0%', tax: 0, applicable: 300000 });
+            if (taxableIncome <= 500000) {
+                const t = (taxableIncome - 300000) * 0.05;
+                tax += t;
+                slabs.push({ range: '₹3,00,001 to ₹5,00,000', rate: '5%', tax: t, applicable: taxableIncome - 300000 });
+            } else {
+                const t1 = 200000 * 0.05;
+                tax += t1;
+                slabs.push({ range: '₹3,00,001 to ₹5,00,000', rate: '5%', tax: t1, applicable: 200000 });
+                if (taxableIncome <= 1000000) {
+                    const t2 = (taxableIncome - 500000) * 0.20;
+                    tax += t2;
+                    slabs.push({ range: '₹5,00,001 to ₹10,00,000', rate: '20%', tax: t2, applicable: taxableIncome - 500000 });
+                } else {
+                    const t2 = 500000 * 0.20;
+                    tax += t2;
+                    slabs.push({ range: '₹5,00,001 to ₹10,00,000', rate: '20%', tax: t2, applicable: 500000 });
+                    const t3 = (taxableIncome - 1000000) * 0.30;
+                    tax += t3;
+                    slabs.push({ range: 'Above ₹10,00,000', rate: '30%', tax: t3, applicable: taxableIncome - 1000000 });
+                }
+            }
+        }
+    } else {
+        // Below 60
+        if (taxableIncome <= 250000) {
+            slabs.push({ range: 'Up to ₹2,50,000', rate: '0%', tax: 0, applicable: taxableIncome });
+        } else {
+            slabs.push({ range: 'Up to ₹2,50,000', rate: '0%', tax: 0, applicable: 250000 });
+            if (taxableIncome <= 500000) {
+                const t = (taxableIncome - 250000) * 0.05;
+                tax += t;
+                slabs.push({ range: '₹2,50,001 to ₹5,00,000', rate: '5%', tax: t, applicable: taxableIncome - 250000 });
+            } else {
+                const t1 = 250000 * 0.05;
+                tax += t1;
+                slabs.push({ range: '₹2,50,001 to ₹5,00,000', rate: '5%', tax: t1, applicable: 250000 });
+                if (taxableIncome <= 1000000) {
+                    const t2 = (taxableIncome - 500000) * 0.20;
+                    tax += t2;
+                    slabs.push({ range: '₹5,00,001 to ₹10,00,000', rate: '20%', tax: t2, applicable: taxableIncome - 500000 });
+                } else {
+                    const t2 = 500000 * 0.20;
+                    tax += t2;
+                    slabs.push({ range: '₹5,00,001 to ₹10,00,000', rate: '20%', tax: t2, applicable: 500000 });
+                    const t3 = (taxableIncome - 1000000) * 0.30;
+                    tax += t3;
+                    slabs.push({ range: 'Above ₹10,00,000', rate: '30%', tax: t3, applicable: taxableIncome - 1000000 });
+                }
+            }
+        }
+    }
+
+    // Rebate u/s 87A
+    if (taxableIncome <= 500000) tax = 0;
+
+    // Cess 4%
+    const cess = tax * 0.04;
+    tax += cess;
+
+    return { tax: Math.round(tax), slabs, cess: Math.round(cess) };
+}
+
+// ===== NEW REGIME TAX SLABS (FY 2024-25) =====
+function calcNewTax(income) {
+    let tax = 0;
+    let slabs = [];
+
+    const brackets = [
+        { limit: 300000,  rate: 0,    label: 'Up to ₹3,00,000' },
+        { limit: 700000,  rate: 0.05, label: '₹3,00,001 to ₹7,00,000' },
+        { limit: 1000000, rate: 0.10, label: '₹7,00,001 to ₹10,00,000' },
+        { limit: 1200000, rate: 0.15, label: '₹10,00,001 to ₹12,00,000' },
+        { limit: 1500000, rate: 0.20, label: '₹12,00,001 to ₹15,00,000' },
+        { limit: Infinity, rate: 0.30, label: 'Above ₹15,00,000' }
+    ];
+
+    let prev = 0;
+    for (let i = 0; i < brackets.length; i++) {
+        const b = brackets[i];
+        if (income <= prev) break;
+        const applicable = Math.min(income, b.limit) - prev;
+        const t = applicable * b.rate;
+        tax += t;
+        slabs.push({
+            range: b.label,
+            rate: (b.rate * 100) + '%',
+            tax: Math.round(t),
+            applicable: applicable
+        });
+        prev = b.limit;
+        if (income <= b.limit) break;
+    }
+
+    // Rebate u/s 87A — new regime: up to ₹7L
+    if (income <= 700000) tax = 0;
+
+    // Standard deduction ₹75,000 in new regime
+    // (already considered in taxable income)
+
+    // Cess 4%
+    const cess = tax * 0.04;
+    tax += cess;
+
+    return { tax: Math.round(tax), slabs, cess: Math.round(cess) };
+}
+
+// ===== MAIN CALCULATE =====
+function calculateTax() {
+    const income = parseFloat(document.getElementById('income').value) || 0;
+    const age = document.getElementById('age').value;
+    const sec80c = Math.min(parseFloat(document.getElementById('sec80c').value) || 0, 150000);
+    const sec80d = Math.min(parseFloat(document.getElementById('sec80d').value) || 0, 25000);
+    const hra = parseFloat(document.getElementById('hra').value) || 0;
+    const other = parseFloat(document.getElementById('otherDed').value) || 0;
+
+    lastIncome = income;
+
+    // Standard deduction
+    const stdDeduction = 50000;
+
+    // Old regime taxable income
+    const totalDeductions = stdDeduction + sec80c + sec80d + hra + other;
+    const oldTaxable = Math.max(0, income - totalDeductions);
+    const oldResult = calcOldTax(oldTaxable, age);
+
+    // New regime taxable income (only std deduction of 75k)
+    const newTaxable = Math.max(0, income - 75000);
+    const newResult = calcNewTax(newTaxable);
+
+    lastOldTax = oldResult.tax;
+    lastNewTax = newResult.tax;
+    lastOldTaxable = oldTaxable;
+    lastNewTaxable = newTaxable;
+
+    // Update cards
+    document.getElementById('oldTax').textContent = fmt(oldResult.tax);
+    document.getElementById('newTax').textContent = fmt(newResult.tax);
+    document.getElementById('oldTaxable').textContent = fmt(oldTaxable);
+    document.getElementById('newTaxable').textContent = fmt(newTaxable);
+    document.getElementById('oldRate').textContent = income > 0 ? ((oldResult.tax / income) * 100).toFixed(2) + '%' : '0%';
+    document.getElementById('newRate').textContent = income > 0 ? ((newResult.tax / income) * 100).toFixed(2) + '%' : '0%';
+
+    // Show better regime badge
+    document.getElementById('oldBadge').style.display = 'none';
+    document.getElementById('newBadge').style.display = 'none';
+    document.getElementById('oldRegimeCard').style.borderColor = '#e9ecef';
+    document.getElementById('newRegimeCard').style.borderColor = '#e9ecef';
+
+    const savings = Math.abs(oldResult.tax - newResult.tax);
+    const banner = document.getElementById('savingsBanner');
+
+    if (oldResult.tax < newResult.tax) {
+        document.getElementById('oldBadge').style.display = 'block';
+        document.getElementById('oldRegimeCard').style.borderColor = '#1a7a4a';
+        document.getElementById('savingsAmount').textContent = fmt(savings);
+        document.getElementById('savingsText').textContent = 'by choosing Old Regime over New Regime';
+        document.getElementById('recommendedRegime').textContent = 'Old Tax Regime';
+    } else if (newResult.tax < oldResult.tax) {
+        document.getElementById('newBadge').style.display = 'block';
+        document.getElementById('newRegimeCard').style.borderColor = '#1a7a4a';
+        document.getElementById('savingsAmount').textContent = fmt(savings);
+        document.getElementById('savingsText').textContent = 'by choosing New Regime over Old Regime';
+        document.getElementById('recommendedRegime').textContent = 'New Tax Regime';
+    } else {
+        document.getElementById('savingsAmount').textContent = '₹0';
+        document.getElementById('savingsText').textContent = 'Both regimes give the same tax!';
+        document.getElementById('recommendedRegime').textContent = 'Either Regime';
+    }
+
+    banner.style.display = 'block';
+
+    // Update breakdown
+    showBreakdown(currentBreakdown);
+
+    // Update deductions summary
+    updateDeductionSummary(stdDeduction, sec80c, sec80d, hra, other, totalDeductions, oldTaxable);
+
+    // Update tips
+    updateTips(income, sec80c, sec80d, oldResult.tax, newResult.tax);
+}
+
+// ===== SHOW SLAB BREAKDOWN =====
+function showBreakdown(regime) {
+    currentBreakdown = regime;
+
+    document.getElementById('breakdownOldBtn').style.background = regime === 'old' ? '#1a7a4a' : '#f0f0f0';
+    document.getElementById('breakdownOldBtn').style.color = regime === 'old' ? 'white' : '#1a1a2e';
+    document.getElementById('breakdownNewBtn').style.background = regime === 'new' ? '#1a7a4a' : '#f0f0f0';
+    document.getElementById('breakdownNewBtn').style.color = regime === 'new' ? 'white' : '#1a1a2e';
+
+    const income = parseFloat(document.getElementById('income').value) || 0;
+    const age = document.getElementById('age').value;
+
+    let result;
+    let taxableIncome;
+    if (regime === 'old') {
+        taxableIncome = lastOldTaxable;
+        result = calcOldTax(lastOldTaxable, age);
+    } else {
+        taxableIncome = lastNewTaxable;
+        result = calcNewTax(lastNewTaxable);
+    }
+
+    let html = `
+        <div style="background: #f8f9fa; border-radius: 12px; padding: 15px; margin-bottom: 15px;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                <span style="color: #6c757d;">Gross Income</span>
+                <strong>${fmt(income)}</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                <span style="color: #6c757d;">Total Deductions</span>
+                <strong style="color: #1a7a4a;">- ${fmt(income - taxableIncome)}</strong>
+            </div>
+            <div style="display: flex; justify-content: space-between; padding-top: 8px; border-top: 1px solid #e9ecef;">
+                <span style="font-weight: 700;">Taxable Income</span>
+                <strong style="color: #1a1a2e;">${fmt(taxableIncome)}</strong>
+            </div>
+        </div>
+
+        <table class="table table-hover" style="font-size: 0.9rem;">
+            <thead style="background: #f8f9fa;">
+                <tr>
+                    <th>Income Slab</th>
+                    <th>Rate</th>
+                    <th>Income in Slab</th>
+                    <th>Tax</th>
+                </tr>
+            </thead>
+            <tbody>
+    `;
+
+    result.slabs.forEach(function(slab) {
+        html += `
+            <tr>
+                <td>${slab.range}</td>
+                <td><span style="background: ${slab.rate === '0%' ? '#e8f5e9' : '#fff8e1'}; color: ${slab.rate === '0%' ? '#1a7a4a' : '#c9a84c'}; padding: 2px 8px; border-radius: 10px; font-weight: 600;">${slab.rate}</span></td>
+                <td>${fmt(slab.applicable)}</td>
+                <td style="font-weight: 600; color: ${slab.tax > 0 ? '#e74c3c' : '#1a7a4a'};">${fmt(slab.tax)}</td>
+            </tr>
+        `;
+    });
+
+    const baseTax = result.tax - result.cess;
+    html += `
+            <tr style="background: #fff8e1;">
+                <td colspan="3"><strong>Health & Education Cess (4%)</strong></td>
+                <td style="font-weight: 600; color: #c9a84c;">${fmt(result.cess)}</td>
+            </tr>
+            <tr style="background: #f8f9fa;">
+                <td colspan="3"><strong>Total Tax Payable</strong></td>
+                <td style="font-weight: 800; color: #1a1a2e; font-size: 1rem;">${fmt(result.tax)}</td>
+            </tr>
+        </tbody>
+        </table>
+    `;
+
+    if (taxableIncome <= (regime === 'new' ? 700000 : 500000)) {
+        html += `
+            <div style="background: #e8f5e9; border-radius: 12px; padding: 12px 15px; margin-top: 10px;">
+                <strong style="color: #1a7a4a;">Rebate under Section 87A applied — Zero tax payable!</strong>
+                <p style="color: #6c757d; margin: 5px 0 0; font-size: 0.85rem;">
+                    ${regime === 'new' ? 'Income up to ₹7,00,000 is tax-free under New Regime with 87A rebate.' : 'Income up to ₹5,00,000 is tax-free under Old Regime with 87A rebate.'}
+                </p>
+            </div>
+        `;
+    }
+
+    document.getElementById('slabBreakdown').innerHTML = html;
+}
+
+// ===== DEDUCTION SUMMARY =====
+function updateDeductionSummary(std, sec80c, sec80d, hra, other, total, taxable) {
+    const income = parseFloat(document.getElementById('income').value) || 0;
+
+    const items = [
+        { label: 'Standard Deduction', amount: std, note: 'Available to all salaried individuals' },
+        { label: 'Section 80C', amount: sec80c, note: 'PPF, ELSS, LIC, EPF, NSC, Home Loan Principal' },
+        { label: 'Section 80D', amount: sec80d, note: 'Health Insurance Premium' },
+        { label: 'HRA Exemption', amount: hra, note: 'House Rent Allowance' },
+        { label: 'Other Deductions', amount: other, note: '80E, 80G, NPS etc.' }
+    ].filter(item => item.amount > 0);
+
+    let html = '';
+    items.forEach(function(item) {
+        const percent = ((item.amount / income) * 100).toFixed(1);
+        html += `
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f0f0f0;">
+                <div>
+                    <div style="font-weight: 600; color: #1a1a2e;">${item.label}</div>
+                    <small style="color: #6c757d;">${item.note}</small>
+                </div>
+                <div style="text-align: right;">
+                    <div style="font-weight: 700; color: #1a7a4a;">- ${fmt(item.amount)}</div>
+                    <small style="color: #6c757d;">${percent}% of income</small>
+                </div>
+            </div>
+        `;
+    });
+
+    html += `
+        <div style="display: flex; justify-content: space-between; align-items: center; padding: 15px 0; margin-top: 5px;">
+            <strong style="color: #1a1a2e; font-size: 1rem;">Total Deductions</strong>
+            <strong style="color: #1a7a4a; font-size: 1.1rem;">- ${fmt(total)}</strong>
+        </div>
+        <div style="background: #f8f9fa; border-radius: 12px; padding: 12px 15px;">
+            <div style="display: flex; justify-content: space-between;">
+                <span style="color: #6c757d;">Net Taxable Income</span>
+                <strong>${fmt(taxable)}</strong>
+            </div>
+        </div>
+    `;
+
+    document.getElementById('deductionList').innerHTML = html;
+}
+
+// ===== TAX SAVING TIPS =====
+function updateTips(income, sec80c, sec80d, oldTax, newTax) {
+    let tips = [];
+
+    if (sec80c < 150000) {
+        tips.push({
+            title: 'Maximize Section 80C',
+            desc: `You can save ₹${Math.round((150000 - sec80c) * 0.30).toLocaleString('en-IN')} more in tax by investing ₹${(150000 - sec80c).toLocaleString('en-IN')} more in PPF, ELSS, or LIC.`
+        });
+    }
+
+    if (sec80d < 25000) {
+        tips.push({
+            title: 'Health Insurance (80D)',
+            desc: `Get health insurance and save up to ₹${Math.round(25000 * 0.30).toLocaleString('en-IN')} in tax. Premium up to ₹25,000 is deductible.`
+        });
+    }
+
+    if (income > 700000 && newTax < oldTax) {
+        tips.push({
+            title: 'Switch to New Tax Regime',
+            desc: `New regime saves you ${fmt(oldTax - newTax)} with simpler tax slabs and no need to invest for deductions.`
+        });
+    }
+
+    if (income > 700000 && oldTax < newTax) {
+        tips.push({
+            title: 'Stick with Old Tax Regime',
+            desc: `Old regime saves you ${fmt(newTax - oldTax)} due to your deductions. Keep investing in 80C and 80D instruments.`
+        });
+    }
+
+    tips.push({
+        title: 'NPS under Section 80CCD(1B)',
+        desc: 'Invest up to ₹50,000 in National Pension Scheme for additional deduction over and above 80C limit.'
+    });
+
+    tips.push({
+        title: 'Home Loan Benefits',
+        desc: 'Interest on home loan (up to ₹2,00,000 under 80EEA) and principal repayment (under 80C) both give tax benefits.'
+    });
+
+    let html = '';
+    tips.forEach(function(tip, index) {
+        html += `
+            <div style="display: flex; gap: 15px; padding: 15px 0; border-bottom: ${index < tips.length - 1 ? '1px solid #f0f0f0' : 'none'};">
+                <div style="width: 35px; height: 35px; background: #e8f5e9; border-radius: 10px; display: flex; align-items: center; justify-content: center; font-weight: 800; color: #1a7a4a; flex-shrink: 0;">
+                    ${index + 1}
+                </div>
+                <div>
+                    <div style="font-weight: 700; color: #1a1a2e; margin-bottom: 4px;">${tip.title}</div>
+                    <div style="color: #6c757d; font-size: 0.9rem; line-height: 1.6;">${tip.desc}</div>
+                </div>
+            </div>
+        `;
+    });
+
+    document.getElementById('taxTips').innerHTML = html;
+}
+
+function selectRegime(regime) {
+    showBreakdown(regime);
+}
+
+// Initialize
+calculateTax();
+</script>
+
+<%- include('../includes/footer') %>

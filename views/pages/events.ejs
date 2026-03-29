@@ -1,0 +1,270 @@
+<% layout('layouts/boilerplate') %>
+<%- include('../includes/navbar') %>
+
+<div class="container mt-4 mb-5">
+
+    <div class="mb-4">
+        <h2>🎉 Event Budget Planner</h2>
+        <p class="text-muted">Plan your event budget, track expenses and manage finances!</p>
+    </div>
+
+    <div class="row">
+
+        <!-- LEFT — Create Event Form -->
+        <div class="col-md-4 mb-4">
+            <div style="background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); position: sticky; top: 20px;">
+                <h5 style="font-weight: 700; color: #1a1a2e; margin-bottom: 20px;">➕ Create Event</h5>
+
+                <form action="/events" method="POST">
+
+                    <div class="mb-3">
+                        <label class="form-label" style="font-weight: 600;">Event Name</label>
+                        <input type="text" name="name" class="form-control"
+                            placeholder="e.g. Annual Tech Fest"
+                            style="border-radius: 10px; border: 2px solid #e9ecef;"
+                            required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" style="font-weight: 600;">Event Type</label>
+                        <select name="type" class="form-select"
+                            style="border-radius: 10px; border: 2px solid #e9ecef;">
+                            <option value="college">🎓 College Event</option>
+                            <option value="concert">🎵 Concert</option>
+                            <option value="sports">⚽ Sports Event</option>
+                            <option value="party">🎊 Party</option>
+                            <option value="conference">💼 Conference</option>
+                            <option value="wedding">💍 Wedding</option>
+                            <option value="other">📌 Other</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" style="font-weight: 600;">Total Budget (₹)</label>
+                        <input type="number" name="totalBudget" class="form-control"
+                            placeholder="e.g. 50000"
+                            style="border-radius: 10px; border: 2px solid #e9ecef;"
+                            required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label class="form-label" style="font-weight: 600;">Expected Attendees</label>
+                        <input type="number" name="attendees" class="form-control"
+                            placeholder="e.g. 200"
+                            style="border-radius: 10px; border: 2px solid #e9ecef;"
+                            required>
+                    </div>
+
+                    <div class="mb-4">
+                        <label class="form-label" style="font-weight: 600;">Event Date</label>
+                        <input type="date" name="date" class="form-control"
+                            style="border-radius: 10px; border: 2px solid #e9ecef;"
+                            required>
+                    </div>
+
+                    <button type="submit"
+                        style="width: 100%; background: linear-gradient(135deg, #1a7a4a, #c9a84c); color: white; border: none; padding: 14px; border-radius: 12px; font-weight: 700; cursor: pointer; font-size: 1rem;">
+                        Create Event 🎉
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <!-- RIGHT — Events List -->
+        <div class="col-md-8">
+
+            <% if (events.length === 0) { %>
+                <div style="background: white; border-radius: 20px; padding: 60px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                    <div style="font-size: 3rem; margin-bottom: 15px;">🎉</div>
+                    <h5 style="color: #1a1a2e; font-weight: 700;">No Events Yet!</h5>
+                    <p style="color: #6c757d;">Create your first event and start planning your budget!</p>
+                </div>
+
+            <% } else { %>
+                <% events.forEach(function(event) { %>
+                    <%
+                        let spent = event.expenses.reduce((sum, e) => sum + e.amount, 0);
+                        let remaining = event.totalBudget - spent;
+                        let percentage = Math.min((spent / event.totalBudget * 100), 100).toFixed(1);
+                        let daysLeft = Math.ceil((new Date(event.date) - new Date()) / (1000 * 60 * 60 * 24));
+                        let perPerson = event.attendees > 0 ? (event.totalBudget / event.attendees).toFixed(0) : 0;
+                    %>
+
+                    <div style="background: white; border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); margin-bottom: 25px;">
+
+                        <!-- Event Header -->
+                        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 20px;">
+                            <div>
+                                <h5 style="font-weight: 700; color: #1a1a2e; margin: 0;">
+                                    <%= event.name %>
+                                    <span style="font-size: 0.8rem; background: #e8f5e9; color: #1a7a4a; padding: 3px 10px; border-radius: 20px; margin-left: 8px;">
+                                        <%= event.type %>
+                                    </span>
+                                </h5>
+                                <small style="color: #6c757d;">
+                                    📅 <%= new Date(event.date).toDateString() %> •
+                                    👥 <%= event.attendees %> attendees •
+                                    💰 ₹<%= perPerson %>/person
+                                </small>
+                            </div>
+                            <div style="text-align: right;">
+                                <% if (daysLeft > 0) { %>
+                                    <span style="background: <%= daysLeft < 7 ? '#fce4ec' : '#e8f5e9' %>; color: <%= daysLeft < 7 ? '#e74c3c' : '#1a7a4a' %>; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">
+                                        <%= daysLeft %> days left
+                                    </span>
+                                <% } else { %>
+                                    <span style="background: #f0f0f0; color: #6c757d; padding: 4px 12px; border-radius: 20px; font-size: 0.85rem;">
+                                        Event Passed
+                                    </span>
+                                <% } %>
+                            </div>
+                        </div>
+
+                        <!-- Budget Summary Cards -->
+                        <div class="row g-2 mb-3">
+                            <div class="col-4">
+                                <div style="background: #e8f5e9; border-radius: 12px; padding: 12px; text-align: center;">
+                                    <div style="font-weight: 800; color: #1a7a4a; font-size: 1.1rem;">₹<%= event.totalBudget.toLocaleString('en-IN') %></div>
+                                    <small style="color: #6c757d;">Total Budget</small>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div style="background: #fff8e1; border-radius: 12px; padding: 12px; text-align: center;">
+                                    <div style="font-weight: 800; color: #c9a84c; font-size: 1.1rem;">₹<%= spent.toLocaleString('en-IN') %></div>
+                                    <small style="color: #6c757d;">Spent</small>
+                                </div>
+                            </div>
+                            <div class="col-4">
+                                <div style="background: <%= remaining < 0 ? '#fce4ec' : '#f0f9ff' %>; border-radius: 12px; padding: 12px; text-align: center;">
+                                    <div style="font-weight: 800; color: <%= remaining < 0 ? '#e74c3c' : '#36A2EB' %>; font-size: 1.1rem;">₹<%= Math.abs(remaining).toLocaleString('en-IN') %></div>
+                                    <small style="color: #6c757d;"><%= remaining < 0 ? 'Over Budget!' : 'Remaining' %></small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Progress Bar -->
+                        <div style="margin-bottom: 20px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                <small style="color: #6c757d;"><%= percentage %>% used</small>
+                                <small style="color: <%= remaining < 0 ? '#e74c3c' : '#1a7a4a' %>; font-weight: 600;">
+                                    <%= remaining < 0 ? '⚠️ Over budget by ₹' + Math.abs(remaining).toLocaleString('en-IN') : '✅ On track' %>
+                                </small>
+                            </div>
+                            <div style="background: #f0f0f0; border-radius: 10px; height: 10px; overflow: hidden;">
+                                <div style="background: <%= percentage >= 100 ? '#e74c3c' : percentage >= 80 ? '#c9a84c' : '#1a7a4a' %>; width: <%= percentage %>%; height: 10px; border-radius: 10px; transition: width 0.5s;"></div>
+                            </div>
+                        </div>
+
+                        <!-- Add Expense Form -->
+                        <div style="background: #f8f9fa; border-radius: 16px; padding: 20px; margin-bottom: 20px;">
+                            <h6 style="font-weight: 700; margin-bottom: 15px;">➕ Add Expense</h6>
+                            <form action="/events/<%= event._id %>/expense" method="POST">
+                                <div class="row g-2">
+                                    <div class="col-md-4">
+                                        <input type="text" name="title" class="form-control form-control-sm"
+                                            placeholder="e.g. Sound System"
+                                            style="border-radius: 8px; border: 2px solid #e9ecef;"
+                                            required>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <input type="number" name="amount" class="form-control form-control-sm"
+                                            placeholder="Amount ₹"
+                                            style="border-radius: 8px; border: 2px solid #e9ecef;"
+                                            required>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <select name="category" class="form-select form-select-sm"
+                                            style="border-radius: 8px; border: 2px solid #e9ecef;">
+                                            <option value="venue">🏛️ Venue</option>
+                                            <option value="food">🍕 Food</option>
+                                            <option value="decoration">🎨 Decoration</option>
+                                            <option value="sound">🔊 Sound/Light</option>
+                                            <option value="transport">🚗 Transport</option>
+                                            <option value="marketing">📢 Marketing</option>
+                                            <option value="other">📌 Other</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <button type="submit"
+                                            style="width: 100%; background: #1a7a4a; color: white; border: none; padding: 6px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 0.85rem;">
+                                            Add
+                                        </button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+
+                        <!-- Expenses List -->
+                        <% if (event.expenses.length > 0) { %>
+                            <h6 style="font-weight: 700; margin-bottom: 12px;">📋 Expenses</h6>
+
+                            <!-- Category breakdown -->
+                            <%
+                                let catTotals = {};
+                                event.expenses.forEach(function(exp) {
+                                    catTotals[exp.category] = (catTotals[exp.category] || 0) + exp.amount;
+                                });
+                            %>
+                            <div style="display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 15px;">
+                                <% Object.keys(catTotals).forEach(function(cat) { %>
+                                    <span style="background: #e8f5e9; color: #1a7a4a; padding: 4px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 600;">
+                                        <%= cat %>: ₹<%= catTotals[cat].toLocaleString('en-IN') %>
+                                    </span>
+                                <% }) %>
+                            </div>
+
+                            <div style="max-height: 250px; overflow-y: auto;">
+                                <table class="table table-sm table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Item</th>
+                                            <th>Category</th>
+                                            <th>Amount</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% event.expenses.forEach(function(exp) { %>
+                                        <tr>
+                                            <td><%= exp.title %></td>
+                                            <td>
+                                                <span style="background: #f0f0f0; padding: 2px 8px; border-radius: 10px; font-size: 0.8rem;">
+                                                    <%= exp.category %>
+                                                </span>
+                                            </td>
+                                            <td style="color: #1a7a4a; font-weight: 600;">₹<%= exp.amount.toLocaleString('en-IN') %></td>
+                                            <td>
+                                                <form action="/events/<%= event._id %>/expense/<%= exp._id %>/delete" method="POST">
+                                                    <button type="submit"
+                                                        style="background: none; border: none; color: #e74c3c; cursor: pointer; font-size: 0.9rem;">
+                                                        🗑️
+                                                    </button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                        <% }) %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        <% } else { %>
+                            <p style="color: #6c757d; text-align: center; padding: 20px;">No expenses added yet!</p>
+                        <% } %>
+
+                        <!-- Delete Event -->
+                        <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #f0f0f0; display: flex; justify-content: flex-end;">
+                            <form action="/events/<%= event._id %>/delete" method="POST">
+                                <button type="submit"
+                                    style="background: #fff0f0; color: #e74c3c; border: none; padding: 8px 16px; border-radius: 10px; font-weight: 600; cursor: pointer; font-size: 0.85rem;">
+                                    🗑️ Delete Event
+                                </button>
+                            </form>
+                        </div>
+
+                    </div>
+                <% }) %>
+            <% } %>
+        </div>
+    </div>
+</div>
+
+<%- include('../includes/footer') %>

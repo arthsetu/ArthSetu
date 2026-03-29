@@ -1,0 +1,489 @@
+<% layout('layouts/boilerplate') %>
+<%- include('../includes/navbar') %>
+
+<div class="container mt-4 mb-5">
+
+    <div class="mb-4">
+        <h2>🌾 Agriculture Loan Calculator</h2>
+        <p class="text-muted">Find government schemes and calculate your EMI instantly</p>
+    </div>
+
+    <div class="row">
+
+        <!-- LEFT — Input Form -->
+        <div class="col-md-4 mb-4">
+            <div style="background: white; border-radius: 20px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); position: sticky; top: 20px;">
+                <h5 style="font-weight: 700; color: #1a1a2e; margin-bottom: 20px;">📋 Your Details</h5>
+
+                <div class="mb-3">
+                    <label class="form-label" style="font-weight: 600;">Monthly Income (₹)</label>
+                    <input type="number" id="income" class="form-control"
+                        placeholder="e.g. 15000"
+                        style="border-radius: 10px; border: 2px solid #e9ecef;">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" style="font-weight: 600;">Land Size (Acres)</label>
+                    <input type="number" id="landSize" class="form-control"
+                        placeholder="e.g. 2.5"
+                        style="border-radius: 10px; border: 2px solid #e9ecef;">
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" style="font-weight: 600;">Land Type</label>
+                    <select id="landType" class="form-select"
+                        style="border-radius: 10px; border: 2px solid #e9ecef;">
+                        <option value="irrigated">Irrigated Land</option>
+                        <option value="non-irrigated">Non-Irrigated Land</option>
+                        <option value="horticulture">Horticulture</option>
+                        <option value="dairy">Dairy Farming</option>
+                        <option value="poultry">Poultry Farming</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label" style="font-weight: 600;">Loan Purpose</label>
+                    <select id="purpose" class="form-select"
+                        style="border-radius: 10px; border: 2px solid #e9ecef;">
+                        <option value="seeds">Seeds & Fertilizers</option>
+                        <option value="equipment">Farm Equipment</option>
+                        <option value="irrigation">Irrigation Setup</option>
+                        <option value="land">Land Purchase</option>
+                        <option value="storage">Storage & Warehouse</option>
+                        <option value="general">General Agriculture</option>
+                    </select>
+                </div>
+
+                <div class="mb-4">
+                    <label class="form-label" style="font-weight: 600;">State</label>
+                    <select id="state" class="form-select"
+                        style="border-radius: 10px; border: 2px solid #e9ecef;">
+                        <option value="mp">Madhya Pradesh</option>
+                        <option value="up">Uttar Pradesh</option>
+                        <option value="raj">Rajasthan</option>
+                        <option value="mah">Maharashtra</option>
+                        <option value="pun">Punjab</option>
+                        <option value="har">Haryana</option>
+                        <option value="guj">Gujarat</option>
+                        <option value="kar">Karnataka</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <button onclick="findSchemes()"
+                    style="width: 100%; background: linear-gradient(135deg, #1a7a4a, #c9a84c); color: white; border: none; padding: 14px; border-radius: 12px; font-weight: 700; cursor: pointer; font-size: 1rem;">
+                    🔍 Find Schemes & Calculate
+                </button>
+            </div>
+        </div>
+
+        <!-- RIGHT — Results -->
+        <div class="col-md-8">
+
+            <!-- Default state -->
+            <div id="defaultState" style="background: white; border-radius: 20px; padding: 60px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                <div style="font-size: 3rem; margin-bottom: 15px;">🌾</div>
+                <h5 style="color: #1a1a2e; font-weight: 700;">Enter Your Details</h5>
+                <p style="color: #6c757d;">Fill in your information on the left to see eligible government schemes and calculate EMI!</p>
+            </div>
+
+            <!-- Results -->
+            <div id="results" style="display: none;">
+
+                <!-- Eligibility Summary -->
+                <div id="eligibilitySummary" style="background: linear-gradient(135deg, #1a1a2e, #1a7a4a); border-radius: 20px; padding: 25px; color: white; margin-bottom: 20px;">
+                    <h5 style="color: #c9a84c; margin-bottom: 15px;">💰 Your Loan Eligibility</h5>
+                    <div class="row">
+                        <div class="col-4 text-center">
+                            <div style="font-size: 1.5rem; font-weight: 800; color: #c9a84c;" id="maxLoan">₹0</div>
+                            <small style="color: rgba(255,255,255,0.7);">Max Loan Amount</small>
+                        </div>
+                        <div class="col-4 text-center">
+                            <div style="font-size: 1.5rem; font-weight: 800; color: #c9a84c;" id="minRate">0%</div>
+                            <small style="color: rgba(255,255,255,0.7);">Lowest Interest</small>
+                        </div>
+                        <div class="col-4 text-center">
+                            <div style="font-size: 1.5rem; font-weight: 800; color: #c9a84c;" id="schemeCount">0</div>
+                            <small style="color: rgba(255,255,255,0.7);">Schemes Available</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Eligible Schemes -->
+                <div style="background: white; border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); margin-bottom: 20px;">
+                    <h5 style="font-weight: 700; color: #1a1a2e; margin-bottom: 20px;">🏛️ Eligible Government Schemes</h5>
+                    <div id="schemesList"></div>
+                </div>
+
+                <!-- EMI Calculator -->
+                <div style="background: white; border-radius: 20px; padding: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);">
+                    <h5 style="font-weight: 700; color: #1a1a2e; margin-bottom: 20px;">🧮 EMI Calculator</h5>
+
+                    <div class="row g-3 mb-4">
+                        <div class="col-md-4">
+                            <label class="form-label" style="font-weight: 600;">Loan Amount (₹)</label>
+                            <input type="number" id="emiLoanAmount" class="form-control"
+                                placeholder="e.g. 100000"
+                                style="border-radius: 10px; border: 2px solid #e9ecef;"
+                                oninput="calculateEMI()">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label" style="font-weight: 600;">Interest Rate (%)</label>
+                            <input type="number" id="emiRate" class="form-control"
+                                placeholder="e.g. 7"
+                                style="border-radius: 10px; border: 2px solid #e9ecef;"
+                                oninput="calculateEMI()">
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label" style="font-weight: 600;">Duration (Years)</label>
+                            <select id="emiYears" class="form-select"
+                                style="border-radius: 10px; border: 2px solid #e9ecef;"
+                                onchange="calculateEMI()">
+                                <option value="1">1 Year</option>
+                                <option value="2">2 Years</option>
+                                <option value="3" selected>3 Years</option>
+                                <option value="5">5 Years</option>
+                                <option value="7">7 Years</option>
+                                <option value="10">10 Years</option>
+                                <option value="15">15 Years</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- EMI Results -->
+                    <div id="emiResults" style="display: none;">
+                        <div class="row g-3">
+                            <div class="col-md-4">
+                                <div style="background: #e8f5e9; border-radius: 16px; padding: 20px; text-align: center;">
+                                    <div style="font-size: 1.8rem; font-weight: 800; color: #1a7a4a;" id="monthlyEMI">₹0</div>
+                                    <small style="color: #6c757d;">Monthly EMI</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div style="background: #fff8e1; border-radius: 16px; padding: 20px; text-align: center;">
+                                    <div style="font-size: 1.8rem; font-weight: 800; color: #c9a84c;" id="totalPayment">₹0</div>
+                                    <small style="color: #6c757d;">Total Payment</small>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div style="background: #fce4ec; border-radius: 16px; padding: 20px; text-align: center;">
+                                    <div style="font-size: 1.8rem; font-weight: 800; color: #e74c3c;" id="totalInterest">₹0</div>
+                                    <small style="color: #6c757d;">Total Interest</small>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Payment breakdown bar -->
+                        <div style="margin-top: 20px;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                                <small style="color: #1a7a4a; font-weight: 600;">Principal</small>
+                                <small style="color: #e74c3c; font-weight: 600;">Interest</small>
+                            </div>
+                            <div style="background: #f0f0f0; border-radius: 10px; height: 14px; overflow: hidden;">
+                                <div id="principalBar" style="background: #1a7a4a; height: 14px; border-radius: 10px; transition: width 0.5s;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// ===== HARDCODED SCHEMES DATABASE =====
+const schemes = [
+    {
+        name: "Kisan Credit Card (KCC)",
+        bank: "All Nationalized Banks",
+        maxAmount: 300000,
+        interestRate: 4,
+        subsidizedRate: 4,
+        duration: "1-5 years",
+        purpose: ["seeds", "fertilizers", "general"],
+        landRequired: 0.5,
+        description: "Short term credit for agricultural needs. Government gives 2% interest subvention.",
+        eligibility: "All farmers with agricultural land",
+        documents: "Land records, Aadhaar, Bank account",
+        icon: "🏦"
+    },
+    {
+        name: "PM Kisan Samman Nidhi",
+        bank: "Government of India",
+        maxAmount: 6000,
+        interestRate: 0,
+        duration: "Annual",
+        purpose: ["seeds", "general"],
+        landRequired: 0,
+        description: "₹6000 per year direct benefit transfer to farmer's bank account in 3 installments.",
+        eligibility: "Small and marginal farmers",
+        documents: "Aadhaar, Land records, Bank account",
+        icon: "🌱"
+    },
+    {
+        name: "NABARD Agriculture Loan",
+        bank: "NABARD / Regional Rural Banks",
+        maxAmount: 500000,
+        interestRate: 7,
+        duration: "3-7 years",
+        purpose: ["equipment", "irrigation", "storage", "general"],
+        landRequired: 1,
+        description: "Medium to long term loans for agriculture infrastructure development.",
+        eligibility: "Farmers, SHGs, FPOs",
+        documents: "Land records, Income proof, Project report",
+        icon: "🏗️"
+    },
+    {
+        name: "PM Fasal Bima Yojana",
+        bank: "Insurance Companies",
+        maxAmount: 200000,
+        interestRate: 2,
+        duration: "1 Season",
+        purpose: ["seeds", "general"],
+        landRequired: 0.5,
+        description: "Crop insurance scheme. Farmers pay only 2% premium for Kharif crops.",
+        eligibility: "All farmers growing notified crops",
+        documents: "Land records, Aadhaar, Bank account",
+        icon: "🛡️"
+    },
+    {
+        name: "Agriculture Infrastructure Fund",
+        bank: "Scheduled Banks / NBFC",
+        maxAmount: 2000000,
+        interestRate: 3,
+        duration: "5-10 years",
+        purpose: ["storage", "equipment", "irrigation"],
+        landRequired: 2,
+        description: "3% interest subvention for post-harvest management and agriculture infrastructure.",
+        eligibility: "Farmers, FPOs, Agri-entrepreneurs",
+        documents: "Project report, Land records, Business plan",
+        icon: "🏭"
+    },
+    {
+        name: "SBI Kisan Gold Card",
+        bank: "State Bank of India",
+        maxAmount: 500000,
+        interestRate: 7,
+        duration: "3-5 years",
+        purpose: ["seeds", "equipment", "general"],
+        landRequired: 1,
+        description: "Revolving credit facility for farmers with good credit history.",
+        eligibility: "Existing KCC holders with good track record",
+        documents: "KCC history, Land records, Aadhaar",
+        icon: "💳"
+    },
+    {
+        name: "Dairy Entrepreneurship Development Scheme",
+        bank: "NABARD",
+        maxAmount: 700000,
+        interestRate: 6.5,
+        duration: "5-7 years",
+        purpose: ["dairy"],
+        landRequired: 0,
+        description: "For setting up small dairy farms. 25% back-ended capital subsidy available.",
+        eligibility: "Farmers, individual entrepreneurs",
+        documents: "Project report, Land/shed documents, Aadhaar",
+        icon: "🐄"
+    },
+    {
+        name: "National Livestock Mission",
+        bank: "Commercial Banks / RRBs",
+        maxAmount: 1000000,
+        interestRate: 5,
+        duration: "5-7 years",
+        purpose: ["poultry", "dairy"],
+        landRequired: 0,
+        description: "For poultry, sheep, goat and pig rearing. Subsidy up to 50% for SC/ST farmers.",
+        eligibility: "All farmers and entrepreneurs",
+        documents: "Project report, Aadhaar, Bank account",
+        icon: "🐔"
+    },
+    {
+        name: "PM Krishi Sinchayee Yojana",
+        bank: "State Government Banks",
+        maxAmount: 300000,
+        interestRate: 5,
+        duration: "3-5 years",
+        purpose: ["irrigation"],
+        landRequired: 0.5,
+        description: "Har Khet Ko Pani — loans for micro irrigation, drip and sprinkler systems.",
+        eligibility: "All farmers with agricultural land",
+        documents: "Land records, Water source proof, Aadhaar",
+        icon: "💧"
+    },
+    {
+        name: "Horticulture Development Scheme",
+        bank: "NHB / Commercial Banks",
+        maxAmount: 1500000,
+        interestRate: 6,
+        duration: "5-10 years",
+        purpose: ["seeds", "irrigation", "storage"],
+        landRequired: 1,
+        description: "For fruits, vegetables and flowers cultivation. Subsidy available under NHM.",
+        eligibility: "Horticulture farmers",
+        documents: "Land records, Horticulture plan, Aadhaar",
+        icon: "🍎"
+    },
+    {
+        name: "Pradhan Mantri Mudra Yojana (Agriculture)",
+        bank: "All Banks / MFIs",
+        maxAmount: 1000000,
+        interestRate: 8.5,
+        duration: "3-5 years",
+        purpose: ["equipment", "general", "seeds"],
+        landRequired: 0,
+        description: "Shishu (₹50k), Kishore (₹5L), Tarun (₹10L) loans for agri-allied activities.",
+        eligibility: "Small farmers and agri-entrepreneurs",
+        documents: "Aadhaar, PAN, Business proof",
+        icon: "💼"
+    },
+    {
+        name: "Land Purchase Scheme",
+        bank: "NABARD / State Co-op Banks",
+        maxAmount: 5000000,
+        interestRate: 8,
+        duration: "7-15 years",
+        purpose: ["land"],
+        landRequired: 0,
+        description: "For purchase of agricultural land by landless farmers and SC/ST beneficiaries.",
+        eligibility: "Landless farmers, SC/ST category",
+        documents: "Income proof, Aadhaar, Sale deed",
+        icon: "🗺️"
+    }
+];
+
+// ===== FIND SCHEMES FUNCTION =====
+function findSchemes() {
+    const income = parseFloat(document.getElementById('income').value) || 0;
+    const landSize = parseFloat(document.getElementById('landSize').value) || 0;
+    const landType = document.getElementById('landType').value;
+    const purpose = document.getElementById('purpose').value;
+
+    if (income === 0 || landSize === 0) {
+        alert('Please enter your monthly income and land size!');
+        return;
+    }
+
+    // Calculate max loan eligibility (60x monthly income or land based)
+    const incomeBasedLoan = income * 60;
+    const landBasedLoan = landSize * 100000;
+    const maxEligible = Math.min(Math.max(incomeBasedLoan, landBasedLoan), 5000000);
+
+    // Filter eligible schemes
+    const eligible = schemes.filter(scheme => {
+        const purposeMatch = scheme.purpose.includes(purpose) || scheme.purpose.includes('general');
+        const landMatch = landSize >= scheme.landRequired;
+        const amountMatch = scheme.maxAmount <= maxEligible * 2;
+        return purposeMatch && landMatch && amountMatch;
+    });
+
+    // Find lowest interest rate
+    const lowestRate = Math.min(...eligible.map(s => s.interestRate));
+
+    // Update summary
+    document.getElementById('maxLoan').textContent = '₹' + maxEligible.toLocaleString('en-IN');
+    document.getElementById('minRate').textContent = lowestRate + '%';
+    document.getElementById('schemeCount').textContent = eligible.length;
+
+    // Render schemes
+    const schemesList = document.getElementById('schemesList');
+    schemesList.innerHTML = '';
+
+    if (eligible.length === 0) {
+        schemesList.innerHTML = '<p class="text-muted">No schemes found. Try different criteria.</p>';
+    } else {
+        eligible.forEach(function(scheme) {
+            schemesList.innerHTML += `
+                <div style="border: 2px solid #e9ecef; border-radius: 16px; padding: 20px; margin-bottom: 15px; cursor: pointer; transition: all 0.3s;"
+                    onmouseover="this.style.borderColor='#1a7a4a'"
+                    onmouseout="this.style.borderColor='#e9ecef'"
+                    onclick="selectScheme(${scheme.maxAmount}, ${scheme.interestRate})">
+
+                    <div style="display: flex; justify-content: space-between; align-items: start;">
+                        <div style="display: flex; gap: 12px; align-items: center;">
+                            <span style="font-size: 2rem;">${scheme.icon}</span>
+                            <div>
+                                <h6 style="font-weight: 700; color: #1a1a2e; margin: 0;">${scheme.name}</h6>
+                                <small style="color: #6c757d;">${scheme.bank}</small>
+                            </div>
+                        </div>
+                        <div style="text-align: right; flex-shrink: 0;">
+                            <div style="background: #e8f5e9; color: #1a7a4a; padding: 4px 12px; border-radius: 20px; font-weight: 700; font-size: 0.85rem;">
+                                ${scheme.interestRate}% p.a.
+                            </div>
+                            <small style="color: #6c757d;">Up to ₹${scheme.maxAmount.toLocaleString('en-IN')}</small>
+                        </div>
+                    </div>
+
+                    <p style="color: #6c757d; font-size: 0.9rem; margin: 12px 0 8px;">${scheme.description}</p>
+
+                    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+                        <small style="color: #1a7a4a;"><strong>Duration:</strong> ${scheme.duration}</small>
+                        <small style="color: #1a7a4a;"><strong>Docs:</strong> ${scheme.documents}</small>
+                    </div>
+
+                    <div style="margin-top: 10px; padding: 8px 12px; background: #f8f9fa; border-radius: 8px;">
+                        <small style="color: #6c757d;"><strong>Eligibility:</strong> ${scheme.eligibility}</small>
+                    </div>
+
+                    <div style="margin-top: 10px;">
+                        <small style="color: #c9a84c; font-weight: 600;">👆 Click to calculate EMI for this scheme</small>
+                    </div>
+                </div>
+            `;
+        });
+    }
+
+    // Show results
+    document.getElementById('defaultState').style.display = 'none';
+    document.getElementById('results').style.display = 'block';
+
+    // Pre-fill EMI calculator
+    document.getElementById('emiLoanAmount').value = Math.min(maxEligible, eligible[0]?.maxAmount || 100000);
+    document.getElementById('emiRate').value = lowestRate;
+    calculateEMI();
+
+    // Scroll to results
+    document.getElementById('results').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ===== SELECT SCHEME FOR EMI =====
+function selectScheme(amount, rate) {
+    document.getElementById('emiLoanAmount').value = amount;
+    document.getElementById('emiRate').value = rate;
+    calculateEMI();
+    document.getElementById('emiResults').scrollIntoView({ behavior: 'smooth' });
+}
+
+// ===== EMI CALCULATOR =====
+function calculateEMI() {
+    const P = parseFloat(document.getElementById('emiLoanAmount').value) || 0;
+    const annualRate = parseFloat(document.getElementById('emiRate').value) || 0;
+    const years = parseFloat(document.getElementById('emiYears').value) || 1;
+
+    if (P === 0 || annualRate === 0) {
+        document.getElementById('emiResults').style.display = 'none';
+        return;
+    }
+
+    const R = annualRate / 12 / 100;
+    const N = years * 12;
+
+    // EMI Formula
+    const EMI = P * R * Math.pow(1 + R, N) / (Math.pow(1 + R, N) - 1);
+    const totalPayment = EMI * N;
+    const totalInterest = totalPayment - P;
+    const principalPercent = (P / totalPayment * 100).toFixed(1);
+
+    // Update UI
+    document.getElementById('monthlyEMI').textContent = '₹' + Math.round(EMI).toLocaleString('en-IN');
+    document.getElementById('totalPayment').textContent = '₹' + Math.round(totalPayment).toLocaleString('en-IN');
+    document.getElementById('totalInterest').textContent = '₹' + Math.round(totalInterest).toLocaleString('en-IN');
+    document.getElementById('principalBar').style.width = principalPercent + '%';
+
+    document.getElementById('emiResults').style.display = 'block';
+}
+</script>
+
+<%- include('../includes/footer') %>

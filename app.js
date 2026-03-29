@@ -40,6 +40,17 @@ const billRoutes = require('./routes/bills');
 app.use(billRoutes);
 const goalRoutes = require('./routes/goals');
 app.use(goalRoutes);
+app.get('/loan', (req, res) => {
+    res.render('pages/loan');
+});
+app.get('/sip', (req, res) => {
+    res.render('pages/sip');
+});
+app.get('/tax', (req, res) => {
+    res.render('pages/tax');
+});
+const eventRoutes = require('./routes/events');
+app.use(eventRoutes);
 app.get('/', (req, res) => res.render('pages/index'));
 app.get('/about', (req, res) => res.render('pages/aboutUs'));
 app.get('/services', (req, res) => res.render('pages/Services'));

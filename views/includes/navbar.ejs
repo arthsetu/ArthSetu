@@ -7,39 +7,110 @@
         </a>
 
         <!-- Mobile toggle -->
-        <button class="navbar-toggler" type="button" 
-            data-bs-toggle="collapse" 
-            data-bs-target="#navbarNav">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
 
-        <!-- Nav links -->
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mx-auto">
+
+                <!-- Home -->
                 <li class="nav-item">
                     <a class="nav-link" href="/">Home</a>
                 </li>
+
+                <!-- Features Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                        Features
+                    </a>
+                    <ul class="dropdown-menu"
+                        style="border-radius: 16px; border: none; box-shadow: 0 10px 40px rgba(0,0,0,0.12); padding: 10px;">
+                        <li>
+                            <a class="dropdown-item" href="/expenses" style="border-radius: 10px; padding: 10px 15px;">
+                                Expense Tracker
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="/dashboard" style="border-radius: 10px; padding: 10px 15px;">
+                                Dashboard
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="/goals" style="border-radius: 10px; padding: 10px 15px;">
+                                Savings Goals
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="/bills" style="border-radius: 10px; padding: 10px 15px;">
+                                Bill Splitter
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Calculators Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                        Calculators
+                    </a>
+                    <ul class="dropdown-menu"
+                        style="border-radius: 16px; border: none; box-shadow: 0 10px 40px rgba(0,0,0,0.12); padding: 10px;">
+                        <li>
+                            <a class="dropdown-item" href="/sip" style="border-radius: 10px; padding: 10px 15px;">
+                                SIP Calculator
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="/loan" style="border-radius: 10px; padding: 10px 15px;">
+                                Loan Calculator
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- Tools Dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                        Tools
+                    </a>
+                    <ul class="dropdown-menu"
+                        style="border-radius: 16px; border: none; box-shadow: 0 10px 40px rgba(0,0,0,0.12); padding: 10px;">
+                        <li>
+                            <a class="dropdown-item" href="/events" style="border-radius: 10px; padding: 10px 15px;">
+                                Event Planner
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="/tax" style="border-radius: 10px; padding: 10px 15px;">
+                                Income Tax Calculator
+                            </a>
+                        </li>
+
+                        <!-- <li>
+                            <a class="dropdown-item" href="/ai-advisor"
+                                style="border-radius: 10px; padding: 10px 15px;">
+                                 AI Advisor
+                            </a>
+                        </li> -->
+                    </ul>
+                </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="/services">Services</a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="/about">About</a>
                 </li>
+
                 <li class="nav-item">
                     <a class="nav-link" href="/contact">Contact</a>
                 </li>
-                <!-- <li class="nav-item">
-    <a class="nav-link" href="/ai-advisor"> AI Advisor</a>
-</li> -->
-<li class="nav-item">
-    <a class="nav-link" href="/bills"> Bill Splitter</a>
-</li>
-<li class="nav-item">
-    <a class="nav-link" href="/goals"> Savings Goals</a>
-</li>
+
             </ul>
 
-            <!-- Auth buttons -->
+            <!-- Auth Buttons -->
             <div class="d-flex gap-2">
                 <a href="/login" class="nav-link btn-nav-login">Login</a>
                 <a href="/register" class="nav-link btn-nav-register">Get Started</a>
