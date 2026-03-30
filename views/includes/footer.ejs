@@ -98,23 +98,30 @@
 /* SOCIAL BUTTON */
 
 .social-btn{
+    display:inline-flex;   /* override block */
+    align-items:center;
+    justify-content:center;
+
     background:rgba(255,255,255,0.1);
     width:38px;
     height:38px;
+
     border-radius:10px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
     text-decoration:none;
     color:white;
     font-weight:700;
     font-size:0.8rem;
+
+    line-height:1;
+    margin-bottom:0;      /* remove inherited margin */
+
     transition:all 0.3s;
 }
 
 .social-btn:hover{
     background:#c9a84c;
 }
+
 
 /* ===== CHAT BUTTON ===== */
 
