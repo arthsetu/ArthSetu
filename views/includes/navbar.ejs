@@ -46,6 +46,12 @@
                                 Bill Splitter
                             </a>
                         </li>
+                         <li>
+                            <a class="dropdown-item" href="/credit-card" style="border-radius: 10px; padding: 10px 15px;">
+                                Credit Card Offers
+                            </a>
+                        </li>
+
                     </ul>
                 </li>
 
@@ -112,8 +118,13 @@
 
             <!-- Auth Buttons -->
             <div class="d-flex gap-2">
-                <a href="/login" class="nav-link btn-nav-login">Login</a>
-                <a href="/register" class="nav-link btn-nav-register">Get Started</a>
+                <% if (typeof user !== 'undefined' && user) { %>
+                    <span class="nav-link">Hi, <%= user.name %></span>
+                    <a href="/logout" class="nav-link btn-nav-login">Logout</a>
+                    <% } else { %>
+                        <a href="/login" class="nav-link btn-nav-login">Login</a>
+                        <a href="/register" class="nav-link btn-nav-register">Get Started</a>
+                        <% } %>
             </div>
         </div>
 

@@ -21,20 +21,25 @@ app.use(session({
     secret: process.env.SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
-   store: MongoStore.create({
-    mongoUrl: process.env.MONGODB_URI
-}),
+    store: MongoStore.create({
+        mongoUrl: process.env.MONGODB_URI
+    }),
     cookie: {
         maxAge: 1000 * 60 * 60 * 24
     }
 }));
-
+app.use((req, res, next) => {
+    res.locals.user = req.session.user || null;
+    next();
+});
 const authRoutes = require('./routes/auth');
 const expenseRoutes = require('./routes/expenses');
 const isLoggedIn = require('./middleware/isLoggedIn');
-
+const creditRoutes = require("./routes/creditCard");
 app.use(authRoutes);
 app.use(expenseRoutes);
+
+app.use("/", creditRoutes);
 
 const billRoutes = require('./routes/bills');
 app.use(billRoutes);
@@ -54,6 +59,7 @@ app.use(eventRoutes);
 app.get('/', (req, res) => res.render('pages/index'));
 app.get('/about', (req, res) => res.render('pages/aboutUs'));
 app.get('/services', (req, res) => res.render('pages/Services'));
+
 app.get('/dashboard', isLoggedIn, async (req, res) => {
     try {
         const Expense = require('./models/Expense');
@@ -61,10 +67,10 @@ app.get('/dashboard', isLoggedIn, async (req, res) => {
 
         const expenses = await Expense.find({ user: userId });
 
-       
+
         const total = expenses.reduce((sum, exp) => sum + exp.amount, 0);
 
-      
+
         const categoryTotals = {};
         expenses.forEach(exp => {
             categoryTotals[exp.category] = (categoryTotals[exp.category] || 0) + exp.amount;
@@ -108,8 +114,15 @@ app.post('/contact', (req, res) => {
         </div>
     `);
 });
+app.get('/ping', (req, res) => {
+    res.status(200).json({
+        message: "pong",
+        status: "ok"
+    });
+});
 async function main() {
-await mongoose.connect(process.env.MONGODB_URI); console.log('MongoDB Connected!'); }
+    await mongoose.connect(process.env.MONGODB_URI); console.log('MongoDB Connected!');
+}
 main().catch(err => console.log(err));
 
 

@@ -1,0 +1,40 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="container mt-5">
+
+    <h2 class="mb-4">Best Cards for <%= category %> 💳</h2>
+
+    <div class="row">
+        <% result.forEach(card => { %>
+
+        <div class="col-md-6 mb-4">
+            <div class="credit-card-ui p-4">
+
+                <h4><%= card.name %></h4>
+                <p class="tagline"><%= card.tagline %></p>
+
+                <ul>
+                    <% card.benefits.forEach(b => { %>
+                        <li>✔ <%= b %></li>
+                    <% }) %>
+                </ul>
+
+                <div class="details">
+                    <p><strong>Annual Fee:</strong> <%= card.annualFee %></p>
+                    <p><strong>Cashback:</strong> <%= card.cashback %></p>
+                    <p><strong>Eligibility:</strong> <%= card.eligibility %></p>
+                </div>
+
+                <div class=" " style="margin-top: 10px; font-size: 0.9em;  ">
+                    <small>🤝 <%= card.company %></small>
+                </div>
+
+                <button class="apply-btn">Apply Now 🚀</button>
+
+            </div>
+        </div>
+
+        <% }) %>
+    </div>
+
+</div>

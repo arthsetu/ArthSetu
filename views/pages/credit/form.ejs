@@ -1,0 +1,21 @@
+<% layout('layouts/boilerplate') %>
+<div class="container">
+    <div class="creditcard">
+        <h2>💳 Find Best Credit Card</h2>
+        <p>Select your purpose</p>
+
+        <form action="/credit-card" method="POST">
+            
+            <select name="category">
+                <option value="fitness">Fitness</option>
+                <option value="education">Education</option>
+                <option value="agriculture">Agriculture</option>
+                <option value="media">Media</option>
+                <option value="travel">Travel</option>
+                <option value="finance">Finance</option>
+            </select>
+
+            <button type="submit">Get Recommendation 🚀</button>
+        </form>
+    </div>
+</div>
