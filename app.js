@@ -36,6 +36,8 @@ const authRoutes = require('./routes/auth');
 const expenseRoutes = require('./routes/expenses');
 const isLoggedIn = require('./middleware/isLoggedIn');
 const creditRoutes = require("./routes/creditCard");
+const insuranceRoutes = require("./routes/insurance");
+app.use("/", insuranceRoutes);
 app.use(authRoutes);
 app.use(expenseRoutes);
 
@@ -45,6 +47,9 @@ const billRoutes = require('./routes/bills');
 app.use(billRoutes);
 const goalRoutes = require('./routes/goals');
 app.use(goalRoutes);
+app.get('/learn', (req, res) => {
+    res.render('pages/learn');
+});
 app.get('/loan', (req, res) => {
     res.render('pages/loan');
 });

@@ -4,7 +4,7 @@ const Expense = require('../models/Expense');
 const isLoggedIn = require('../middleware/isLoggedIn');
 
 
-router.get('/expenses', isLoggedIn, async (req, res) => {
+router.get('/expenses',isLoggedIn, async (req, res) => {
     try {
         const userId = req.session.user.id;
 
