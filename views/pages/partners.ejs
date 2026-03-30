@@ -1,0 +1,87 @@
+<% layout('layouts/boilerplate') %>
+
+<!-- HERO -->
+<section style="background: linear-gradient(135deg, #1a1a2e 0%, #1a7a4a 100%); padding: 80px 0;">
+    <div class="container text-center">
+        <h1 style="color:white; font-weight:800;">
+            Our <span style="color:#c9a84c;">Partners</span>
+        </h1>
+        <p style="color:rgba(255,255,255,0.8); max-width:600px; margin:15px auto;">
+            We collaborate with trusted financial institutions and platforms to provide the best services to our users.
+        </p>
+    </div>
+</section>
+
+<!-- PARTNERS GRID -->
+<section style="padding:80px 0; background:#f8f9fa;">
+    <div class="container">
+
+        <div class="row text-center">
+
+            <% const partners = [
+                { name: "HDFC Bank", type: "Banking Partner", logo: "🏦" },
+                { name: "ICICI Bank", type: "Financial Partner", logo: "💳" },
+                { name: "Axis Bank", type: "Travel Card Partner", logo: "✈️" },
+                { name: "SBI", type: "Student Card Partner", logo: "🎓" },
+                { name: "Amazon Pay", type: "Shopping Partner", logo: "🛒" },
+                { name: "Razorpay", type: "Payment Gateway", logo: "⚡" }
+            ]; %>
+
+            <% partners.forEach(p => { %>
+
+            <div class="col-md-4 mb-4">
+                <div class="partner-card p-4">
+
+                    <div style="font-size:2.5rem;"><%= p.logo %></div>
+
+                    <h5 style="margin-top:10px;"><%= p.name %></h5>
+
+                    <p style="color:#6c757d;"><%= p.type %></p>
+
+                </div>
+            </div>
+
+            <% }) %>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- TRUST SECTION -->
+<section style="padding:80px 0;">
+    <div class="container text-center">
+
+        <h2 style="font-weight:800;">🤝 Why Our Partnerships Matter</h2>
+
+        <div class="row mt-5">
+
+            <div class="col-md-4">
+                <h4>Verified</h4>
+                <p>We collaborate only with trusted brands</p>
+            </div>
+
+            <div class="col-md-4">
+                <h4>Secure</h4>
+                <p>Safe financial integrations</p>
+            </div>
+
+            <div class="col-md-4">
+                <h4>Better Offers</h4>
+                <p>Exclusive deals for our users</p>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- CTA -->
+<section style="background: linear-gradient(135deg, #1a1a2e 0%, #1a7a4a 100%); padding:80px 0; text-align:center;">
+    <div class="container">
+        <h2 style="color:white; font-weight:800;">Want to Partner With Us?</h2>
+        <a href="/contact" style="background:#c9a84c; padding:15px 40px; border-radius:30px; text-decoration:none; font-weight:700;">
+            Contact Us →
+        </a>
+    </div>
+</section>

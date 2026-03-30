@@ -572,3 +572,13 @@ select, button {
     border-radius: 10px;
     width: 100%;
 }
+.partner-card {
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    transition: 0.3s;
+}
+
+.partner-card:hover {
+    transform: translateY(-10px);
+}

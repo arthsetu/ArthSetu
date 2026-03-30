@@ -114,6 +114,10 @@ app.post('/contact', (req, res) => {
         </div>
     `);
 });
+
+app.get('/partner', (req, res) => {
+    res.render('pages/partners');
+});
 app.get('/ping', (req, res) => {
     res.status(200).json({
         message: "pong",
