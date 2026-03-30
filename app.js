@@ -45,6 +45,9 @@ const billRoutes = require('./routes/bills');
 app.use(billRoutes);
 const goalRoutes = require('./routes/goals');
 app.use(goalRoutes);
+app.get('/learn', (req, res) => {
+    res.render('pages/learn');
+});
 app.get('/loan', (req, res) => {
     res.render('pages/loan');
 });

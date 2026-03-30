@@ -1,0 +1,453 @@
+<% layout('layouts/boilerplate') %>
+
+
+<div style="background: linear-gradient(135deg, #1a1a2e 0%, #1a7a4a 100%); padding: 80px 0;">
+    <div class="container text-center">
+        <h1 style="color: white; font-size: 2.8rem; font-weight: 800;">Upskill in Finance</h1>
+        <p style="color: rgba(255,255,255,0.8); font-size: 1.1rem; margin-top: 15px; max-width: 600px; margin-left: auto; margin-right: auto;">
+            Handpicked courses and resources to help you master personal finance, investing and wealth building.
+        </p>
+    </div>
+</div>
+<style>
+
+/* ===== COURSE FILTER SLIDER ===== */
+
+.course-filter-wrapper{
+    margin-bottom:35px;
+    overflow:hidden;
+}
+
+.course-filter-scroll{
+    display:flex;
+    gap:12px;
+    overflow-x:auto;
+    padding-bottom:10px;
+    scrollbar-width:none;
+}
+
+.course-filter-scroll::-webkit-scrollbar{
+    display:none;
+}
+
+.course-filter-btn{
+    background:#f0f0f0;
+    border:none;
+    padding:10px 22px;
+    border-radius:25px;
+    font-weight:600;
+    cursor:pointer;
+    color:#1a1a2e;
+    white-space:nowrap;
+    transition:all 0.25s ease;
+}
+
+.course-filter-btn:hover{
+    background:#e4e4e4;
+}
+
+.course-filter-btn.active{
+    background:#1a7a4a;
+    color:white;
+}
+
+</style>
+<div class="container mt-5 mb-5">
+
+   <!-- Filter Tabs -->
+<div class="course-filter-wrapper">
+    <div class="course-filter-scroll">
+
+        <button onclick="filterCourses('all')" id="btn-all" class="course-filter-btn active">
+            All Courses
+        </button>
+
+        <button onclick="filterCourses('investing')" id="btn-investing" class="course-filter-btn">
+            Investing
+        </button>
+
+        <button onclick="filterCourses('budgeting')" id="btn-budgeting" class="course-filter-btn">
+            Budgeting
+        </button>
+
+        <button onclick="filterCourses('tax')" id="btn-tax" class="course-filter-btn">
+            Tax Planning
+        </button>
+
+        <button onclick="filterCourses('stock')" id="btn-stock" class="course-filter-btn">
+            Stock Market
+        </button>
+
+        <button onclick="filterCourses('free')" id="btn-free" class="course-filter-btn">
+            Free Only
+        </button>
+
+    </div>
+</div>
+
+    <!-- Courses Grid -->
+    <div class="row g-4" id="coursesGrid">
+
+        <!-- Course 1 -->
+        <div class="col-md-4 course-card" data-category="investing free">
+            <div style="background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08); height: 100%; transition: transform 0.3s;"
+                onmouseover="this.style.transform='translateY(-5px)'"
+                onmouseout="this.style.transform='translateY(0)'">
+                <div style="background: linear-gradient(135deg, #1a1a2e, #1a7a4a); height: 160px; display: flex; align-items: center; justify-content: center;">
+                    <div style="text-align: center; color: white;">
+                        <div style="font-size: 3rem; font-weight: 800; color: #c9a84c;">NSE</div>
+                        <div style="font-size: 0.9rem; color: rgba(255,255,255,0.8);">Academy</div>
+                    </div>
+                </div>
+                <div style="padding: 20px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span style="background: #e8f5e9; color: #1a7a4a; padding: 3px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 600;">Investing</span>
+                        <span style="background: #e8f5e9; color: #1a7a4a; padding: 3px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 600;">Free</span>
+                    </div>
+                    <h5 style="font-weight: 700; color: #1a1a2e; margin-bottom: 8px;">Basics of Stock Market</h5>
+                    <p style="color: #6c757d; font-size: 0.9rem; line-height: 1.6; margin-bottom: 15px;">
+                        Learn the fundamentals of stock markets, how exchanges work, and how to start investing in equities from NSE India.
+                    </p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <small style="color: #6c757d;">Provider: NSE Academy</small>
+                        <small style="color: #6c757d;">Beginner</small>
+                    </div>
+                    <a href="https://www.nseindia.com/learn/content/ncfm-modules" target="_blank"
+                        style="display: block; text-align: center; background: #1a7a4a; color: white; padding: 12px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.3s;"
+                        onmouseover="this.style.background='#145c38'"
+                        onmouseout="this.style.background='#1a7a4a'">
+                        Start Learning
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Course 2 -->
+        <div class="col-md-4 course-card" data-category="budgeting free">
+            <div style="background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08); height: 100%; transition: transform 0.3s;"
+                onmouseover="this.style.transform='translateY(-5px)'"
+                onmouseout="this.style.transform='translateY(0)'">
+                <div style="background: linear-gradient(135deg, #c9a84c, #e8c96d); height: 160px; display: flex; align-items: center; justify-content: center;">
+                    <div style="text-align: center; color: white;">
+                        <div style="font-size: 2.5rem; font-weight: 800;">Khan</div>
+                        <div style="font-size: 0.9rem; color: rgba(255,255,255,0.9);">Academy</div>
+                    </div>
+                </div>
+                <div style="padding: 20px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span style="background: #fff8e1; color: #c9a84c; padding: 3px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 600;">Budgeting</span>
+                        <span style="background: #e8f5e9; color: #1a7a4a; padding: 3px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 600;">Free</span>
+                    </div>
+                    <h5 style="font-weight: 700; color: #1a1a2e; margin-bottom: 8px;">Personal Finance Fundamentals</h5>
+                    <p style="color: #6c757d; font-size: 0.9rem; line-height: 1.6; margin-bottom: 15px;">
+                        A comprehensive free course covering budgeting, saving, debt management and building a solid financial foundation.
+                    </p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <small style="color: #6c757d;">Provider: Khan Academy</small>
+                        <small style="color: #6c757d;">Beginner</small>
+                    </div>
+                    <a href="https://www.khanacademy.org/college-careers-more/personal-finance" target="_blank"
+                        style="display: block; text-align: center; background: #1a7a4a; color: white; padding: 12px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.3s;"
+                        onmouseover="this.style.background='#145c38'"
+                        onmouseout="this.style.background='#1a7a4a'">
+                        Start Learning
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Course 3 -->
+        <div class="col-md-4 course-card" data-category="stock investing">
+            <div style="background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08); height: 100%; transition: transform 0.3s;"
+                onmouseover="this.style.transform='translateY(-5px)'"
+                onmouseout="this.style.transform='translateY(0)'">
+                <div style="background: linear-gradient(135deg, #1a1a2e, #2c3e6b); height: 160px; display: flex; align-items: center; justify-content: center;">
+                    <div style="text-align: center; color: white;">
+                        <div style="font-size: 2.2rem; font-weight: 800; color: #c9a84c;">Zerodha</div>
+                        <div style="font-size: 0.9rem; color: rgba(255,255,255,0.8);">Varsity</div>
+                    </div>
+                </div>
+                <div style="padding: 20px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span style="background: #e8f0fe; color: #1a1a2e; padding: 3px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 600;">Stock Market</span>
+                        <span style="background: #e8f5e9; color: #1a7a4a; padding: 3px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 600;">Free</span>
+                    </div>
+                    <h5 style="font-weight: 700; color: #1a1a2e; margin-bottom: 8px;">Stock Market Made Simple</h5>
+                    <p style="color: #6c757d; font-size: 0.9rem; line-height: 1.6; margin-bottom: 15px;">
+                        India's most popular stock market learning platform. Covers technical analysis, fundamental analysis, futures and options.
+                    </p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <small style="color: #6c757d;">Provider: Zerodha Varsity</small>
+                        <small style="color: #6c757d;">Beginner to Advanced</small>
+                    </div>
+                    <a href="https://zerodha.com/varsity/" target="_blank"
+                        style="display: block; text-align: center; background: #1a7a4a; color: white; padding: 12px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.3s;"
+                        onmouseover="this.style.background='#145c38'"
+                        onmouseout="this.style.background='#1a7a4a'">
+                        Start Learning
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Course 4 -->
+        <div class="col-md-4 course-card" data-category="tax">
+            <div style="background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08); height: 100%; transition: transform 0.3s;"
+                onmouseover="this.style.transform='translateY(-5px)'"
+                onmouseout="this.style.transform='translateY(0)'">
+                <div style="background: linear-gradient(135deg, #1a7a4a, #2ecc71); height: 160px; display: flex; align-items: center; justify-content: center;">
+                    <div style="text-align: center; color: white;">
+                        <div style="font-size: 2rem; font-weight: 800;">Clear Tax</div>
+                        <div style="font-size: 0.9rem; color: rgba(255,255,255,0.8);">Learning Hub</div>
+                    </div>
+                </div>
+                <div style="padding: 20px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span style="background: #fce4ec; color: #e74c3c; padding: 3px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 600;">Tax Planning</span>
+                        <span style="background: #e8f5e9; color: #1a7a4a; padding: 3px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 600;">Free</span>
+                    </div>
+                    <h5 style="font-weight: 700; color: #1a1a2e; margin-bottom: 8px;">Income Tax Filing Guide</h5>
+                    <p style="color: #6c757d; font-size: 0.9rem; line-height: 1.6; margin-bottom: 15px;">
+                        Learn how to file your ITR, save tax legally using deductions and understand the new vs old tax regime in detail.
+                    </p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <small style="color: #6c757d;">Provider: ClearTax</small>
+                        <small style="color: #6c757d;">Beginner</small>
+                    </div>
+                    <a href="https://cleartax.in/guide/income-tax" target="_blank"
+                        style="display: block; text-align: center; background: #1a7a4a; color: white; padding: 12px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.3s;"
+                        onmouseover="this.style.background='#145c38'"
+                        onmouseout="this.style.background='#1a7a4a'">
+                        Start Learning
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Course 5 -->
+        <div class="col-md-4 course-card" data-category="investing stock">
+            <div style="background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08); height: 100%; transition: transform 0.3s;"
+                onmouseover="this.style.transform='translateY(-5px)'"
+                onmouseout="this.style.transform='translateY(0)'">
+                <div style="background: linear-gradient(135deg, #e74c3c, #c0392b); height: 160px; display: flex; align-items: center; justify-content: center;">
+                    <div style="text-align: center; color: white;">
+                        <div style="font-size: 2.2rem; font-weight: 800;">Coursera</div>
+                        <div style="font-size: 0.9rem; color: rgba(255,255,255,0.8);">Finance Courses</div>
+                    </div>
+                </div>
+                <div style="padding: 20px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span style="background: #e8f0fe; color: #1a1a2e; padding: 3px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 600;">Investing</span>
+                        <span style="background: #fff8e1; color: #c9a84c; padding: 3px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 600;">Paid</span>
+                    </div>
+                    <h5 style="font-weight: 700; color: #1a1a2e; margin-bottom: 8px;">Financial Markets by Yale</h5>
+                    <p style="color: #6c757d; font-size: 0.9rem; line-height: 1.6; margin-bottom: 15px;">
+                        Robert Shiller's world-famous course on financial markets. Understand risk management, behavioural finance and market history.
+                    </p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <small style="color: #6c757d;">Provider: Yale / Coursera</small>
+                        <small style="color: #6c757d;">Intermediate</small>
+                    </div>
+                    <a href="https://www.coursera.org/learn/financial-markets-global" target="_blank"
+                        style="display: block; text-align: center; background: #1a7a4a; color: white; padding: 12px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.3s;"
+                        onmouseover="this.style.background='#145c38'"
+                        onmouseout="this.style.background='#1a7a4a'">
+                        View Course
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Course 6 -->
+        <div class="col-md-4 course-card" data-category="budgeting free">
+            <div style="background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08); height: 100%; transition: transform 0.3s;"
+                onmouseover="this.style.transform='translateY(-5px)'"
+                onmouseout="this.style.transform='translateY(0)'">
+                <div style="background: linear-gradient(135deg, #8e44ad, #6c3483); height: 160px; display: flex; align-items: center; justify-content: center;">
+                    <div style="text-align: center; color: white;">
+                        <div style="font-size: 2.2rem; font-weight: 800;">NPTEL</div>
+                        <div style="font-size: 0.9rem; color: rgba(255,255,255,0.8);">IIT Courses</div>
+                    </div>
+                </div>
+                <div style="padding: 20px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span style="background: #fff8e1; color: #c9a84c; padding: 3px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 600;">Budgeting</span>
+                        <span style="background: #e8f5e9; color: #1a7a4a; padding: 3px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 600;">Free</span>
+                    </div>
+                    <h5 style="font-weight: 700; color: #1a1a2e; margin-bottom: 8px;">Financial Management — IIT</h5>
+                    <p style="color: #6c757d; font-size: 0.9rem; line-height: 1.6; margin-bottom: 15px;">
+                        IIT professors teach financial management concepts — capital budgeting, financial ratios, working capital and more.
+                    </p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <small style="color: #6c757d;">Provider: NPTEL / IIT</small>
+                        <small style="color: #6c757d;">Intermediate</small>
+                    </div>
+                    <a href="https://nptel.ac.in/courses/110105040" target="_blank"
+                        style="display: block; text-align: center; background: #1a7a4a; color: white; padding: 12px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.3s;"
+                        onmouseover="this.style.background='#145c38'"
+                        onmouseout="this.style.background='#1a7a4a'">
+                        Start Learning
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Course 7 -->
+        <div class="col-md-4 course-card" data-category="stock investing free">
+            <div style="background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08); height: 100%; transition: transform 0.3s;"
+                onmouseover="this.style.transform='translateY(-5px)'"
+                onmouseout="this.style.transform='translateY(0)'">
+                <div style="background: linear-gradient(135deg, #16a085, #1abc9c); height: 160px; display: flex; align-items: center; justify-content: center;">
+                    <div style="text-align: center; color: white;">
+                        <div style="font-size: 2rem; font-weight: 800;">Groww</div>
+                        <div style="font-size: 0.9rem; color: rgba(255,255,255,0.8);">Learn</div>
+                    </div>
+                </div>
+                <div style="padding: 20px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span style="background: #e8f0fe; color: #1a1a2e; padding: 3px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 600;">Stock Market</span>
+                        <span style="background: #e8f5e9; color: #1a7a4a; padding: 3px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 600;">Free</span>
+                    </div>
+                    <h5 style="font-weight: 700; color: #1a1a2e; margin-bottom: 8px;">Mutual Funds & SIP Guide</h5>
+                    <p style="color: #6c757d; font-size: 0.9rem; line-height: 1.6; margin-bottom: 15px;">
+                        Learn everything about mutual funds, SIP investments, how to choose the right fund and start your investment journey.
+                    </p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <small style="color: #6c757d;">Provider: Groww</small>
+                        <small style="color: #6c757d;">Beginner</small>
+                    </div>
+                    <a href="https://groww.in/blog/category/mutual-funds" target="_blank"
+                        style="display: block; text-align: center; background: #1a7a4a; color: white; padding: 12px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.3s;"
+                        onmouseover="this.style.background='#145c38'"
+                        onmouseout="this.style.background='#1a7a4a'">
+                        Start Learning
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Course 8 -->
+        <div class="col-md-4 course-card" data-category="tax investing">
+            <div style="background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08); height: 100%; transition: transform 0.3s;"
+                onmouseover="this.style.transform='translateY(-5px)'"
+                onmouseout="this.style.transform='translateY(0)'">
+                <div style="background: linear-gradient(135deg, #2980b9, #1a5276); height: 160px; display: flex; align-items: center; justify-content: center;">
+                    <div style="text-align: center; color: white;">
+                        <div style="font-size: 1.8rem; font-weight: 800;">Udemy</div>
+                        <div style="font-size: 0.9rem; color: rgba(255,255,255,0.8);">Finance Courses</div>
+                    </div>
+                </div>
+                <div style="padding: 20px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span style="background: #fce4ec; color: #e74c3c; padding: 3px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 600;">Tax Planning</span>
+                        <span style="background: #fff8e1; color: #c9a84c; padding: 3px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 600;">Paid</span>
+                    </div>
+                    <h5 style="font-weight: 700; color: #1a1a2e; margin-bottom: 8px;">Complete Indian Tax Course</h5>
+                    <p style="color: #6c757d; font-size: 0.9rem; line-height: 1.6; margin-bottom: 15px;">
+                        A complete guide to Indian income tax — ITR filing, GST basics, tax saving investments and everything in between.
+                    </p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <small style="color: #6c757d;">Provider: Udemy</small>
+                        <small style="color: #6c757d;">Beginner to Advanced</small>
+                    </div>
+                    <a href="https://www.udemy.com/topic/income-tax/" target="_blank"
+                        style="display: block; text-align: center; background: #1a7a4a; color: white; padding: 12px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.3s;"
+                        onmouseover="this.style.background='#145c38'"
+                        onmouseout="this.style.background='#1a7a4a'">
+                        View Course
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Course 9 -->
+        <div class="col-md-4 course-card" data-category="budgeting investing free">
+            <div style="background: white; border-radius: 20px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08); height: 100%; transition: transform 0.3s;"
+                onmouseover="this.style.transform='translateY(-5px)'"
+                onmouseout="this.style.transform='translateY(0)'">
+                <div style="background: linear-gradient(135deg, #c9a84c, #1a7a4a); height: 160px; display: flex; align-items: center; justify-content: center;">
+                    <div style="text-align: center; color: white;">
+                        <div style="font-size: 1.8rem; font-weight: 800;">RBI</div>
+                        <div style="font-size: 0.9rem; color: rgba(255,255,255,0.8);">Financial Literacy</div>
+                    </div>
+                </div>
+                <div style="padding: 20px;">
+                    <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                        <span style="background: #fff8e1; color: #c9a84c; padding: 3px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 600;">Budgeting</span>
+                        <span style="background: #e8f5e9; color: #1a7a4a; padding: 3px 12px; border-radius: 20px; font-size: 0.78rem; font-weight: 600;">Free</span>
+                    </div>
+                    <h5 style="font-weight: 700; color: #1a1a2e; margin-bottom: 8px;">RBI Financial Literacy Program</h5>
+                    <p style="color: #6c757d; font-size: 0.9rem; line-height: 1.6; margin-bottom: 15px;">
+                        Official financial literacy material by Reserve Bank of India covering savings, banking, insurance and responsible borrowing.
+                    </p>
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <small style="color: #6c757d;">Provider: RBI India</small>
+                        <small style="color: #6c757d;">Beginner</small>
+                    </div>
+                    <a href="https://www.rbi.org.in/financialeducation/home.aspx" target="_blank"
+                        style="display: block; text-align: center; background: #1a7a4a; color: white; padding: 12px; border-radius: 12px; text-decoration: none; font-weight: 600; transition: all 0.3s;"
+                        onmouseover="this.style.background='#145c38'"
+                        onmouseout="this.style.background='#1a7a4a'">
+                        Start Learning
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Bottom CTA -->
+    <div style="background: linear-gradient(135deg, #1a1a2e, #1a7a4a); border-radius: 20px; padding: 50px; text-align: center; margin-top: 50px;">
+        <h3 style="color: white; font-weight: 800; margin-bottom: 15px;">Ready to Apply What You Learn?</h3>
+        <p style="color: rgba(255,255,255,0.8); margin-bottom: 30px;">
+            Use ArthSetu's tools to put your financial knowledge into practice.
+        </p>
+        <div style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap;">
+            <a href="/expenses"
+                style="background: #c9a84c; color: #1a1a2e; padding: 14px 30px; border-radius: 25px; text-decoration: none; font-weight: 700;">
+                Track Expenses
+            </a>
+            <a href="/sip"
+                style="background: transparent; color: white; border: 2px solid white; padding: 14px 30px; border-radius: 25px; text-decoration: none; font-weight: 700;">
+                SIP Calculator
+            </a>
+        </div>
+    </div>
+
+</div>
+
+<script>
+
+function filterCourses(category){
+
+    /* ===== Button Highlight ===== */
+
+    const buttons=document.querySelectorAll(".course-filter-btn");
+
+    buttons.forEach(btn=>{
+        btn.classList.remove("active");
+    });
+
+    document.getElementById("btn-"+category).classList.add("active");
+
+
+    /* ===== Filter Cards ===== */
+
+    const cards=document.querySelectorAll(".course-card");
+
+    cards.forEach(card=>{
+
+        const cats=card.getAttribute("data-category");
+
+        if(category==="all" || cats.includes(category)){
+            card.style.display="";
+        }
+        else{
+            card.style.display="none";
+        }
+
+    });
+
+}
+
+</script>
