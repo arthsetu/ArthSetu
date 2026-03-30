@@ -539,3 +539,36 @@ select, button {
     border: none;
     cursor: pointer;
 }
+.credit-card-ui {
+    background: rgba(255,255,255,0.08);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    color: #1a1a2e;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.credit-card-ui:hover {
+    transform: translateY(-10px);
+}
+
+.tagline {
+    color: #6c757d;
+    font-size: 0.9rem;
+    margin-bottom: 10px;
+}
+
+.details {
+    margin-top: 10px;
+    font-size: 0.9rem;
+}
+
+.apply-btn {
+    margin-top: 10px;
+    background: #1a7a4a;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 10px;
+    width: 100%;
+}
