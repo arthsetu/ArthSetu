@@ -1,0 +1,21 @@
+<% layout('layouts/boilerplate') %>
+<div class="container">
+    <h2>Best Cards for <%= category %> 💳</h2>
+
+    <% if (result.length === 0) { %>
+        <p>No cards found</p>
+    <% } %>
+
+    <% result.forEach(card => { %>
+        <div class="creditcard">
+            <h3><%= card.name %></h3>
+            <p><%= card.benefits %></p>
+
+            <small>
+                🤝 Collaboration with <%= card.company %>
+            </small>
+        </div>
+    <% }) %>
+
+    <a href="/">⬅ Back</a>
+</div>
