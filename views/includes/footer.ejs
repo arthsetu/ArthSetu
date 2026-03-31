@@ -3,7 +3,12 @@
         <div class="row">
 
             <div class="col-md-4 mb-4">
-                <h5>Arth<span style="color: var(--gold)">Setu</span></h5>
+                <a class="navbar-brand d-flex align-items-center gap-2" href="/">
+                    <img src="https://res.cloudinary.com/dsb5aq7d2/image/upload/v1774933910/arth_setu_pd8mzm.png"
+                        alt="ArthSetu Logo"
+                        style="height: 40px; width: auto; object-fit: contain; transform: scale(1.1);">
+                   
+                </a>
                 <p style="color: rgba(255,255,255,0.6); line-height: 1.8;">
                     Smart financial management for college students. Track, save and grow your wealth.
                 </p>
@@ -65,188 +70,188 @@
 </div>
 
 <style>
+    /* ===== FOOTER ===== */
 
-/* ===== FOOTER ===== */
+    .footer {
+        background: #111;
+        color: white;
+        padding: 60px 0 20px 0;
+    }
 
-.footer{
-    background:#111;
-    color:white;
-    padding:60px 0 20px 0;
-}
+    .footer a {
+        display: block;
+        color: rgba(255, 255, 255, 0.7);
+        text-decoration: none;
+        margin-bottom: 8px;
+        font-size: 0.9rem;
+    }
 
-.footer a{
-    display:block;
-    color:rgba(255,255,255,0.7);
-    text-decoration:none;
-    margin-bottom:8px;
-    font-size:0.9rem;
-}
+    .footer a:hover {
+        color: #c9a84c;
+    }
 
-.footer a:hover{
-    color:#c9a84c;
-}
+    .footer-bottom {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        margin-top: 30px;
+        padding-top: 15px;
+        text-align: center;
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 0.85rem;
+    }
 
-.footer-bottom{
-    border-top:1px solid rgba(255,255,255,0.1);
-    margin-top:30px;
-    padding-top:15px;
-    text-align:center;
-    color:rgba(255,255,255,0.5);
-    font-size:0.85rem;
-}
+    /* SOCIAL BUTTON */
 
-/* SOCIAL BUTTON */
+    .social-btn {
+        display: inline-flex;
+        /* override block */
+        align-items: center;
+        justify-content: center;
 
-.social-btn{
-    display:inline-flex;   /* override block */
-    align-items:center;
-    justify-content:center;
+        background: rgba(255, 255, 255, 0.1);
+        width: 38px;
+        height: 38px;
 
-    background:rgba(255,255,255,0.1);
-    width:38px;
-    height:38px;
+        border-radius: 10px;
+        text-decoration: none;
+        color: white;
+        font-weight: 700;
+        font-size: 0.8rem;
 
-    border-radius:10px;
-    text-decoration:none;
-    color:white;
-    font-weight:700;
-    font-size:0.8rem;
+        line-height: 1;
+        margin-bottom: 0;
+        /* remove inherited margin */
 
-    line-height:1;
-    margin-bottom:0;      /* remove inherited margin */
+        transition: all 0.3s;
+    }
 
-    transition:all 0.3s;
-}
-
-.social-btn:hover{
-    background:#c9a84c;
-}
+    .social-btn:hover {
+        background: #c9a84c;
+    }
 
 
-/* ===== CHAT BUTTON ===== */
+    /* ===== CHAT BUTTON ===== */
 
-#chatBtn{
-    position:fixed;
-    bottom:25px;
-    right:25px;
-    background:linear-gradient(135deg,#1a7a4a,#c9a84c);
-    color:white;
-    border:none;
-    padding:14px 18px;
-    border-radius:40px;
-    font-size:0.9rem;
-    font-weight:600;
-    cursor:pointer;
+    #chatBtn {
+        position: fixed;
+        bottom: 25px;
+        right: 25px;
+        background: linear-gradient(135deg, #1a7a4a, #c9a84c);
+        color: white;
+        border: none;
+        padding: 14px 18px;
+        border-radius: 40px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        cursor: pointer;
 
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
 
-    width:auto !important;
-    white-space:nowrap;
+        width: auto !important;
+        white-space: nowrap;
 
-    z-index:2000;
+        z-index: 2000;
 
-    box-shadow:0 10px 30px rgba(0,0,0,0.3);
-}
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    }
 
-/* ===== CHAT SIDEBAR ===== */
+    /* ===== CHAT SIDEBAR ===== */
 
-#chatSidebar{
-    position:fixed;
-    top:0;
-    right:-420px;
-    width:400px;
-    height:100vh;
-    background:white;
-    box-shadow:-8px 0 30px rgba(0,0,0,0.2);
-    transition:right 0.3s ease;
-    z-index:2001;
+    #chatSidebar {
+        position: fixed;
+        top: 0;
+        right: -420px;
+        width: 400px;
+        height: 100vh;
+        background: white;
+        box-shadow: -8px 0 30px rgba(0, 0, 0, 0.2);
+        transition: right 0.3s ease;
+        z-index: 2001;
 
-    display:flex;
-    flex-direction:column;
-}
+        display: flex;
+        flex-direction: column;
+    }
 
-#chatSidebar.active{
-    right:0;
-}
+    #chatSidebar.active {
+        right: 0;
+    }
 
-/* CHAT HEADER */
+    /* CHAT HEADER */
 
-#chatHeader{
-    background:linear-gradient(135deg,#1a1a2e,#1a7a4a);
-    color:white;
-    padding:15px 20px;
+    #chatHeader {
+        background: linear-gradient(135deg, #1a1a2e, #1a7a4a);
+        color: white;
+        padding: 15px 20px;
 
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-}
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
 
-#closeBtn{
-    background:none;
-    border:none;
-    color:white;
-    font-size:16px;
-    cursor:pointer;
-}
+    #closeBtn {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+    }
 
-/* CHAT FRAME */
+    /* CHAT FRAME */
 
-#chatSidebar iframe{
-    flex:1;
-    width:100%;
-    border:none;
-}
+    #chatSidebar iframe {
+        flex: 1;
+        width: 100%;
+        border: none;
+    }
 
-/* MOBILE */
+    /* MOBILE */
 
-@media(max-width:480px){
+    @media(max-width:480px) {
 
-#chatSidebar{
-    width:100%;
-    right:-100%;
-}
+        #chatSidebar {
+            width: 100%;
+            right: -100%;
+        }
 
-#chatSidebar.active{
-    right:0;
-}
+        #chatSidebar.active {
+            right: 0;
+        }
 
-#chatBtnText{
-    display:none;
-}
+        #chatBtnText {
+            display: none;
+        }
 
-#chatBtn{
-    border-radius:50%;
-    padding:16px;
-}
+        #chatBtn {
+            border-radius: 50%;
+            padding: 16px;
+        }
 
-}
-
+    }
 </style>
 
 <script>
 
-function toggleChat(e){
-    if(e) e.stopPropagation();
+    function toggleChat(e) {
+        if (e) e.stopPropagation();
 
-    const sidebar=document.getElementById("chatSidebar");
-    sidebar.classList.toggle("active");
-}
-
-document.addEventListener("click",function(e){
-
-    const sidebar=document.getElementById("chatSidebar");
-    const btn=document.getElementById("chatBtn");
-
-    if(sidebar.classList.contains("active") &&
-       !sidebar.contains(e.target) &&
-       !btn.contains(e.target)){
-
-        sidebar.classList.remove("active");
-
+        const sidebar = document.getElementById("chatSidebar");
+        sidebar.classList.toggle("active");
     }
 
-});
+    document.addEventListener("click", function (e) {
+
+        const sidebar = document.getElementById("chatSidebar");
+        const btn = document.getElementById("chatBtn");
+
+        if (sidebar.classList.contains("active") &&
+            !sidebar.contains(e.target) &&
+            !btn.contains(e.target)) {
+
+            sidebar.classList.remove("active");
+
+        }
+
+    });
 
 </script>
