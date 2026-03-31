@@ -7,7 +7,7 @@
         </a>
 
         <!-- Mobile toggle -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <button class="navbar-toggler" style="width: 60px;" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -46,9 +46,15 @@
                                 Bill Splitter
                             </a>
                         </li>
-                         <li>
-                            <a class="dropdown-item" href="/credit-card" style="border-radius: 10px; padding: 10px 15px;">
-                                Credit Card Offers
+                        <li>
+                            <a class="dropdown-item" href="/credit-card"
+                                style="border-radius: 10px; padding: 10px 15px;">
+                                Credit Cards 
+                            </a>
+                        </li>
+                        <li>
+                            <a class="dropdown-item" href="/insurance" style="border-radius: 10px; padding: 10px 15px;">
+                                Insurance
                             </a>
                         </li>
 
@@ -74,7 +80,7 @@
                         </li>
                     </ul>
                 </li>
-         
+
                 <!-- Tools Dropdown -->
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
@@ -105,6 +111,12 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/services">Services</a>
                 </li>
+                <li class="nav-item"><a class="nav-link" href="/learn">
+                        Courses
+                    </a></li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/partner">Partners</a>
+                </li>
 
                 <li class="nav-item">
                     <a class="nav-link" href="/about">About</a>
@@ -113,16 +125,13 @@
                 <li class="nav-item">
                     <a class="nav-link" href="/contact">Contact</a>
                 </li>
-                    <li><a class="dropdown-item" href="/learn"
-    style="border-radius: 10px; padding: 10px 15px;">
-    Finance Courses
-</a></li>
+
 
             </ul>
 
             <!-- Auth Buttons -->
             <div class="d-flex gap-2">
-                <% if (typeof user !== 'undefined' && user) { %>
+                <% if (typeof user !=='undefined' && user) { %>
                     <span class="nav-link">Hi, <%= user.name %></span>
                     <a href="/logout" class="nav-link btn-nav-login">Logout</a>
                     <% } else { %>

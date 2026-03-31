@@ -1,0 +1,23 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="container mt-5  "  style="margin-bottom: 20px; height: 100vh;">
+    <h2>🛡️ Find Best Insurance Plan</h2>
+
+    <form action="/insurance" method="POST">
+
+        <select name="category" class="form-select mt-3">
+            <option value="fitness">Fitness</option>
+            <option value="education">Education</option>
+            <option value="life">Life</option>
+            <option value="travel">Travel</option>
+            <option value="agriculture">Agriculture</option>
+            <option value="entertainment">Entertainment</option>
+            <option value="finance">Finance</option>
+        </select>
+
+        <button class="btn btn-success mt-3 w-100">
+            Get Insurance Plan
+        </button>
+
+    </form>
+</div>

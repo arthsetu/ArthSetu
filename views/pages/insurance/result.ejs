@@ -1,0 +1,32 @@
+<% layout('layouts/boilerplate') %>
+
+<div class="container mt-5">
+
+    <h2>Best Insurance for <%= category %> 🛡️</h2>
+
+    <div class="row mt-4">
+        <% result.forEach(plan => { %>
+
+        <div class="col-md-6 mb-4">
+            <div class="card p-4 shadow">
+
+                <h4><%= plan.name %></h4>
+                <p><strong>Provider:</strong> <%= plan.provider %></p>
+
+                <ul>
+                    <% plan.benefits.forEach(b => { %>
+                        <li>✔ <%= b %></li>
+                    <% }) %>
+                </ul>
+
+                <button class="btn btn-primary">
+                    Apply Now 🚀
+                </button>
+
+            </div>
+        </div>
+
+        <% }) %>
+    </div>
+
+</div>

@@ -36,6 +36,8 @@ const authRoutes = require('./routes/auth');
 const expenseRoutes = require('./routes/expenses');
 const isLoggedIn = require('./middleware/isLoggedIn');
 const creditRoutes = require("./routes/creditCard");
+const insuranceRoutes = require("./routes/insurance");
+app.use("/", insuranceRoutes);
 app.use(authRoutes);
 app.use(expenseRoutes);
 
@@ -116,6 +118,10 @@ app.post('/contact', (req, res) => {
             </a>
         </div>
     `);
+});
+
+app.get('/partner', (req, res) => {
+    res.render('pages/partners');
 });
 app.get('/ping', (req, res) => {
     res.status(200).json({
