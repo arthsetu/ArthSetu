@@ -1,196 +1,184 @@
 <% layout('layouts/boilerplate') %>
 
-<div class="container mt-5 mb-5">
-    <div class="row justify-content-center">
-        <div class="col-md-5">
-            <div class="card shadow" style="border-radius: 20px; border: none;">
-                <div class="card-body p-4">
+    <div class="container mt-5 mb-5">
+        <div class="row justify-content-center">
+            <div class="col-md-5">
+                <div class="card shadow" style="border-radius: 20px; border: none;">
+                    <div class="card-body p-4">
 
-                    <div style="text-align: center; margin-bottom: 25px;">
-                        <h2 style="font-weight: 800; color: #1a1a2e;">Create Account</h2>
-                        <p style="color: #6c757d;">Join ArthSetu and take control of your finances!</p>
-                    </div>
-
-                    <!-- Error message -->
-                    <div id="errorMsg" style="display: none; background: #fce4ec; color: #e74c3c; padding: 12px; border-radius: 10px; margin-bottom: 15px; font-size: 0.9rem;"></div>
-
-                    <form action="/register" method="POST" id="registerForm">
-
-                        <div class="mb-3">
-                            <label class="form-label" style="font-weight: 600; color: #1a1a2e;">Full Name</label>
-                            <input
-                                type="text"
-                                name="name"
-                                id="name"
-                                class="form-control"
-                                placeholder="Enter your full name"
-                                style="border-radius: 10px; border: 2px solid #e9ecef; padding: 12px;"
-                                required>
+                        <div style="text-align: center; margin-bottom: 25px;">
+                            <h2 style="font-weight: 800; color: #1a1a2e;">Create Account</h2>
+                            <p style="color: #6c757d;">Join ArthSetu and take control of your finances!</p>
                         </div>
 
-                        <div class="mb-3">
-                            <label class="form-label" style="font-weight: 600; color: #1a1a2e;">Email Address</label>
-                            <input
-                                type="email"
-                                name="email"
-                                id="email"
-                                class="form-control"
-                                placeholder="Enter your email"
-                                style="border-radius: 10px; border: 2px solid #e9ecef; padding: 12px;"
-                                required>
+                        <!-- Error message -->
+                        <div id="errorMsg"
+                            style="display: none; background: #fce4ec; color: #e74c3c; padding: 12px; border-radius: 10px; margin-bottom: 15px; font-size: 0.9rem;">
                         </div>
 
-                        <div class="mb-3">
-                            <label class="form-label" style="font-weight: 600; color: #1a1a2e;">Password</label>
-                            <div style="position: relative;">
-                                <input
-                                    type="password"
-                                    name="password"
-                                    id="password"
-                                    class="form-control"
-                                    placeholder="Min 6 characters"
-                                    style="border-radius: 10px; border: 2px solid #e9ecef; padding: 12px; padding-right: 45px;"
-                                    required>
-                                <button type="button" onclick="togglePassword('password', 'eyeIcon1')"
-                                    style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #6c757d; font-size: 1.1rem;">
-                                    <span id="eyeIcon1">👁️</span>
-                                </button>
+                        <form action="/register" method="POST" id="registerForm">
+
+                            <div class="mb-3">
+                                <label class="form-label" style="font-weight: 600; color: #1a1a2e;">Full Name</label>
+                                <input type="text" name="name" id="name" class="form-control"
+                                    placeholder="Enter your full name"
+                                    style="border-radius: 10px; border: 2px solid #e9ecef; padding: 12px;" required>
                             </div>
-                            <!-- Password strength -->
-                            <div style="margin-top: 8px;">
-                                <div style="background: #f0f0f0; border-radius: 10px; height: 5px; overflow: hidden;">
-                                    <div id="strengthBar" style="height: 5px; border-radius: 10px; transition: all 0.3s; width: 0%;"></div>
+
+                            <div class="mb-3">
+                                <label class="form-label" style="font-weight: 600; color: #1a1a2e;">Email
+                                    Address</label>
+                                <input type="email" name="email" id="email" class="form-control"
+                                    placeholder="Enter your email"
+                                    style="border-radius: 10px; border: 2px solid #e9ecef; padding: 12px;" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" style="font-weight: 600; color: #1a1a2e;">Password</label>
+                                <div style="position: relative;">
+                                    <input type="password" name="password" id="password" class="form-control"
+                                        placeholder="Min 6 characters" style="padding-right: 45px;" required>
+
+                                    <span onclick="togglePassword('password', 'eyeIcon1')"
+                                        style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); cursor: pointer;">
+                                        <span id="eyeIcon1">👁️</span>
+                                    </span>
                                 </div>
-                                <small id="strengthText" style="color: #6c757d;"></small>
+                                <!-- Password strength -->
+                                <div style="margin-top: 8px;">
+                                    <div
+                                        style="background: #f0f0f0; border-radius: 10px; height: 5px; overflow: hidden;">
+                                        <div id="strengthBar"
+                                            style="height: 5px; border-radius: 10px; transition: all 0.3s; width: 0%;">
+                                        </div>
+                                    </div>
+                                    <small id="strengthText" style="color: #6c757d;"></small>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="mb-4">
-                            <label class="form-label" style="font-weight: 600; color: #1a1a2e;">Confirm Password</label>
-                            <div style="position: relative;">
-                                <input
-                                    type="password"
-                                    id="confirmPassword"
-                                    class="form-control"
-                                    placeholder="Re-enter your password"
-                                    style="border-radius: 10px; border: 2px solid #e9ecef; padding: 12px; padding-right: 45px;"
-                                    required>
-                                <button type="button" onclick="togglePassword('confirmPassword', 'eyeIcon2')"
-                                    style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); background: none; border: none; cursor: pointer; color: #6c757d; font-size: 1.1rem;">
-                                    <span id="eyeIcon2">👁️</span>
-                                </button>
+                            <div class="mb-4">
+                                <label class="form-label" style="font-weight: 600; color: #1a1a2e;">Confirm
+                                    Password</label>
+                                <div style="position: relative;">
+                                    <input type="password" id="confirmPassword" class="form-control"
+                                        placeholder="Re-enter your password" style="padding-right: 45px;" required>
+
+                                    <span onclick="togglePassword('confirmPassword', 'eyeIcon2')"
+                                        style="position: absolute; right: 12px; top: 50%; transform: translateY(-50%); cursor: pointer;">
+                                        <span id="eyeIcon2">👁️</span>
+                                    </span>
+                                </div>
+                                <small id="matchMsg" style="display: none; margin-top: 5px;"></small>
                             </div>
-                            <small id="matchMsg" style="display: none; margin-top: 5px;"></small>
-                        </div>
 
-                        <button type="submit" id="submitBtn"
-                            style="width: 100%; background: #1a7a4a; color: white; border: none; padding: 14px; border-radius: 12px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.3s;">
-                            Create Account 🚀
-                        </button>
+                            <button type="submit" id="submitBtn"
+                                style="width: 100%; background: #1a7a4a; color: white; border: none; padding: 14px; border-radius: 12px; font-weight: 700; font-size: 1rem; cursor: pointer; transition: all 0.3s;">
+                                Create Account 🚀
+                            </button>
 
-                    </form>
+                        </form>
 
-                    <p style="text-align: center; margin-top: 20px; color: #6c757d;">
-                        Already have an account?
-                        <a href="/login" style="color: #1a7a4a; font-weight: 600;">Login here</a>
-                    </p>
+                        <p style="text-align: center; margin-top: 20px; color: #6c757d;">
+                            Already have an account?
+                            <a href="/login" style="color: #1a7a4a; font-weight: 600;">Login here</a>
+                        </p>
 
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 
-<script>
-// Toggle password visibility
-function togglePassword(fieldId, iconId) {
-    const field = document.getElementById(fieldId);
-    const icon = document.getElementById(iconId);
-    if (field.type === 'password') {
-        field.type = 'text';
-        icon.textContent = '🙈';
-    } else {
-        field.type = 'password';
-        icon.textContent = '👁️';
-    }
-}
+    <script>
+        // Toggle password visibility
+        function togglePassword(fieldId, iconId) {
+            const field = document.getElementById(fieldId);
+            const icon = document.getElementById(iconId);
+            if (field.type === 'password') {
+                field.type = 'text';
+                icon.textContent = '🙈';
+            } else {
+                field.type = 'password';
+                icon.textContent = '👁️';
+            }
+        }
 
-// Password strength checker
-document.getElementById('password').addEventListener('input', function() {
-    const val = this.value;
-    const bar = document.getElementById('strengthBar');
-    const text = document.getElementById('strengthText');
+        // Password strength checker
+        document.getElementById('password').addEventListener('input', function () {
+            const val = this.value;
+            const bar = document.getElementById('strengthBar');
+            const text = document.getElementById('strengthText');
 
-    let strength = 0;
-    if (val.length >= 6) strength++;
-    if (val.length >= 10) strength++;
-    if (/[A-Z]/.test(val)) strength++;
-    if (/[0-9]/.test(val)) strength++;
-    if (/[^A-Za-z0-9]/.test(val)) strength++;
+            let strength = 0;
+            if (val.length >= 6) strength++;
+            if (val.length >= 10) strength++;
+            if (/[A-Z]/.test(val)) strength++;
+            if (/[0-9]/.test(val)) strength++;
+            if (/[^A-Za-z0-9]/.test(val)) strength++;
 
-    const levels = [
-        { width: '0%',   color: '#f0f0f0', label: '' },
-        { width: '25%',  color: '#e74c3c', label: '😟 Weak' },
-        { width: '50%',  color: '#c9a84c', label: '😐 Fair' },
-        { width: '75%',  color: '#36A2EB', label: '😊 Good' },
-        { width: '100%', color: '#1a7a4a', label: '💪 Strong' },
-    ];
+            const levels = [
+                { width: '0%', color: '#f0f0f0', label: '' },
+                { width: '25%', color: '#e74c3c', label: '😟 Weak' },
+                { width: '50%', color: '#c9a84c', label: '😐 Fair' },
+                { width: '75%', color: '#36A2EB', label: '😊 Good' },
+                { width: '100%', color: '#1a7a4a', label: '💪 Strong' },
+            ];
 
-    bar.style.width = levels[strength].width;
-    bar.style.background = levels[strength].color;
-    text.textContent = levels[strength].label;
-    text.style.color = levels[strength].color;
+            bar.style.width = levels[strength].width;
+            bar.style.background = levels[strength].color;
+            text.textContent = levels[strength].label;
+            text.style.color = levels[strength].color;
 
-    checkMatch();
-});
+            checkMatch();
+        });
 
-// Password match checker
-document.getElementById('confirmPassword').addEventListener('input', checkMatch);
+        // Password match checker
+        document.getElementById('confirmPassword').addEventListener('input', checkMatch);
 
-function checkMatch() {
-    const pass = document.getElementById('password').value;
-    const confirm = document.getElementById('confirmPassword').value;
-    const msg = document.getElementById('matchMsg');
-    const btn = document.getElementById('submitBtn');
+        function checkMatch() {
+            const pass = document.getElementById('password').value;
+            const confirm = document.getElementById('confirmPassword').value;
+            const msg = document.getElementById('matchMsg');
+            const btn = document.getElementById('submitBtn');
 
-    if (confirm.length === 0) {
-        msg.style.display = 'none';
-        return;
-    }
+            if (confirm.length === 0) {
+                msg.style.display = 'none';
+                return;
+            }
 
-    msg.style.display = 'block';
+            msg.style.display = 'block';
 
-    if (pass === confirm) {
-        msg.textContent = '✅ Passwords match!';
-        msg.style.color = '#1a7a4a';
-        btn.style.background = '#1a7a4a';
-        btn.disabled = false;
-    } else {
-        msg.textContent = '❌ Passwords do not match!';
-        msg.style.color = '#e74c3c';
-        btn.style.background = '#ccc';
-        btn.disabled = true;
-    }
-}
+            if (pass === confirm) {
+                msg.textContent = '✅ Passwords match!';
+                msg.style.color = '#1a7a4a';
+                btn.style.background = '#1a7a4a';
+                btn.disabled = false;
+            } else {
+                msg.textContent = '❌ Passwords do not match!';
+                msg.style.color = '#e74c3c';
+                btn.style.background = '#ccc';
+                btn.disabled = true;
+            }
+        }
 
-// Form validation before submit
-document.getElementById('registerForm').addEventListener('submit', function(e) {
-    const pass = document.getElementById('password').value;
-    const confirm = document.getElementById('confirmPassword').value;
-    const errorMsg = document.getElementById('errorMsg');
+        // Form validation before submit
+        document.getElementById('registerForm').addEventListener('submit', function (e) {
+            const pass = document.getElementById('password').value;
+            const confirm = document.getElementById('confirmPassword').value;
+            const errorMsg = document.getElementById('errorMsg');
 
-    if (pass !== confirm) {
-        e.preventDefault();
-        errorMsg.style.display = 'block';
-        errorMsg.textContent = '❌ Passwords do not match! Please try again.';
-        return;
-    }
+            if (pass !== confirm) {
+                e.preventDefault();
+                errorMsg.style.display = 'block';
+                errorMsg.textContent = '❌ Passwords do not match! Please try again.';
+                return;
+            }
 
-    if (pass.length < 6) {
-        e.preventDefault();
-        errorMsg.style.display = 'block';
-        errorMsg.textContent = '❌ Password must be at least 6 characters!';
-        return;
-    }
-});
-</script>
+            if (pass.length < 6) {
+                e.preventDefault();
+                errorMsg.style.display = 'block';
+                errorMsg.textContent = '❌ Password must be at least 6 characters!';
+                return;
+            }
+        });
+    </script>
