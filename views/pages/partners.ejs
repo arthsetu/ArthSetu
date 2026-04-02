@@ -21,41 +21,41 @@
 ```
     <div class="row text-center">
 
-        <% const partners = [
-            { name: "Pulse", logo: "https://instagram.frpr1-2.fna.fbcdn.net/v/t51.82787-19/657566786_18065690906391989_4345555633231832331_n.jpg" },
-            { name: "Agrinova", logo: "https://instagram.frpr1-2.fna.fbcdn.net/v/t51.82787-19/657788885_18073901900202599_7894519918136075811_n.jpg" },
-            { name: "TourMitra", logo: "https://instagram.frpr1-2.fna.fbcdn.net/v/t51.82787-19/642178094_18075077444182349_4861727626965950866_n.jpg" },
-            { name: "HDFC Bank", type: "Banking Partner", logo: "🏦" },
-            { name: "ICICI Bank", type: "Financial Partner", logo: "💳" },
-            { name: "Axis Bank", type: "Travel Card Partner", logo: "✈️" },
-            { name: "SBI", type: "Student Card Partner", logo: "🎓" },
-            { name: "Amazon Pay", type: "Shopping Partner", logo: "🛒" },
-            { name: "Razorpay", type: "Payment Gateway", logo: "⚡" }
-        ]; %>
+    <% const partners = [
+        { name: "Pulse", logo: "/images/partners/pulse.jpeg" },
+        { name: "Agrinova", logo: "/images/partners/agrinova.jpeg" },
+        { name: "TourMitra", logo: "/images/partners/tourmitra.jpeg" },
+        { name: "HDFC Bank", type: "Banking Partner", logo: "🏦" },
+        { name: "ICICI Bank", type: "Financial Partner", logo: "💳" },
+        { name: "Axis Bank", type: "Travel Card Partner", logo: "✈️" },
+        { name: "SBI", type: "Student Card Partner", logo: "🎓" },
+        { name: "Amazon Pay", type: "Shopping Partner", logo: "🛒" },
+        { name: "Razorpay", type: "Payment Gateway", logo: "⚡" }
+    ]; %>
 
-        <% partners.forEach(p => { %>
+    <% partners.forEach(p => { %>
 
-        <div class="col-md-4 mb-4">
-            <div class="partner-card p-4">
+    <div class="col-md-4 mb-4">
+        <div class="partner-card p-4 bg-white shadow-sm rounded">
 
-                <div style="font-size:2.5rem;">
-                    <% if (p.logo.startsWith("http")) { %>
-                        <img src="<%= p.logo %>" alt="logo" width="100">
-                    <% } else { %>
-                        <%= p.logo %>
-                    <% } %>
-                </div>
-
-                <h5 style="margin-top:10px;"><%= p.name %></h5>
-
-                <% if(p.type){ %>
-                    <p style="color:#6c757d;"><%= p.type %></p>
+            <div style="font-size:2.5rem; margin-bottom:10px;">
+                <% if (p.logo.startsWith("/images")) { %>
+                    <img src="<%= p.logo %>" alt="logo" width="100">
+                <% } else { %>
+                    <%= p.logo %>
                 <% } %>
-
             </div>
-        </div>
 
-        <% }) %>
+            <h5 style="margin-top:10px;"><%= p.name %></h5>
+
+            <% if(p.type){ %>
+                <p style="color:#6c757d;"><%= p.type %></p>
+            <% } %>
+
+        </div>
+    </div>
+
+    <% }) %>
 
     </div>
 
@@ -106,3 +106,4 @@
         </a>
     </div>
 </section>
+
