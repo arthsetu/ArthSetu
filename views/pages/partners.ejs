@@ -1,6 +1,7 @@
 <% layout('layouts/boilerplate') %>
 
 <!-- HERO -->
+
 <section style="background: linear-gradient(135deg, #1a1a2e 0%, #1a7a4a 100%); padding: 80px 0;">
     <div class="container text-center">
         <h1 style="color:white; font-weight:800;">
@@ -13,73 +14,90 @@
 </section>
 
 <!-- PARTNERS GRID -->
+
 <section style="padding:80px 0; background:#f8f9fa;">
     <div class="container">
 
-        <div class="row text-center">
+```
+    <div class="row text-center">
 
-            <% const partners = [
-                { name: "Pulse", logo:<img src="https://instagram.frpr1-2.fna.fbcdn.net/v/t51.82787-19/657566786_18065690906391989_4345555633231832331_n.jpg?stp=dst-jpg_s320x320_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDI0LmMyIn0&_nc_ht=instagram.frpr1-2.fna.fbcdn.net&_nc_cat=105&_nc_oc=Q6cZ2gHb3TkeKJ8jKZ6k3gRgRmYnNwizwdo0-eac_cynweO8tZXpZN7LdH_NFfwFq150-M4ipARpl6btqi_2oO11UR-A&_nc_ohc=mhoJWifprfwQ7kNvwF1HHi6&_nc_gid=E9uqa-VL0R0dB8mIY1hA7A&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Af1j0iNaLQZcieN-JzMhXXonq4roIndIw6DfX4OkHIwDyQ&oe=69D3CF25&_nc_sid=8b3546" alt="logo" width="100">},
-                { name: "Agrinova", logo:<img src="https://instagram.frpr1-2.fna.fbcdn.net/v/t51.82787-19/657788885_18073901900202599_7894519918136075811_n.jpg?stp=dst-jpg_s320x320_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDgwLmMyIn0&_nc_ht=instagram.frpr1-2.fna.fbcdn.net&_nc_cat=111&_nc_oc=Q6cZ2gHVOiqwt57dLBr8YZ5osfxYj39ueh7UfXkPjdgmpQmUmasgno09bbExZZLFqh1NusbMPiToZCDf80_hsWYz0UX4&_nc_ohc=6vpeeUeSYeYQ7kNvwGfu2Ek&_nc_gid=8LJnKJL3ezD8F203A3aSyQ&edm=AOQ1c0wBAAAA&ccb=7-5&oh=00_Af2cB2mafZW72kO0cydEE0di9MQHkx08uh7JeTNNrOhsyQ&oe=69D3D501&_nc_sid=8b3546" alt="logo" width="100">},
-                { name: "TourMitra", logo:<img src="https://instagram.frpr1-2.fna.fbcdn.net/v/t51.82787-19/642178094_18075077444182349_4861727626965950866_n.jpg?stp=dst-jpg_s320x320_tt6&efg=eyJ2ZW5jb2RlX3RhZyI6InByb2ZpbGVfcGljLmRqYW5nby4xMDI0LmMyIn0&_nc_ht=instagram.frpr1-2.fna.fbcdn.net&_nc_cat=105&_nc_oc=Q6cZ2gG3GR_vTGCAq_cG50KQPfyiqgmtcfAYgs6BhFOpitjwxgukbkREqg_Z4QZ9mC3F9dvVrbewkxr-MBPG5Obp5eP2&_nc_ohc=88zQlO7QlEEQ7kNvwFSJjTK&_nc_gid=-r1aq190OTTic7_WgQOs7w&edm=AOii8G0BAAAA&ccb=7-5&oh=00_Af1YyDy1CV4YFyJGIRNymz5XXMLObcmBj2mnynq4fgwx9w&oe=69D3DC8B&_nc_sid=f8e7cd" alt="logo" width="100">},
-                { name: "HDFC Bank", type: "Banking Partner", logo: "🏦" },
-                { name: "ICICI Bank", type: "Financial Partner", logo: "💳" },
-                { name: "Axis Bank", type: "Travel Card Partner", logo: "✈️" },
-                { name: "SBI", type: "Student Card Partner", logo: "🎓" },
-                { name: "Amazon Pay", type: "Shopping Partner", logo: "🛒" },
-                { name: "Razorpay", type: "Payment Gateway", logo: "⚡" }
-            ]; %>
+        <% const partners = [
+            { name: "Pulse", logo: "https://instagram.frpr1-2.fna.fbcdn.net/v/t51.82787-19/657566786_18065690906391989_4345555633231832331_n.jpg" },
+            { name: "Agrinova", logo: "https://instagram.frpr1-2.fna.fbcdn.net/v/t51.82787-19/657788885_18073901900202599_7894519918136075811_n.jpg" },
+            { name: "TourMitra", logo: "https://instagram.frpr1-2.fna.fbcdn.net/v/t51.82787-19/642178094_18075077444182349_4861727626965950866_n.jpg" },
+            { name: "HDFC Bank", type: "Banking Partner", logo: "🏦" },
+            { name: "ICICI Bank", type: "Financial Partner", logo: "💳" },
+            { name: "Axis Bank", type: "Travel Card Partner", logo: "✈️" },
+            { name: "SBI", type: "Student Card Partner", logo: "🎓" },
+            { name: "Amazon Pay", type: "Shopping Partner", logo: "🛒" },
+            { name: "Razorpay", type: "Payment Gateway", logo: "⚡" }
+        ]; %>
 
-            <% partners.forEach(p => { %>
+        <% partners.forEach(p => { %>
 
-            <div class="col-md-4 mb-4">
-                <div class="partner-card p-4">
+        <div class="col-md-4 mb-4">
+            <div class="partner-card p-4">
 
-                    <div style="font-size:2.5rem;"><%= p.logo %></div>
-
-                    <h5 style="margin-top:10px;"><%= p.name %></h5>
-
-                    <p style="color:#6c757d;"><%= p.type %></p>
-
+                <div style="font-size:2.5rem;">
+                    <% if (p.logo.startsWith("http")) { %>
+                        <img src="<%= p.logo %>" alt="logo" width="100">
+                    <% } else { %>
+                        <%= p.logo %>
+                    <% } %>
                 </div>
+
+                <h5 style="margin-top:10px;"><%= p.name %></h5>
+
+                <% if(p.type){ %>
+                    <p style="color:#6c757d;"><%= p.type %></p>
+                <% } %>
+
             </div>
-
-            <% }) %>
-
         </div>
 
+        <% }) %>
+
     </div>
+
+</div>
+```
+
 </section>
 
 <!-- TRUST SECTION -->
+
 <section style="padding:80px 0;">
     <div class="container text-center">
 
-        <h2 style="font-weight:800;">🤝 Why Our Partnerships Matter</h2>
+```
+    <h2 style="font-weight:800;">🤝 Why Our Partnerships Matter</h2>
 
-        <div class="row mt-5">
+    <div class="row mt-5">
 
-            <div class="col-md-4">
-                <h4>Verified</h4>
-                <p>We collaborate only with trusted brands</p>
-            </div>
+        <div class="col-md-4">
+            <h4>Verified</h4>
+            <p>We collaborate only with trusted brands</p>
+        </div>
 
-            <div class="col-md-4">
-                <h4>Secure</h4>
-                <p>Safe financial integrations</p>
-            </div>
+        <div class="col-md-4">
+            <h4>Secure</h4>
+            <p>Safe financial integrations</p>
+        </div>
 
-            <div class="col-md-4">
-                <h4>Better Offers</h4>
-                <p>Exclusive deals for our users</p>
-            </div>
-
+        <div class="col-md-4">
+            <h4>Better Offers</h4>
+            <p>Exclusive deals for our users</p>
         </div>
 
     </div>
+
+</div>
+```
+
 </section>
 
 <!-- CTA -->
+
 <section style="background: linear-gradient(135deg, #1a1a2e 0%, #1a7a4a 100%); padding:80px 0; text-align:center;">
     <div class="container">
         <h2 style="color:white; font-weight:800; margin-bottom: 20px;">Want to Partner With Us?</h2>
